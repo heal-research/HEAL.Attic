@@ -20,7 +20,7 @@ HEAL.Attic provides .NET attributes to mark classes, properties and fields for p
   }
 ```
 
-We can then save objects of type `Person` to disk using the `ProtobufSerializer`.
+We can then save objects of type `Person` to a file using the `ProtoBufSerializer`.
 
 ```csharp
   public class Program {
@@ -32,7 +32,7 @@ We can then save objects of type `Person` to disk using the `ProtobufSerializer`
   }
 ```
 
-Similarly, we can restore the person object from a file using the  `Deserialize` method.
+Similarly, we can restore the person object using the  `Deserialize` method.
 ```csharp
    ...
    var person = (Person)serializer.Deserialize("person.bin");
@@ -59,13 +59,12 @@ Similarly, we can restore the person object from a file using the  `Deserialize`
 
   public class Program {
       public static void Main(string[] args) {
-          var family = new List<Person>();
           var a = new Person("Bart");
           var b = new Person("Lisa");
           var c = new Person("Maggie");
           var d = new Person("Homer", new Person[] {a, b, c});
           var e = new Person("Marge", new Person[] {a, b, c});
-          family.AddRange(new [] {a, b, c, d});
+          var family = new List<Person>(new [] {a, b, c, d, e});
 
           var serializer = new ProtoBufSerializer();
           seriaizer.Serialize(family, "family.bin");
@@ -89,7 +88,7 @@ Structs that should be included in serialization must be marked with the `Storab
 
 
 ### Storable Constructor
-Each storable class should have an empty constructor marked with the `StorableConstructor` attribute. This constructor can be used by HEAL.Attic to create empty objects which are subsequently filled with the serialized data. This can be useful to save effort and to speed up deserialization because it is not necessary to initialize members of an object using a default constructor when data is later loaded from serialized format. 
+Each storable class should have an empty constructor marked with the `StorableConstructor` attribute. This constructor can be used by HEAL.Attic to create empty objects which are subsequently filled with serialized data. This can be useful to save effort and to speed up deserialization because it is not necessary to initialize members of an object using a default constructor when data is later loaded from serialized format. 
 
 HEAL.Attic provides the type `StorableConstructorFlag` which must be used as formal parameter for the storable constructor to prevent collisions with existing constructors. The storable constructor should be protected (or private in sealed classes). Don't forget to call the `StorableConstructor` of the base class if there is one.
 ```csharp
@@ -144,7 +143,7 @@ In the same way it is possible to execute code before serialization. For instanc
     }
   }
 ```
- The `BeforeDeserialization` hook from the derived class is called before the hook from the base class (recursively). Other than that no order of execution can be assumed.
+ The `BeforeSerialization` hook from the derived class is called before the hook from the base class (recursively). `BeforeSerialization` are guaranteed to be called before the serializaer accesses any of the members marked as `Storable`. Other than that no order of execution of `BeforeSerialization` hooks can be assumed.
 
 ### Member Selection
 It is possible to change how HEAL.Attic handles storable members by setting the MemberSelection property of the `StorableType` attribute. The `StorableMemberSelection` enum has four possible values `MarkedOnly`, `AllFields`, `AllProperties`, `AllFieldsAndProperties`. Whereby `MarkedOnly` is the default and means that each member which should be included in serialization / deserialization must be marked with the `Storable` attribute. If member selection is set to `AllFields` then HEAL.Attic will automatically serialize and deserialize all fields in the type. 
@@ -156,22 +155,32 @@ Strings are handled as immutable values. On serialization, HEAL.Attic adds each 
 
 ### Serialization Workflow
 HEAL.Attic executes the following steps when you call `ProtoBufSerializer.Serialize(obj, filename)`:
-1. Iterate the whole graph of `Storable` objects starting from `obj` and **call the `BeforeSerialization` hooks**. It calls `BeforeSerialization` hooks from the derived class before it calls the hook from the base class (recursively). No other order of execution of `BeforeSerialiation` hooks can be assumed.   
-1. **Serialize all `Storable` members of all objects** starting from `obj` recursively. `Storable` members from the derived class are serialized before storable members from the base class. No other order of serialization of  `Storable` members can be assumed. 
+1. Execute the `BeforeSerialization` hooks for `obj`. `BeforeSerialization` hooks from the derived class are called before  the hooks from the base class (recursively).
+1. Find all `Storable` members for `obj` including inherited members.   
+1. **Serialize** each member recursively (starting at step 1). `Storable` members from the derived class are serialized before storable members from the base class. No other order of serialization of  `Storable` members can be assumed. 
 
 ### Deserialization Workflow
 HEAL.Attic executes the following steps when you call `ProtoBufSerializer.Deserialize(filename)`:
-1. Iterate over all boxes in the serialized file and **create objects using the `StorableConstructor`** or alternatively the default constructor if no `StorableConstructor` is available for the type. Because of the `base(flag)` constructor calls the `StorableConstructors` of base classes will be called before storable constructors of derived classes.
-1. **Restore values of `Storable` members** of all objects using data from the serialized format.  members of base classes are set before members of derived classes (recursively). No order can be assumed about value initialization of `Storable` members. 
-1. **Call `AfterDeserialization` hooks.** The hook from the base class is called before the hook from the derived class (recursively).
+1. Iterate over all boxes in the serialized file and **create objects using the `StorableConstructor`** or alternatively the default constructor if no `StorableConstructor` is available for the type. 
+1. Start from the root box and **Restore all values of `Storable` members** using data from the serialized format.  Members of base classes are set before members of derived classes (recursively). No order can be assumed about value initialization of `Storable` members. 
+1. After the whole object graph has been restored **call `AfterDeserialization` hooks.** The hook from the base class is called before the hook from the derived class (recursively).
 
 
 ### StorableType Attribute
 
 #### Why is it necessary to generate GUIDs for storable types?
-HEAL.Attic does not store type names in the serialized format. This makes it easy to rename of type and move types between namespaces and assemblies. Instead, HEAL.Attic uses GUIDs to identify types. When an object is deserialized HEAL.Attic first looks up the type that is currently registered for the serialized type GUID and instantiates an object of this type. This means that the actual type for a serialized object can change over time as long as the new type is backwards compatible. It is even possible to merge two different types into a single type by adding two StorableType GUIDs to a class (TODO CHECK???). 
+HEAL.Attic does not store type names in the serialized format. This makes it easy to rename of type and move types between namespaces and assemblies. Instead, HEAL.Attic uses GUIDs to identify types. When an object is deserialized HEAL.Attic first looks up the type that is currently registered for the serialized type GUID and instantiates an object of this type. This means that the actual type for a serialized object can change over time as long as the new type is backwards compatible.
 
-As a consequence, every type must be marked with the `StorableType` attribute with a GUID. We provide tools (Visual Studio Code Fixes) to automatically add a StorableType attribute with  an autogenerated GUID (see [tools section](#tools)).   
+As a consequence, every type must be marked with the `StorableType` attribute with a GUID. We provide tools (Visual Studio Code Fixes) to automatically add a StorableType attribute with  an autogenerated GUID (see [tools section](#tools)).
+
+ It is even possible to merge two different types into a single type by adding two StorableType GUIDs to a class.
+```csharp
+  [StorableType("251601b7-3406-4038-9cfc-6332966240a3", "3fcaca9c-b474-4313-b00b-3db8082cb9e1")]
+  public class TypeAggregator {
+    ...
+  }
+``` 
+   
 
 
 #### Why is it necessary to mark interfaces and enums with the StorableType attribute?
@@ -268,7 +277,7 @@ New code (alternative version using `OldName`):
 ```csharp
 [StorableType("28A5F6B8-49AF-4C6A-AF0E-F92EB4511722")]
 class A {
-  [Storable(OldName = "v")]  // TODO: works this way?
+  [Storable(OldName = "v")]
   public int value;
 }
 ```
@@ -502,7 +511,10 @@ class NewType : AB {
 
 
 ### Deleting a type
-TODO
+When you want to remove a type which has been marked as a `StorableType` then you have several options to make sure that old files can still be opened with the new version of your code.
+1. Keep the (empty) class definition including the attached `StorableType` attribute. HEAL.Attic will create an object of the class on deserialization.
+1. Delete the type but use a different (compatible) type as a replacement. Add the GUID from the deleted class to the list of GUIDs in the `StorableType` attribute of replacement type
+1. Delete the type and remove the GUID. HEAL.Attic will detect that there is no registered type for the GUID it finds in the serialized format and will therefore set the `Storable` member which used to hold the serialized object to null.    
 
 
 ## Adding Transformers
@@ -523,6 +535,8 @@ Customer transformers must be marked with the `Transformer` attribute with a GUI
 For each type that must be serialized, HEAL.Attic calls `CanTransformType` to find all compatible transformers and uses the transformer with the highest priority.  
 `ToBox(object o, ...)` must produce a ProtoBuf box with the data for the object.  
 `ToObject(Box box, ...)` is the inverse operation and must restore the object from the box.
+
+It is possible to have multiple different transformers for the same type. On serialization, HEAL.Attic will use the transformer with the highest priority. The GUID of the transformer which has been used to serialize an object is stored in the serialized format. Therefore, HEAL.Attic will be able to re-create the object with the same transformer on deserialization. As a consequence, you should never delete transformers because it breaks backwards compatibility.
 
 Additionally to the transformer you need to register GUIDs of all types that are supported by the transformer and which you want to (de-)serialize. This is described in the next section. 
 
@@ -561,19 +575,11 @@ We have implemented an extension for Microsoft Visual Studio which provides  so-
  - adding the `StorableType` attribute to a type definition,
  - adding a storable constructor 
 
-## Diagnostics
-When migrating software to HEAL.Attic it is necessary to add the `StorableType` attribute to each type which must be supported by HEAL.Attic. In this process it is easy to miss types. Therefore, HEAL.Attic provides static methods to perform automated checks for all loaded types in the namespace `HEAL.Attic.Diagnostics`.
- - CheckStorableTypes(): Lists all types with the StorableType attribute and checks that
-   -  there are no duplicate GUIDs, 
-   -  all parent types are marked with the StorableType attribute (recursively), and
-   - if the type is class it must have a compatible constructor marked with the `StorableConstructor` attribute
- - FindNonStorableTypes(): Lists all types without a StorableType attribute. 
-
 ## License
 HEAL.Attic is released under the MIT license.
 
 Copyright (C) 2018, 2019  
-Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributers
+Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

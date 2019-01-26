@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributers</Authors>
+    <Authors>Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributors</Authors>
     <Company>University of Applied Sciences Upper Austria</Company>
     <Copyright>(c) Heuristic and Evolutionary Algorithms Laboratory (HEAL)</Copyright>
     <SignAssembly>true</SignAssembly>

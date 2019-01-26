@@ -19,7 +19,7 @@ HEAL.Attic provides .NET attributes to mark classes, properties and fields for p
   }
 ```
 
-We can then save objects of type `Person` to disk using the `ProtobufSerializer`.
+We can then save objects of type `Person` using the `ProtoBufSerializer`.
 
 ```csharp
   public class Program {
@@ -31,7 +31,7 @@ We can then save objects of type `Person` to disk using the `ProtobufSerializer`
   }
 ```
 
-Similarly, we can restore the person object from a file using the  `Deserialize` method.
+Similarly, we can restore the person object using the  `Deserialize` method.
 ```csharp
    ...
    var person = (Person)serializer.Deserialize("person.bin");
@@ -58,16 +58,15 @@ Similarly, we can restore the person object from a file using the  `Deserialize`
 
   public class Program {
       public static void Main(string[] args) {
-          var family = new List<Person>();
           var a = new Person("Bart");
           var b = new Person("Lisa");
           var c = new Person("Maggie");
           var d = new Person("Homer", new Person[] {a, b, c});
           var e = new Person("Marge", new Person[] {a, b, c});
-          family.AddRange(new [] {a, b, c, d});
+          var family = new List<Person>(new [] {a, b, c, d, e});
 
           var serializer = new ProtoBufSerializer();
-          seriaizer.Serialize(family, "family.bin");
+          serializer.Serialize(family, "family.bin");
       }
   }
 ```
@@ -98,7 +97,7 @@ Our main objectives for HEAL.Attic are:
 HEAL.Attic is released under the MIT license.
 
 Copyright (C) 2018, 2019   
-Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributers
+Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

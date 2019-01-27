@@ -73,15 +73,15 @@ Similarly, we can restore the person object using the  `Deserialize` method.
 ``` 
 
 ### Principles
-TODO:
-- Boxes
-- TypeIds
-- Handling of fields
-- Handling of properties (without a getter, without a setter)
-- StorableConstructor (optional)
-- AfterDeserialization Hook (optional)
-- Storage of transformer GUIDs
-- Initialization of HEAL.Attic
+HEAL.Attic transforms object graphs to a serialized format called `Bundle`. The `Bundle` is a ProtoBuf message type and basically holds an array of `Boxes`. `Box` is another ProtoBuf message type which represents each object from the serialized object graph. The `Box` contains the information to restore the object. For a scalar types (int, long, double, ...), the box contains only the value. 
+For `StorableTypes`, all class members  with the `Storable` attribute (fields and properties) including inherited members are stored in the `Box`. For each `Storable` member, HEAL.Attic stores the member value and additionally the name of the member as a key. Keys are used on deserialization to assign values to the correct members. The member value is stored in a separate `Box` and only the index of the box is stored as a reference. 
+HEAL.Attic correctly resolves multiple references to an object within the object graph. It generates a `Box` when the object is first visited and adds the box to a collection. When HEAL.Attic detects that a `Box` for an object has already been generated then it will only store the reference to the `Box`. 
+
+As a user of HEAL.Attic you will never work directly with `Bundles` or `Boxes`. If you extend HEAL.Attic, for example by [adding transformers](#Adding%20Transformers), then you need to work with `Boxes` directly.
+
+All strings referenced in the object graph as well as `Storable` member names and GUIDs are added to a separate set of strings for serialization. HEAL.Attic detects duplicate strings and stores them only once. A `Box` only contains the index of the referenced string. 
+
+HEAL.Attic never stores names of types. Instead each known type is identified by a GUID. The mapping of GUIDs to types is defined in the code and includes all (see [Supported Types](#Supported%Types)) as well as all loaded `StorableTypes`. This allows more flexibility of changing type names and class hierarchies while still keeping backwards compatibility. When HEAL.Attic deserializes an object graph it must restore all `Storable` members. For example, when we have stored a `List<IComparable>` then we instantiate this object on deserialization. For this purpose we store GUIDs of serialized types in boxes. Generic types are supported (including) complex or deeply nested generic types). 
 
 #### Structs
 Structs that should be included in serialization must be marked with the `StorableType` attribute. `HEAL.Attic` automatically (de-)serializes all fields within structs. It is therefore not necessary to mark fields with the `Storable` attribute. `HEAL.Attic` even throws an exception on serialization when it finds fields with `Storable` attributes within structs.
@@ -216,6 +216,96 @@ Note that the property `Name` of `IPerson` must not be marked as storable.
       // ...
   }
 ```
+
+
+## Adding Transformers
+HEAL.Attic uses so-called `Transformers` to create `ProtoBuf` boxes for objects. We have implemented transformers for all primitive types and many collections of primitive types. For special edge cases it might however be necessary to add custom transformers. All transformers must implement the interface `ITransformer` to create ProtoBuf boxes for objects and to fill objects from ProtoBuf boxes. HEAL.Attic provides an abstract base class for `Tranformer`s.
+```csharp
+  public abstract class Transformer : ITransformer {
+    // ...
+    
+    public abstract bool CanTransformType(Type type);
+    public abstract Box ToBox(object o, Mapper mapper);
+    public abstract object ToObject(Box box, Mapper mapper);
+
+    // ...
+  }
+```
+
+Customer transformers must be marked with the `Transformer` attribute with a GUID and a priority.  
+For each type that must be serialized, HEAL.Attic calls `CanTransformType` to find all compatible transformers and uses the transformer with the highest priority.  
+`ToBox(object o, ...)` must produce a ProtoBuf box with the data for the object.  
+`ToObject(Box box, ...)` is the inverse operation and must restore the object from the box.
+
+It is possible to have multiple different transformers for the same type. On serialization, HEAL.Attic will use the transformer with the highest priority. The GUID of the transformer which has been used to serialize an object is stored in the serialized format. Therefore, HEAL.Attic will be able to re-create the object with the same transformer on deserialization. As a consequence, you should never delete transformers because it breaks backwards compatibility.
+
+Additionally to the transformer you need to register GUIDs of all types that are supported by the transformer and which you want to (de-)serialize. This is described in the next section. 
+
+### Supported Types
+The following types are supported by HEAL.Attic:
+```
+- object
+- bool
+- byte
+- sbyte
+- short
+- ushort
+- char
+- int
+- uint
+- long
+- ulong
+- float
+- double
+- decimal
+- System.DateTime
+- System.TimeSpan
+- System.Nullable<>
+- string
+- System.Array
+- System.Tuple<>
+- System.Tuple<,>
+- System.Tuple<,,>
+- System.Tuple<,,,>
+- System.Tuple<,,,,>
+- System.Tuple<,,,,,>
+- System.Tuple<,,,,,,>
+- System.Tuple<,,,,,,,>
+- System.Drawing.Color
+- System.Drawing.Point
+- System.Collections.Generic.KeyValuePair<,>
+- System.Collections.IEnumerable
+- System.Collections.Generic.IEnumerable<>
+- System.Collections.IList
+- System.Collections.Generic.List<>
+- System.Collections.Generic.Stack<>
+- System.Collections.Stack
+- System.Collections.ArrayList
+- System.Collections.Queue
+- System.Collections.Generic.Queue<>
+- System.Collections.Generic.HashSet<>
+- System.Collections.Generic.Dictionary<,>
+- System.Type
+- System.StringComparer
+- System.CultureAwareComparer
+- System.OrdinalComparer
+- System.Resources.FastResourceComparer
+- System.Collections.CompatibleComparer
+- System.Collections.IEqualityComparer
+- System.Collections.Generic.EqualityComparer`1
+- System.Collections.Generic.GenericEqualityComparer`1
+- System.Collections.Generic.NullableEqualityComparer`1
+- System.Collections.Generic.ObjectEqualityComparer`1
+- System.Collections.Generic.ByteEqualityComparer
+- System.Collections.Generic.EnumEqualityComparer`1
+- System.Collections.Generic.LongEnumEqualityComparer`1
+- System.Collections.Generic.IEqualityComparer`1
+- System.Drawing.Bitmap
+- System.Drawing.Font
+- System.Drawing.FontStyle
+- System.Drawing.GraphicsUnit
+```
+
 
 
 ## Backwards Compatibility Examples
@@ -514,31 +604,8 @@ class NewType : AB {
 When you want to remove a type which has been marked as a `StorableType` then you have several options to make sure that old files can still be opened with the new version of your code.
 1. Keep the (empty) class definition including the attached `StorableType` attribute. HEAL.Attic will create an object of the class on deserialization.
 1. Delete the type but use a different (compatible) type as a replacement. Add the GUID from the deleted class to the list of GUIDs in the `StorableType` attribute of replacement type
-1. Delete the type and remove the GUID. HEAL.Attic will detect that there is no registered type for the GUID it finds in the serialized format and will therefore set the `Storable` member which used to hold the serialized object to null.    
+1. Delete the type and remove the GUID. HEAL.Attic will detect that there is no registered type for a GUID it finds in the serialized format and will therefore set the corresponding `Storable` member to null.    
 
-
-## Adding Transformers
-HEAL.Attic uses so-called `Transformers` to create `ProtoBuf` boxes for objects. We have implemented transformers for all primitive types and many collections of primitive types. For special edge cases it might however be necessary to add custom transformers. All transformers must implement the interface `ITransformer` to create ProtoBuf boxes for objects and to fill objects from ProtoBuf boxes. HEAL.Attic provides an abstract base class for `Tranformer`s.
-```csharp
-  public abstract class Transformer : ITransformer {
-    // ...
-    
-    public abstract bool CanTransformType(Type type);
-    public abstract Box ToBox(object o, Mapper mapper);
-    public abstract object ToObject(Box box, Mapper mapper);
-
-    // ...
-  }
-```
-
-Customer transformers must be marked with the `Transformer` attribute with a GUID and a priority.  
-For each type that must be serialized, HEAL.Attic calls `CanTransformType` to find all compatible transformers and uses the transformer with the highest priority.  
-`ToBox(object o, ...)` must produce a ProtoBuf box with the data for the object.  
-`ToObject(Box box, ...)` is the inverse operation and must restore the object from the box.
-
-It is possible to have multiple different transformers for the same type. On serialization, HEAL.Attic will use the transformer with the highest priority. The GUID of the transformer which has been used to serialize an object is stored in the serialized format. Therefore, HEAL.Attic will be able to re-create the object with the same transformer on deserialization. As a consequence, you should never delete transformers because it breaks backwards compatibility.
-
-Additionally to the transformer you need to register GUIDs of all types that are supported by the transformer and which you want to (de-)serialize. This is described in the next section. 
 
 ## Registering Types 
 There are two use cases where you must register types explicitly:
@@ -555,7 +622,7 @@ For the declaration of types with GUIDs you can simply add a class that implemen
   }
 ```
 
-All GUID and type pairs returned in the `KnownStorableTypes` enumerable are registered by HEAL.Attic when it is initialized. 
+All GUID and type pairs returned in the `KnownStorableTypes` are registered by HEAL.Attic when it is initialized. 
 
 ### Dynamically loaded types (with `StorableType` attribute)
 HEAL.Attic automatically discovers all loaded types marked with the `StorableType` attribute when it is first used (e.g. using `Serialize()` or `Deserialize()` or accessing `Mapper.StaticCache`). HEAL.Attic is therefore not aware of types that are loaded or generated at a later time. These types can be registered explicitly. For example if the new type `MyDynamicType` is loaded at runtime you can register the type using:
@@ -569,11 +636,6 @@ This method of registering types can be used for any type including types marked
 
 ## Benchmarks
 The source folder contains the `HEAL.Attic.Benchmarks` console application which runs a set of benchmark tests. The benchmarking results can be found in [Benchmarks](Benchmarks.md)
-
-## Tools 
-We have implemented an extension for Microsoft Visual Studio which provides  so-called _Code Fixes_ for:
- - adding the `StorableType` attribute to a type definition,
- - adding a storable constructor 
 
 ## License
 HEAL.Attic is released under the MIT license.

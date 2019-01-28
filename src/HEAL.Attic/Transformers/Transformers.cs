@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Google.Protobuf;
+using HEAL.Attic;
 
 namespace HEAL.Attic {
   [StorableType("8c7e99f5-092f-4cef-8b72-8afec1d10236")]
@@ -434,6 +435,24 @@ namespace HEAL.Attic {
     }
   }
 
+  [Transformer("C199BE18-6454-4EB7-AE25-DCFCABD54FF4", 213)]
+  [StorableType("22AEC35F-62B4-4E36-98BF-11A81C841385")]
+  internal sealed class DecimalArrayTransformer : MultiDimValueArrayBoxTransformer<decimal> {
+    protected override void AddValueToBox(Box box, decimal val, Mapper mapper) {
+      box.Ints.AddRange(decimal.GetBits(val));
+    }
+    protected override IEnumerable<decimal> ExtractValues(Box box, Mapper mapper) {
+      int[] bits = new int[4];
+      int i = 0;
+      while (i <= box.Ints.Count - 4) {
+        for (int j = 0; j < 4; j++) {
+          bits[j] = box.Ints[i++];
+        }
+        yield return new decimal(bits);
+      }
+    }
+  }
+
   [Transformer("05AE4C5D-4D0C-47C7-B6D5-F04230C6F565", 301)]
   [StorableType("A74820C8-F400-462A-913A-610BB588D04A")]
   internal sealed class ArrayBoxTransformer : BoxTransformer<object> {
@@ -752,26 +771,11 @@ namespace HEAL.Attic {
   [StorableType("C3C23FEE-DB96-4CEA-A38B-6BB73811F877")]
   internal sealed class DecimalBoxTransformer : BoxTransformer<decimal> {
     protected override decimal Extract(Box box, Type type, Mapper mapper) {
-      return ParseG30(mapper.GetString(box.UInt));
+      return new decimal(box.Ints.ToArray());
     }
 
     protected override void Populate(Box box, decimal value, Mapper mapper) {
-      box.UInt = mapper.GetStringId(FormatG30(value)); // TODO: improve efficiency for decimals
-    }
-
-    private static decimal ParseG30(string s) {
-      decimal d;
-      if (decimal.TryParse(s,
-        NumberStyles.AllowDecimalPoint |
-        NumberStyles.AllowExponent |
-        NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out d))
-        return d;
-      throw new FormatException(
-        string.Format("Invalid decimal G30 number format \"{0}\" could not be parsed", s));
-    }
-
-    private static string FormatG30(decimal d) {
-      return d.ToString("g30", CultureInfo.InvariantCulture);
+      box.Ints.AddRange(decimal.GetBits(value));
     }
   }
 

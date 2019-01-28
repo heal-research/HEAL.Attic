@@ -278,7 +278,8 @@ namespace HEAL.Attic.Tests {
 
     public DateTime lastLoadTime;
     [Storable]
-    private DateTime lastLoadTimePersistence {
+    private DateTime lastLoadTimePersistence
+    {
       get { return lastLoadTime; }
       set { lastLoadTime = DateTime.Now; }
     }
@@ -440,6 +441,21 @@ namespace HEAL.Attic.Tests {
       decimal result = (decimal)o;
       Assert.AreEqual(test(), result);
       Assert.IsTrue(o is decimal);
+    }
+
+
+    [TestMethod]
+    public void TestDecimalArray() {
+      var test = new decimal[2, 2];
+      test[0, 0] = decimal.MaxValue;
+      test[1, 1] = decimal.MinValue;
+      test[0, 1] = decimal.MinusOne;
+      test[1, 0] = decimal.One;
+      ProtoBufSerializer serializer = new ProtoBufSerializer();
+      serializer.Serialize(test, tempFile);
+      object o = serializer.Deserialize(tempFile);
+      var result = (decimal[,])o;
+      CollectionAssert.AreEqual(test, result);
     }
 
     [TestMethod]
@@ -1427,7 +1443,8 @@ namespace HEAL.Attic.Tests {
     [StorableType("A5DAC970-4E03-4B69-A95A-9DAC683D051F")]
     public class ReadOnlyFail {
       [Storable]
-      public string ReadOnly {
+      public string ReadOnly
+      {
         get { return "fail"; }
       }
 
@@ -1453,7 +1470,8 @@ namespace HEAL.Attic.Tests {
     [StorableType("653EBC18-E461-4F5C-8FD6-9F588AAC70D9")]
     public class WriteOnlyFail {
       [Storable]
-      public string WriteOnly {
+      public string WriteOnly
+      {
         set { throw new InvalidOperationException("this property should never be set."); }
       }
 
@@ -1484,11 +1502,13 @@ namespace HEAL.Attic.Tests {
       public OneWayTest() { this.value = "default"; }
       public string value;
       [Storable(AllowOneWay = true)]
-      public string ReadOnly {
+      public string ReadOnly
+      {
         get { return "ReadOnly"; }
       }
       [Storable(AllowOneWay = true)]
-      public string WriteOnly {
+      public string WriteOnly
+      {
         set { this.value = value; }
       }
     }
@@ -1683,14 +1703,16 @@ namespace HEAL.Attic.Tests {
 
       public int value;
       [Storable]
-      public int Value {
+      public int Value
+      {
         get { WorkflowLog.Add("get Base.Value"); return value; }
         set { WorkflowLog.Add("set Base.Value"); this.value = value; }
       }
 
       public int value2;
       [Storable]
-      public virtual int VirtualValue {
+      public virtual int VirtualValue
+      {
         get { WorkflowLog.Add("get Base.VirtualValue"); return value2; }
         set { WorkflowLog.Add("set Base.VirtualValue"); this.value2 = value; }
       }
@@ -1721,14 +1743,16 @@ namespace HEAL.Attic.Tests {
     internal class WorkflowTestClass : WorkflowTestBaseClass {
       public int value;
       [Storable]
-      public new int Value {
+      public new int Value
+      {
         get { WorkflowLog.Add("get Derived.Value"); return value; }
         set { WorkflowLog.Add("set Derived.Value"); this.value = value; }
       }
 
       public int value2;
       [Storable]
-      public override int VirtualValue {
+      public override int VirtualValue
+      {
         get { WorkflowLog.Add("get Derived.VirtualValue"); return value2; }
         set { WorkflowLog.Add("set Derived.VirtualValue"); this.value2 = value; }
       }
@@ -1930,7 +1954,8 @@ namespace HEAL.Attic.Tests {
     public class MyRoot {
       private List<MyStorable> storables;
       [Storable]
-      public IEnumerable<MyStorable> Storables {
+      public IEnumerable<MyStorable> Storables
+      {
         get { return storables; }
         set { storables = new List<MyStorable>(value); }
       }
@@ -2044,7 +2069,8 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000A1")]
     private class PersistenceTestA1 {
       [Storable(OldName = "v")]
-      private IntValue v1 {
+      private IntValue v1
+      {
         set { v = value.Value; }
       }
 
@@ -2055,12 +2081,14 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000A2")]
     private class PersistenceTestA2 {
       [Storable(OldName = "v")]
-      private IntValue v1 {
+      private IntValue v1
+      {
         set { v2 = value.Value; }
       }
 
       [Storable(OldName = "v2")]
-      private int v2 {
+      private int v2
+      {
         set { v = (double)value; }
       }
 
@@ -2107,7 +2135,8 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000B1")]
     private class PersistenceTestB1 {
       [Storable(AllowOneWay = true)]
-      private Point p {
+      private Point p
+      {
         set {
           x = value.X;
           y = value.Y;
@@ -2307,7 +2336,8 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000001A1")]
     class PersistenceTestSample4NewType1 : AB {
       [Storable(OldName = "Description")]
-      private StringValue Description_Persistence_Setter {
+      private StringValue Description_Persistence_Setter
+      {
         set {
           base.Description = value.Value;
         }

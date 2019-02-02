@@ -38,9 +38,6 @@ namespace HEAL.Attic.Benchmarks {
       Benchmark(MakeDoubleList);
       Console.WriteLine();
 
-      Console.WriteLine("Random graph:");
-      Benchmark(MakeGraph);
-      Console.WriteLine();
 
       Console.WriteLine("ushort[]:");
       Benchmark(MakeUShortArray);
@@ -56,6 +53,10 @@ namespace HEAL.Attic.Benchmarks {
 
       Console.WriteLine("int[,,,]:");
       Benchmark(MakeInt4Array);
+      Console.WriteLine();
+
+      Console.WriteLine("Random graph:");
+      Benchmark(MakeGraph);
       Console.WriteLine();
     }
 
@@ -86,7 +87,7 @@ namespace HEAL.Attic.Benchmarks {
       return arr;
     }
     public static object MakeInt3Array(int size, Random rand) {
-      var arr = new int[(int)Math.Cbrt(size), (int)Math.Cbrt(size), (int)Math.Cbrt(size)];
+      var arr = new int[(int)Math.Pow(size, 1.0 / 3), (int)Math.Pow(size, 1.0 / 3), (int)Math.Pow(size, 1.0 / 3)];
       for (int i = 0; i < arr.GetLength(0); i++) {
         for (int j = 0; j < arr.GetLength(1); j++) {
           for (int k = 0; k < arr.GetLength(2); k++) {
@@ -187,9 +188,9 @@ namespace HEAL.Attic.Benchmarks {
       long fileSize = 0;
       Console.WriteLine("| Elements | Serialization time (ms) | Deserialization time (ms) | File size (kB) | avg. bytes per element |");
       Console.WriteLine("|---------:|------------------------:|--------------------------:|---------------:|------------------------|");
-      for (int e = 10; e <= 20; e++) {
+      for (int e = 13; e <= 21; e++) {
         for (int reps = 0; reps < REPS; reps++) {
-          var obj = createObj(2 << e, rand);
+          var obj = createObj(1 << e, rand);
           sw.Reset();
           sw.Start();
 
@@ -213,7 +214,7 @@ namespace HEAL.Attic.Benchmarks {
           sw.Stop();
           deserializationTime += sw.ElapsedMilliseconds;
         }
-        int numElems = 2 << e;
+        int numElems = 1 << e;
         Console.WriteLine($"| {numElems,8} | {serializationTime / (double)REPS,23:N1} | {deserializationTime / (double)REPS,25:N1} | {fileSize / 1024.0,14:N1} | {fileSize / (double)numElems,22:N1} | ");
       }
     }

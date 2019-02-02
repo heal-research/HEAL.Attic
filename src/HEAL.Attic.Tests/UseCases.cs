@@ -1929,6 +1929,37 @@ namespace HEAL.Attic.Tests {
       Assert.IsTrue(sw.Elapsed.TotalSeconds > 2 && sw.Elapsed.TotalSeconds < 6);
     }
 
+    [StorableType("B9C2AA20-A18C-4124-90B8-B181BF7691B4")]
+    private class ListNode {
+      [Storable]
+      public ListNode Next;
+      [Storable]
+      public int Value;
+    }
+    private static ListNode MakeLinkedList(int size, Random rand) {
+      var first = new ListNode();
+      var cur = first;
+      for (int i = 0; i < size; i++) {
+        cur.Next = new ListNode() { Value = rand.Next() };
+        cur = cur.Next;
+      }
+      return first;
+    }
+    [TestMethod]
+    public void LinkedList() {
+      var l = MakeLinkedList(5000, new Random());
+      var ser = new ProtoBufSerializer();
+      ser.Serialize(l, tempFile);
+
+      var l2 = (ListNode)ser.Deserialize(tempFile);
+      while (l != null && l2 != null) {
+        Assert.AreEqual(l.Value, l.Value);
+        l = l.Next;
+        l2 = l2.Next;
+      }
+      Assert.AreEqual(l, l2);
+    }
+
     [StorableType("A65B7AD9-12EB-4767-958B-86193AA3DA79")]
     public class MyStorable {
       [StorableHook(HookType.AfterDeserialization)]

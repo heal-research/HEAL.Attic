@@ -55,6 +55,10 @@ namespace HEAL.Attic.Benchmarks {
       Benchmark(MakeInt4Array);
       Console.WriteLine();
 
+      Console.WriteLine("Linked list:");
+      Benchmark(MakeLinkedList);
+      Console.WriteLine();
+
       Console.WriteLine("Random graph:");
       Benchmark(MakeGraph);
       Console.WriteLine();
@@ -176,6 +180,23 @@ namespace HEAL.Attic.Benchmarks {
         allNodes.Add(node);
       }
       return allNodes;
+    }
+
+    [StorableType("B9C2AA20-A18C-4124-90B8-B181BF7691B4")]
+    private class ListNode {
+      [Storable]
+      public ListNode Next;
+      [Storable]
+      public int Value;
+    }
+    public static object MakeLinkedList(int size, Random rand) {
+      var first = new ListNode();
+      var cur = first;
+      for (int i = 0; i < size; i++) {
+        cur.Next = new ListNode() { Value = rand.Next() };
+        cur = cur.Next;
+      }
+      return first;
     }
 
 

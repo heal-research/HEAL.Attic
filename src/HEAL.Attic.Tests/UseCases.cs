@@ -278,8 +278,7 @@ namespace HEAL.Attic.Tests {
 
     public DateTime lastLoadTime;
     [Storable]
-    private DateTime lastLoadTimePersistence
-    {
+    private DateTime lastLoadTimePersistence {
       get { return lastLoadTime; }
       set { lastLoadTime = DateTime.Now; }
     }
@@ -1443,8 +1442,7 @@ namespace HEAL.Attic.Tests {
     [StorableType("A5DAC970-4E03-4B69-A95A-9DAC683D051F")]
     public class ReadOnlyFail {
       [Storable]
-      public string ReadOnly
-      {
+      public string ReadOnly {
         get { return "fail"; }
       }
 
@@ -1470,8 +1468,7 @@ namespace HEAL.Attic.Tests {
     [StorableType("653EBC18-E461-4F5C-8FD6-9F588AAC70D9")]
     public class WriteOnlyFail {
       [Storable]
-      public string WriteOnly
-      {
+      public string WriteOnly {
         set { throw new InvalidOperationException("this property should never be set."); }
       }
 
@@ -1502,13 +1499,11 @@ namespace HEAL.Attic.Tests {
       public OneWayTest() { this.value = "default"; }
       public string value;
       [Storable(AllowOneWay = true)]
-      public string ReadOnly
-      {
+      public string ReadOnly {
         get { return "ReadOnly"; }
       }
       [Storable(AllowOneWay = true)]
-      public string WriteOnly
-      {
+      public string WriteOnly {
         set { this.value = value; }
       }
     }
@@ -1703,16 +1698,14 @@ namespace HEAL.Attic.Tests {
 
       public int value;
       [Storable]
-      public int Value
-      {
+      public int Value {
         get { WorkflowLog.Add("get Base.Value"); return value; }
         set { WorkflowLog.Add("set Base.Value"); this.value = value; }
       }
 
       public int value2;
       [Storable]
-      public virtual int VirtualValue
-      {
+      public virtual int VirtualValue {
         get { WorkflowLog.Add("get Base.VirtualValue"); return value2; }
         set { WorkflowLog.Add("set Base.VirtualValue"); this.value2 = value; }
       }
@@ -1743,16 +1736,14 @@ namespace HEAL.Attic.Tests {
     internal class WorkflowTestClass : WorkflowTestBaseClass {
       public int value;
       [Storable]
-      public new int Value
-      {
+      public new int Value {
         get { WorkflowLog.Add("get Derived.Value"); return value; }
         set { WorkflowLog.Add("set Derived.Value"); this.value = value; }
       }
 
       public int value2;
       [Storable]
-      public override int VirtualValue
-      {
+      public override int VirtualValue {
         get { WorkflowLog.Add("get Derived.VirtualValue"); return value2; }
         set { WorkflowLog.Add("set Derived.VirtualValue"); this.value2 = value; }
       }
@@ -1879,7 +1870,7 @@ namespace HEAL.Attic.Tests {
 
     [TestMethod]
     public void TestBigMultiDimArray() {
-      int k = 300;
+      int k = 100;
       var bigArray = new float[k, k, k];
       for (int i = 0; i < k; i++)
         for (int j = 0; j < k; j++)
@@ -1954,8 +1945,7 @@ namespace HEAL.Attic.Tests {
     public class MyRoot {
       private List<MyStorable> storables;
       [Storable]
-      public IEnumerable<MyStorable> Storables
-      {
+      public IEnumerable<MyStorable> Storables {
         get { return storables; }
         set { storables = new List<MyStorable>(value); }
       }
@@ -1982,22 +1972,57 @@ namespace HEAL.Attic.Tests {
     }
 
     [TestMethod]
-    public void TestSpecialMultiDimArray() {
-      float[,] arr = (float[,])Array.CreateInstance(typeof(float), lengths: new int[] { 100, 100 }, lowerBounds: new int[] { 1, 1 });
-      for (int i = 1; i < 101; i++)
-        for (int j = 1; j < 101; j++)
-          arr[i, j] = 1.0f;
-      var ser = new ProtoBufSerializer();
-      ser.Serialize(arr, tempFile);
-      var arr2 = (float[,])ser.Deserialize(tempFile);
-      Assert.AreEqual(arr.GetLength(0), arr2.GetLength(0));
-      Assert.AreEqual(arr.GetLength(1), arr2.GetLength(1));
-      Assert.AreEqual(arr.GetLowerBound(0), arr2.GetLowerBound(0));
-      Assert.AreEqual(arr.GetLowerBound(1), arr2.GetLowerBound(1));
+    public void TestNullableArray() {
+      {
+        double?[,,,] a = new double?[2, 2, 1, 1];
+        a[0, 0, 0, 0] = 1.0;
+        a[0, 1, 0, 0] = null;
+        a[1, 0, 0, 0] = 2.0;
+        a[1, 1, 0, 0] = 3.0;
+        var ser = new ProtoBufSerializer();
+        ser.Serialize(a, tempFile);
+        var arr2 = (double?[,,,])ser.Deserialize(tempFile);
+        CollectionAssert.AreEqual(a, arr2);
+      }
+      {
+        double?[,] a = new double?[2, 2];
+        a[0, 0] = 1.0;
+        a[0, 1] = null;
+        a[1, 0] = 2.0;
+        a[1, 1] = 3.0;
+        var ser = new ProtoBufSerializer();
+        ser.Serialize(a, tempFile);
+        var arr2 = (double?[,])ser.Deserialize(tempFile);
+        CollectionAssert.AreEqual(a, arr2);
+      }
+    }
 
-      for (int i = 1; i < 101; i++)
-        for (int j = 1; j < 101; j++)
-          Assert.AreEqual(1.0f, arr2[i, j]);
+    [TestMethod]
+    public void TestSpecialMultiDimArray() {
+      {
+        object[,,,] arr = new object[0, 0, 0, 0];
+        var ser = new ProtoBufSerializer();
+        ser.Serialize(arr, tempFile);
+        var arr2 = (object[,,,])ser.Deserialize(tempFile);
+        Assert.AreEqual(arr.Length, arr2.Length);
+      }
+      {
+        float[,] arr = (float[,])Array.CreateInstance(typeof(float), lengths: new int[] { 100, 100 }, lowerBounds: new int[] { 1, 1 });
+        for (int i = 1; i < 101; i++)
+          for (int j = 1; j < 101; j++)
+            arr[i, j] = 1.0f;
+        var ser = new ProtoBufSerializer();
+        ser.Serialize(arr, tempFile);
+        var arr2 = (float[,])ser.Deserialize(tempFile);
+        Assert.AreEqual(arr.GetLength(0), arr2.GetLength(0));
+        Assert.AreEqual(arr.GetLength(1), arr2.GetLength(1));
+        Assert.AreEqual(arr.GetLowerBound(0), arr2.GetLowerBound(0));
+        Assert.AreEqual(arr.GetLowerBound(1), arr2.GetLowerBound(1));
+
+        for (int i = 1; i < 101; i++)
+          for (int j = 1; j < 101; j++)
+            Assert.AreEqual(1.0f, arr2[i, j]);
+      }
     }
 
     [TestMethod]
@@ -2054,7 +2079,6 @@ namespace HEAL.Attic.Tests {
     public static void SetTypeGuid(Type type, Guid guid) {
       var typeInfo = GetTypeInfo(type);
       guidPropertyInfo.SetValue(typeInfo.StorableTypeAttribute, guid);
-
       var reflectMethod = typeInfo.GetType().GetMethod("Reflect", BindingFlags.NonPublic | BindingFlags.Instance);
       reflectMethod.Invoke(typeInfo, new object[0]);
     }
@@ -2069,8 +2093,7 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000A1")]
     private class PersistenceTestA1 {
       [Storable(OldName = "v")]
-      private IntValue v1
-      {
+      private IntValue v1 {
         set { v = value.Value; }
       }
 
@@ -2081,14 +2104,12 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000A2")]
     private class PersistenceTestA2 {
       [Storable(OldName = "v")]
-      private IntValue v1
-      {
+      private IntValue v1 {
         set { v2 = value.Value; }
       }
 
       [Storable(OldName = "v2")]
-      private int v2
-      {
+      private int v2 {
         set { v = (double)value; }
       }
 
@@ -2135,8 +2156,7 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000000B1")]
     private class PersistenceTestB1 {
       [Storable(AllowOneWay = true)]
-      private Point p
-      {
+      private Point p {
         set {
           x = value.X;
           y = value.Y;
@@ -2336,8 +2356,7 @@ namespace HEAL.Attic.Tests {
     [StorableType("00000000-0000-0000-0000-0000000001A1")]
     class PersistenceTestSample4NewType1 : AB {
       [Storable(OldName = "Description")]
-      private StringValue Description_Persistence_Setter
-      {
+      private StringValue Description_Persistence_Setter {
         set {
           base.Description = value.Value;
         }
@@ -2369,9 +2388,12 @@ namespace HEAL.Attic.Tests {
       Assert.AreEqual(c0.Description, newC0.Description);
       Assert.AreEqual(c0.p, newC0.p);
 
+
+
       // serialize C0, deserialize C1
       ReplaceTypeImplementation(c0Type, c0Guid, typeof(PersistenceTestSample4C1));
       ReplaceTypeImplementation(a0Type, a0Guid, typeof(PersistenceTestSample4A1));
+      serializer = new ProtoBufSerializer();
       var c1 = (PersistenceTestSample4C1)serializer.Deserialize(tempFile);
       Assert.AreEqual(c0.Name, c1.Name);
       Assert.AreEqual(c0.Description, c1.Description);

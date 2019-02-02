@@ -20,6 +20,7 @@ namespace HEAL.Attic {
   )]
   public sealed class StorableTypeAttribute : Attribute {
     private static IDictionary<Type, StorableTypeAttribute> attributeCache = new Dictionary<Type, StorableTypeAttribute>();
+    private static HashSet<Type> nonStorableTypes = new HashSet<Type>();
 
     #region Properties
     /// <summary>
@@ -82,11 +83,12 @@ namespace HEAL.Attic {
     }
 
     public static StorableTypeAttribute GetStorableTypeAttribute(Type type) {
-      StorableTypeAttribute attrib;
+      StorableTypeAttribute attrib = null;
 
-      if (!attributeCache.TryGetValue(type, out attrib)) {
+      if (!nonStorableTypes.Contains(type) && !attributeCache.TryGetValue(type, out attrib)) {
         attrib = (StorableTypeAttribute)GetCustomAttribute(type, typeof(StorableTypeAttribute), false);
         if (attrib != null) attributeCache[type] = attrib;
+        else nonStorableTypes.Add(type);
       }
 
       return attrib;

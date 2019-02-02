@@ -60,6 +60,7 @@ namespace HEAL.Attic {
     private Dictionary<object, uint> object2BoxId;
     private Dictionary<uint, object> boxId2Object;
     private Index<string> strings;
+    private Dictionary<uint, Dictionary<uint, string>> componentInfoKeys; // cache for strings <TypeGUID>.<MemberName> for accessing fields and properties of StorableTypes
 
     public CancellationToken CancellationToken { get; private set; }
 
@@ -73,6 +74,7 @@ namespace HEAL.Attic {
       object2BoxId = new Dictionary<object, uint>(new MappingEqualityComparer());
       boxId2Object = new Dictionary<uint, object>();
       strings = new Index<string>();
+      componentInfoKeys = new Dictionary<uint, Dictionary<uint, string>>();
 
       BoxCount = 0;
     }
@@ -150,6 +152,17 @@ namespace HEAL.Attic {
     }
     public string GetString(uint stringId) {
       return strings.GetValue(stringId);
+    }
+    public string GetComponentInfoKey(uint typeId, uint memberId) {
+      if(!componentInfoKeys.TryGetValue(typeId, out Dictionary<uint, string> dict)) {
+        dict = new Dictionary<uint, string>();
+        componentInfoKeys.Add(typeId, dict);
+      }
+      if(!dict.TryGetValue(memberId, out string componentInfoKey)) {
+        componentInfoKey = GetString(typeId) + "." + GetString(memberId);
+        dict.Add(memberId, componentInfoKey);
+      }
+      return componentInfoKey;
     }
     #endregion
 

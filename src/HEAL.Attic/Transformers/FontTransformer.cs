@@ -11,27 +11,29 @@ using System.Drawing;
 namespace HEAL.Attic {
 
   [Transformer("AFF27987-3301-4D70-9601-EFCA31BDA0DB", 405)]
-  [StorableType("B9F9A371-4DCB-478B-B0D4-6F87A15C02B5")]
+  
   internal sealed class FontTransformer : BoxTransformer<Font> {
     protected override void Populate(Box box, Font value, Mapper mapper) {
-      var uints = box.UInts;
-      uints.Add(mapper.GetStringId(GetFontFamilyName(value.FontFamily)));
-      uints.Add(mapper.GetBoxId(value.Size));
-      uints.Add(mapper.GetBoxId(value.Style));
-      uints.Add(mapper.GetBoxId(value.Unit));
-      uints.Add(mapper.GetBoxId(value.GdiCharSet));
-      uints.Add(mapper.GetBoxId(value.GdiVerticalFont));
+      box.Values = new RepeatedValueBox();
+      box.Values.UInts = new RepeatedUIntBox();
+      var uints = box.Values.UInts;
+      uints.Values.Add(mapper.GetStringId(GetFontFamilyName(value.FontFamily)));
+      uints.Values.Add(mapper.GetBoxId(value.Size));
+      uints.Values.Add(mapper.GetBoxId(value.Style));
+      uints.Values.Add(mapper.GetBoxId(value.Unit));
+      uints.Values.Add(mapper.GetBoxId(value.GdiCharSet));
+      uints.Values.Add(mapper.GetBoxId(value.GdiVerticalFont));
     }
 
     protected override Font Extract(Box box, Type type, Mapper mapper) {
-      var fontData = box.UInts;
+      var fontData = box.Values.UInts.Values;
       return new Font(
-        GetFontFamily(mapper.GetString(fontData[0])),
-        (float)mapper.GetObject(fontData[1]),
-        (FontStyle)mapper.GetObject(fontData[2]),
-        (GraphicsUnit)mapper.GetObject(fontData[3]),
-        (byte)mapper.GetObject(fontData[4]),
-        (bool)mapper.GetObject(fontData[5])
+        GetFontFamily(mapper.GetString((uint)fontData[0])),
+        (float)mapper.GetObject((uint)fontData[1]),
+        (FontStyle)mapper.GetObject((uint)fontData[2]),
+        (GraphicsUnit)mapper.GetObject((uint)fontData[3]),
+        (byte)mapper.GetObject((uint)fontData[4]),
+        (bool)mapper.GetObject((uint)fontData[5])
       );
     }
 

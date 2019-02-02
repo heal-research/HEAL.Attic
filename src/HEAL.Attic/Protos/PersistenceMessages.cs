@@ -22,33 +22,64 @@ namespace HEAL.Attic {
     static PersistenceMessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgtIRUFMLkZvc3NpbCJ+CgZC",
-            "dW5kbGUSGQoRdHJhbnNmb3JtZXJfZ3VpZHMYASADKAwSEgoKdHlwZV9ndWlk",
-            "cxgCIAMoDBITCgtyb290X2JveF9pZBgKIAEoDRIfCgVib3hlcxgUIAMoCzIQ",
-            "LkhFQUwuRm9zc2lsLkJveBIPCgdzdHJpbmdzGB4gAygJIsoDCgNCb3gSFgoO",
-            "dHJhbnNmb3JtZXJfaWQYASABKA0SEwoLdHlwZV9ib3hfaWQYAiABKA0SDwoH",
-            "dHlwZV9pZBgKIAEoDRIcChRnZW5lcmljX3R5cGVfYm94X2lkcxgLIAMoDRIM",
-            "CgRib29sGBQgASgIEgsKA2ludBgVIAEoBRIMCgRsb25nGBYgASgDEg0KBXVf",
-            "aW50GBcgASgNEg4KBnVfbG9uZxgYIAEoBBINCgVmbG9hdBgZIAEoAhIOCgZk",
-            "b3VibGUYGiABKAESDQoFYnl0ZXMYGyABKAwSDQoFYm9vbHMYHiADKAgSDAoE",
-            "aW50cxgfIAMoBRINCgVsb25ncxggIAMoAxIOCgZ1X2ludHMYISADKA0SDwoH",
-            "dV9sb25ncxgiIAMoBBIOCgZmbG9hdHMYIyADKAISDwoHZG91YmxlcxgkIAMo",
-            "ARI1Cg9rZXlfdmFsdWVfcGFpcnMYKCADKAsyHC5IRUFMLkZvc3NpbC5LZXlW",
-            "YWx1ZVBhaXJCb3gSEwoLY29tcGFyZXJfaWQYMiABKA0SNwoQYXJyYXlNZXRh",
-            "SW5mb0JveBg8IAEoCzIdLkhFQUwuRm9zc2lsLkFycmF5TWV0YUluZm9Cb3gi",
-            "RgoQQXJyYXlNZXRhSW5mb0JveBIMCgRyYW5rGAEgASgFEg8KB2xlbmd0aHMY",
-            "AiADKAUSEwoLbG93ZXJCb3VuZHMYAyADKAUiogEKD0tleVZhbHVlUGFpckJv",
-            "eBIPCgd0eXBlX2lkGAEgASgNEkgKD2tleV92YWx1ZV9wYWlycxgCIAMoCzIv",
-            "LkhFQUwuRm9zc2lsLktleVZhbHVlUGFpckJveC5LZXlWYWx1ZVBhaXJzRW50",
-            "cnkaNAoSS2V5VmFsdWVQYWlyc0VudHJ5EgsKA2tleRgBIAEoDRINCgV2YWx1",
-            "ZRgCIAEoDToCOAFiBnByb3RvMw=="));
+            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIn0KBkJ1",
+            "bmRsZRIZChF0cmFuc2Zvcm1lcl9ndWlkcxgBIAMoDBISCgp0eXBlX2d1aWRz",
+            "GAIgAygMEhMKC3Jvb3RfYm94X2lkGAMgASgNEh4KBWJveGVzGAQgAygLMg8u",
+            "SEVBTC5BdHRpYy5Cb3gSDwoHc3RyaW5ncxgFIAMoCSLjAQoDQm94EhYKDnRy",
+            "YW5zZm9ybWVyX2lkGAEgASgNEhMKC3R5cGVfYm94X2lkGAIgASgNEikKBXZh",
+            "bHVlGAMgASgLMhouSEVBTC5BdHRpYy5TY2FsYXJWYWx1ZUJveBIhCgR0eXBl",
+            "GAQgASgLMhMuSEVBTC5BdHRpYy5UeXBlQm94EiwKBnZhbHVlcxgFIAEoCzIc",
+            "LkhFQUwuQXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAogASgL",
+            "MiIuSEVBTC5BdHRpYy5TdG9yYWJsZVR5cGVNZW1iZXJzQm94IjgKB1R5cGVC",
+            "b3gSDwoHdHlwZV9pZBgBIAEoDRIcChRnZW5lcmljX3R5cGVfYm94X2lkcxgC",
+            "IAMoDSJsCg5TY2FsYXJWYWx1ZUJveBIMCgRsb25nGAMgASgDEg4KBnVfbG9u",
+            "ZxgFIAEoBBINCgVmbG9hdBgGIAEoAhIOCgZkb3VibGUYByABKAESDQoFYnl0",
+            "ZXMYCCABKAwSDgoGc19sb25nGAogASgSIqsEChBSZXBlYXRlZFZhbHVlQm94",
+            "EioKBWJvb2xzGAEgASgLMhsuSEVBTC5BdHRpYy5SZXBlYXRlZEJvb2xCb3gS",
+            "KAoEaW50cxgCIAEoCzIaLkhFQUwuQXR0aWMuUmVwZWF0ZWRJbnRCb3gSKgoF",
+            "bG9uZ3MYAyABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkTG9uZ0JveBIrCgZ1",
+            "X2ludHMYBCABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkVUludEJveBItCgd1",
+            "X2xvbmdzGAUgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFVMb25nQm94EiwK",
+            "BmZsb2F0cxgGIAEoCzIcLkhFQUwuQXR0aWMuUmVwZWF0ZWRGbG9hdEJveBIu",
+            "Cgdkb3VibGVzGAcgASgLMh0uSEVBTC5BdHRpYy5SZXBlYXRlZERvdWJsZUJv",
+            "eBIrCgZzX2ludHMYCCABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkU0ludEJv",
+            "eBItCgdzX2xvbmdzGAkgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFNMb25n",
+            "Qm94EjIKBGt2cHMYCiABKAsyJC5IRUFMLkF0dGljLlJlcGVhdGVkS2V5VmFs",
+            "dWVQYWlyc0JveBI2ChBhcnJheU1ldGFJbmZvQm94GA0gASgLMhwuSEVBTC5B",
+            "dHRpYy5BcnJheU1ldGFJbmZvQm94EhMKC2NvbXBhcmVyX2lkGBQgASgNIkYK",
+            "EEFycmF5TWV0YUluZm9Cb3gSDAoEcmFuaxgBIAEoBRIPCgdsZW5ndGhzGAIg",
+            "AygFEhMKC2xvd2VyQm91bmRzGAMgAygFInsKFlN0b3JhYmxlVHlwZU1lbWJl",
+            "cnNCb3gSDwoHdHlwZV9pZBgBIAEoDRIMCgRrZXlzGAMgAygNEg4KBnZhbHVl",
+            "cxgEIAMoDRIyCgZwYXJlbnQYBSABKAsyIi5IRUFMLkF0dGljLlN0b3JhYmxl",
+            "VHlwZU1lbWJlcnNCb3giIQoPUmVwZWF0ZWRCb29sQm94Eg4KBnZhbHVlcxgB",
+            "IAMoCCIgCg5SZXBlYXRlZEludEJveBIOCgZ2YWx1ZXMYASADKAUiIQoPUmVw",
+            "ZWF0ZWRMb25nQm94Eg4KBnZhbHVlcxgBIAMoAyIhCg9SZXBlYXRlZFVJbnRC",
+            "b3gSDgoGdmFsdWVzGAEgAygNIiIKEFJlcGVhdGVkVUxvbmdCb3gSDgoGdmFs",
+            "dWVzGAEgAygEIiIKEFJlcGVhdGVkRmxvYXRCb3gSDgoGdmFsdWVzGAEgAygC",
+            "IiMKEVJlcGVhdGVkRG91YmxlQm94Eg4KBnZhbHVlcxgBIAMoASIhCg9SZXBl",
+            "YXRlZFNJbnRCb3gSDgoGdmFsdWVzGAEgAygRIiIKEFJlcGVhdGVkU0xvbmdC",
+            "b3gSDgoGdmFsdWVzGAEgAygSIjgKGFJlcGVhdGVkS2V5VmFsdWVQYWlyc0Jv",
+            "eBIMCgRrZXlzGAEgAygNEg4KBnZhbHVlcxgCIAMoDWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TransformerId", "TypeBoxId", "TypeId", "GenericTypeBoxIds", "Bool", "Int", "Long", "UInt", "ULong", "Float", "Double", "Bytes", "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "KeyValuePairs", "ComparerId", "ArrayMetaInfoBox" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TransformerId", "TypeBoxId", "Value", "Type", "Values", "Members" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeBox), global::HEAL.Attic.TypeBox.Parser, new[]{ "TypeId", "GenericTypeBoxIds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ArrayMetaInfoBox", "ComparerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetaInfoBox), global::HEAL.Attic.ArrayMetaInfoBox.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.KeyValuePairBox), global::HEAL.Attic.KeyValuePairBox.Parser, new[]{ "TypeId", "KeyValuePairs" }, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "TypeId", "Keys", "Values", "Parent" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedBoolBox), global::HEAL.Attic.RepeatedBoolBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedIntBox), global::HEAL.Attic.RepeatedIntBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedLongBox), global::HEAL.Attic.RepeatedLongBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedUIntBox), global::HEAL.Attic.RepeatedUIntBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedULongBox), global::HEAL.Attic.RepeatedULongBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedFloatBox), global::HEAL.Attic.RepeatedFloatBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedDoubleBox), global::HEAL.Attic.RepeatedDoubleBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSIntBox), global::HEAL.Attic.RepeatedSIntBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSLongBox), global::HEAL.Attic.RepeatedSLongBox.Parser, new[]{ "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedKeyValuePairsBox), global::HEAL.Attic.RepeatedKeyValuePairsBox.Parser, new[]{ "Keys", "Values" }, null, null, null)
           }));
     }
     #endregion
@@ -112,8 +143,11 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "root_box_id" field.</summary>
-    public const int RootBoxIdFieldNumber = 10;
+    public const int RootBoxIdFieldNumber = 3;
     private uint rootBoxId_;
+    /// <summary>
+    /// index into boxes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint RootBoxId {
       get { return rootBoxId_; }
@@ -123,9 +157,9 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "boxes" field.</summary>
-    public const int BoxesFieldNumber = 20;
+    public const int BoxesFieldNumber = 4;
     private static readonly pb::FieldCodec<global::HEAL.Attic.Box> _repeated_boxes_codec
-        = pb::FieldCodec.ForMessage(162, global::HEAL.Attic.Box.Parser);
+        = pb::FieldCodec.ForMessage(34, global::HEAL.Attic.Box.Parser);
     private readonly pbc::RepeatedField<global::HEAL.Attic.Box> boxes_ = new pbc::RepeatedField<global::HEAL.Attic.Box>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::HEAL.Attic.Box> Boxes {
@@ -133,9 +167,9 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "strings" field.</summary>
-    public const int StringsFieldNumber = 30;
+    public const int StringsFieldNumber = 5;
     private static readonly pb::FieldCodec<string> _repeated_strings_codec
-        = pb::FieldCodec.ForString(242);
+        = pb::FieldCodec.ForString(42);
     private readonly pbc::RepeatedField<string> strings_ = new pbc::RepeatedField<string>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<string> Strings {
@@ -184,7 +218,7 @@ namespace HEAL.Attic {
       transformerGuids_.WriteTo(output, _repeated_transformerGuids_codec);
       typeGuids_.WriteTo(output, _repeated_typeGuids_codec);
       if (RootBoxId != 0) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(24);
         output.WriteUInt32(RootBoxId);
       }
       boxes_.WriteTo(output, _repeated_boxes_codec);
@@ -234,15 +268,15 @@ namespace HEAL.Attic {
             typeGuids_.AddEntriesFrom(input, _repeated_typeGuids_codec);
             break;
           }
-          case 80: {
+          case 24: {
             RootBoxId = input.ReadUInt32();
             break;
           }
-          case 162: {
+          case 34: {
             boxes_.AddEntriesFrom(input, _repeated_boxes_codec);
             break;
           }
-          case 242: {
+          case 42: {
             strings_.AddEntriesFrom(input, _repeated_strings_codec);
             break;
           }
@@ -252,6 +286,9 @@ namespace HEAL.Attic {
 
   }
 
+  /// <summary>
+  /// each box represents and object in an object graph
+  /// </summary>
   public sealed partial class Box : pb::IMessage<Box> {
     private static readonly pb::MessageParser<Box> _parser = new pb::MessageParser<Box>(() => new Box());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -278,26 +315,10 @@ namespace HEAL.Attic {
     public Box(Box other) : this() {
       transformerId_ = other.transformerId_;
       typeBoxId_ = other.typeBoxId_;
-      typeId_ = other.typeId_;
-      genericTypeBoxIds_ = other.genericTypeBoxIds_.Clone();
-      bool_ = other.bool_;
-      int_ = other.int_;
-      long_ = other.long_;
-      uInt_ = other.uInt_;
-      uLong_ = other.uLong_;
-      float_ = other.float_;
-      double_ = other.double_;
-      bytes_ = other.bytes_;
-      bools_ = other.bools_.Clone();
-      ints_ = other.ints_.Clone();
-      longs_ = other.longs_.Clone();
-      uInts_ = other.uInts_.Clone();
-      uLongs_ = other.uLongs_.Clone();
-      floats_ = other.floats_.Clone();
-      doubles_ = other.doubles_.Clone();
-      keyValuePairs_ = other.keyValuePairs_.Clone();
-      comparerId_ = other.comparerId_;
-      ArrayMetaInfoBox = other.arrayMetaInfoBox_ != null ? other.ArrayMetaInfoBox.Clone() : null;
+      Value = other.value_ != null ? other.Value.Clone() : null;
+      Type = other.type_ != null ? other.Type.Clone() : null;
+      Values = other.values_ != null ? other.Values.Clone() : null;
+      Members = other.members_ != null ? other.Members.Clone() : null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -319,6 +340,9 @@ namespace HEAL.Attic {
     /// <summary>Field number for the "type_box_id" field.</summary>
     public const int TypeBoxIdFieldNumber = 2;
     private uint typeBoxId_;
+    /// <summary>
+    /// index within Bundle.boxes of the box for the type of the object
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint TypeBoxId {
       get { return typeBoxId_; }
@@ -327,214 +351,47 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "type_id" field.</summary>
-    public const int TypeIdFieldNumber = 10;
-    private uint typeId_;
+    /// <summary>Field number for the "value" field.</summary>
+    public const int ValueFieldNumber = 3;
+    private global::HEAL.Attic.ScalarValueBox value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TypeId {
-      get { return typeId_; }
+    public global::HEAL.Attic.ScalarValueBox Value {
+      get { return value_; }
       set {
-        typeId_ = value;
+        value_ = value;
       }
     }
 
-    /// <summary>Field number for the "generic_type_box_ids" field.</summary>
-    public const int GenericTypeBoxIdsFieldNumber = 11;
-    private static readonly pb::FieldCodec<uint> _repeated_genericTypeBoxIds_codec
-        = pb::FieldCodec.ForUInt32(90);
-    private readonly pbc::RepeatedField<uint> genericTypeBoxIds_ = new pbc::RepeatedField<uint>();
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 4;
+    private global::HEAL.Attic.TypeBox type_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> GenericTypeBoxIds {
-      get { return genericTypeBoxIds_; }
-    }
-
-    /// <summary>Field number for the "bool" field.</summary>
-    public const int BoolFieldNumber = 20;
-    private bool bool_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Bool {
-      get { return bool_; }
+    public global::HEAL.Attic.TypeBox Type {
+      get { return type_; }
       set {
-        bool_ = value;
+        type_ = value;
       }
     }
 
-    /// <summary>Field number for the "int" field.</summary>
-    public const int IntFieldNumber = 21;
-    private int int_;
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 5;
+    private global::HEAL.Attic.RepeatedValueBox values_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Int {
-      get { return int_; }
+    public global::HEAL.Attic.RepeatedValueBox Values {
+      get { return values_; }
       set {
-        int_ = value;
+        values_ = value;
       }
     }
 
-    /// <summary>Field number for the "long" field.</summary>
-    public const int LongFieldNumber = 22;
-    private long long_;
+    /// <summary>Field number for the "members" field.</summary>
+    public const int MembersFieldNumber = 10;
+    private global::HEAL.Attic.StorableTypeMembersBox members_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public long Long {
-      get { return long_; }
+    public global::HEAL.Attic.StorableTypeMembersBox Members {
+      get { return members_; }
       set {
-        long_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "u_int" field.</summary>
-    public const int UIntFieldNumber = 23;
-    private uint uInt_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint UInt {
-      get { return uInt_; }
-      set {
-        uInt_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "u_long" field.</summary>
-    public const int ULongFieldNumber = 24;
-    private ulong uLong_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong ULong {
-      get { return uLong_; }
-      set {
-        uLong_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "float" field.</summary>
-    public const int FloatFieldNumber = 25;
-    private float float_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float Float {
-      get { return float_; }
-      set {
-        float_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "double" field.</summary>
-    public const int DoubleFieldNumber = 26;
-    private double double_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public double Double {
-      get { return double_; }
-      set {
-        double_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "bytes" field.</summary>
-    public const int BytesFieldNumber = 27;
-    private pb::ByteString bytes_ = pb::ByteString.Empty;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Bytes {
-      get { return bytes_; }
-      set {
-        bytes_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "bools" field.</summary>
-    public const int BoolsFieldNumber = 30;
-    private static readonly pb::FieldCodec<bool> _repeated_bools_codec
-        = pb::FieldCodec.ForBool(242);
-    private readonly pbc::RepeatedField<bool> bools_ = new pbc::RepeatedField<bool>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<bool> Bools {
-      get { return bools_; }
-    }
-
-    /// <summary>Field number for the "ints" field.</summary>
-    public const int IntsFieldNumber = 31;
-    private static readonly pb::FieldCodec<int> _repeated_ints_codec
-        = pb::FieldCodec.ForInt32(250);
-    private readonly pbc::RepeatedField<int> ints_ = new pbc::RepeatedField<int>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<int> Ints {
-      get { return ints_; }
-    }
-
-    /// <summary>Field number for the "longs" field.</summary>
-    public const int LongsFieldNumber = 32;
-    private static readonly pb::FieldCodec<long> _repeated_longs_codec
-        = pb::FieldCodec.ForInt64(258);
-    private readonly pbc::RepeatedField<long> longs_ = new pbc::RepeatedField<long>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<long> Longs {
-      get { return longs_; }
-    }
-
-    /// <summary>Field number for the "u_ints" field.</summary>
-    public const int UIntsFieldNumber = 33;
-    private static readonly pb::FieldCodec<uint> _repeated_uInts_codec
-        = pb::FieldCodec.ForUInt32(266);
-    private readonly pbc::RepeatedField<uint> uInts_ = new pbc::RepeatedField<uint>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> UInts {
-      get { return uInts_; }
-    }
-
-    /// <summary>Field number for the "u_longs" field.</summary>
-    public const int ULongsFieldNumber = 34;
-    private static readonly pb::FieldCodec<ulong> _repeated_uLongs_codec
-        = pb::FieldCodec.ForUInt64(274);
-    private readonly pbc::RepeatedField<ulong> uLongs_ = new pbc::RepeatedField<ulong>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<ulong> ULongs {
-      get { return uLongs_; }
-    }
-
-    /// <summary>Field number for the "floats" field.</summary>
-    public const int FloatsFieldNumber = 35;
-    private static readonly pb::FieldCodec<float> _repeated_floats_codec
-        = pb::FieldCodec.ForFloat(282);
-    private readonly pbc::RepeatedField<float> floats_ = new pbc::RepeatedField<float>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<float> Floats {
-      get { return floats_; }
-    }
-
-    /// <summary>Field number for the "doubles" field.</summary>
-    public const int DoublesFieldNumber = 36;
-    private static readonly pb::FieldCodec<double> _repeated_doubles_codec
-        = pb::FieldCodec.ForDouble(290);
-    private readonly pbc::RepeatedField<double> doubles_ = new pbc::RepeatedField<double>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<double> Doubles {
-      get { return doubles_; }
-    }
-
-    /// <summary>Field number for the "key_value_pairs" field.</summary>
-    public const int KeyValuePairsFieldNumber = 40;
-    private static readonly pb::FieldCodec<global::HEAL.Attic.KeyValuePairBox> _repeated_keyValuePairs_codec
-        = pb::FieldCodec.ForMessage(322, global::HEAL.Attic.KeyValuePairBox.Parser);
-    private readonly pbc::RepeatedField<global::HEAL.Attic.KeyValuePairBox> keyValuePairs_ = new pbc::RepeatedField<global::HEAL.Attic.KeyValuePairBox>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::HEAL.Attic.KeyValuePairBox> KeyValuePairs {
-      get { return keyValuePairs_; }
-    }
-
-    /// <summary>Field number for the "comparer_id" field.</summary>
-    public const int ComparerIdFieldNumber = 50;
-    private uint comparerId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ComparerId {
-      get { return comparerId_; }
-      set {
-        comparerId_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "arrayMetaInfoBox" field.</summary>
-    public const int ArrayMetaInfoBoxFieldNumber = 60;
-    private global::HEAL.Attic.ArrayMetaInfoBox arrayMetaInfoBox_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::HEAL.Attic.ArrayMetaInfoBox ArrayMetaInfoBox {
-      get { return arrayMetaInfoBox_; }
-      set {
-        arrayMetaInfoBox_ = value;
+        members_ = value;
       }
     }
 
@@ -553,26 +410,10 @@ namespace HEAL.Attic {
       }
       if (TransformerId != other.TransformerId) return false;
       if (TypeBoxId != other.TypeBoxId) return false;
-      if (TypeId != other.TypeId) return false;
-      if(!genericTypeBoxIds_.Equals(other.genericTypeBoxIds_)) return false;
-      if (Bool != other.Bool) return false;
-      if (Int != other.Int) return false;
-      if (Long != other.Long) return false;
-      if (UInt != other.UInt) return false;
-      if (ULong != other.ULong) return false;
-      if (Float != other.Float) return false;
-      if (Double != other.Double) return false;
-      if (Bytes != other.Bytes) return false;
-      if(!bools_.Equals(other.bools_)) return false;
-      if(!ints_.Equals(other.ints_)) return false;
-      if(!longs_.Equals(other.longs_)) return false;
-      if(!uInts_.Equals(other.uInts_)) return false;
-      if(!uLongs_.Equals(other.uLongs_)) return false;
-      if(!floats_.Equals(other.floats_)) return false;
-      if(!doubles_.Equals(other.doubles_)) return false;
-      if(!keyValuePairs_.Equals(other.keyValuePairs_)) return false;
-      if (ComparerId != other.ComparerId) return false;
-      if (!object.Equals(ArrayMetaInfoBox, other.ArrayMetaInfoBox)) return false;
+      if (!object.Equals(Value, other.Value)) return false;
+      if (!object.Equals(Type, other.Type)) return false;
+      if (!object.Equals(Values, other.Values)) return false;
+      if (!object.Equals(Members, other.Members)) return false;
       return true;
     }
 
@@ -581,26 +422,10 @@ namespace HEAL.Attic {
       int hash = 1;
       if (TransformerId != 0) hash ^= TransformerId.GetHashCode();
       if (TypeBoxId != 0) hash ^= TypeBoxId.GetHashCode();
-      if (TypeId != 0) hash ^= TypeId.GetHashCode();
-      hash ^= genericTypeBoxIds_.GetHashCode();
-      if (Bool != false) hash ^= Bool.GetHashCode();
-      if (Int != 0) hash ^= Int.GetHashCode();
-      if (Long != 0L) hash ^= Long.GetHashCode();
-      if (UInt != 0) hash ^= UInt.GetHashCode();
-      if (ULong != 0UL) hash ^= ULong.GetHashCode();
-      if (Float != 0F) hash ^= Float.GetHashCode();
-      if (Double != 0D) hash ^= Double.GetHashCode();
-      if (Bytes.Length != 0) hash ^= Bytes.GetHashCode();
-      hash ^= bools_.GetHashCode();
-      hash ^= ints_.GetHashCode();
-      hash ^= longs_.GetHashCode();
-      hash ^= uInts_.GetHashCode();
-      hash ^= uLongs_.GetHashCode();
-      hash ^= floats_.GetHashCode();
-      hash ^= doubles_.GetHashCode();
-      hash ^= keyValuePairs_.GetHashCode();
-      if (ComparerId != 0) hash ^= ComparerId.GetHashCode();
-      if (arrayMetaInfoBox_ != null) hash ^= ArrayMetaInfoBox.GetHashCode();
+      if (value_ != null) hash ^= Value.GetHashCode();
+      if (type_ != null) hash ^= Type.GetHashCode();
+      if (values_ != null) hash ^= Values.GetHashCode();
+      if (members_ != null) hash ^= Members.GetHashCode();
       return hash;
     }
 
@@ -619,58 +444,21 @@ namespace HEAL.Attic {
         output.WriteRawTag(16);
         output.WriteUInt32(TypeBoxId);
       }
-      if (TypeId != 0) {
-        output.WriteRawTag(80);
-        output.WriteUInt32(TypeId);
+      if (value_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Value);
       }
-      genericTypeBoxIds_.WriteTo(output, _repeated_genericTypeBoxIds_codec);
-      if (Bool != false) {
-        output.WriteRawTag(160, 1);
-        output.WriteBool(Bool);
+      if (type_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(Type);
       }
-      if (Int != 0) {
-        output.WriteRawTag(168, 1);
-        output.WriteInt32(Int);
+      if (values_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Values);
       }
-      if (Long != 0L) {
-        output.WriteRawTag(176, 1);
-        output.WriteInt64(Long);
-      }
-      if (UInt != 0) {
-        output.WriteRawTag(184, 1);
-        output.WriteUInt32(UInt);
-      }
-      if (ULong != 0UL) {
-        output.WriteRawTag(192, 1);
-        output.WriteUInt64(ULong);
-      }
-      if (Float != 0F) {
-        output.WriteRawTag(205, 1);
-        output.WriteFloat(Float);
-      }
-      if (Double != 0D) {
-        output.WriteRawTag(209, 1);
-        output.WriteDouble(Double);
-      }
-      if (Bytes.Length != 0) {
-        output.WriteRawTag(218, 1);
-        output.WriteBytes(Bytes);
-      }
-      bools_.WriteTo(output, _repeated_bools_codec);
-      ints_.WriteTo(output, _repeated_ints_codec);
-      longs_.WriteTo(output, _repeated_longs_codec);
-      uInts_.WriteTo(output, _repeated_uInts_codec);
-      uLongs_.WriteTo(output, _repeated_uLongs_codec);
-      floats_.WriteTo(output, _repeated_floats_codec);
-      doubles_.WriteTo(output, _repeated_doubles_codec);
-      keyValuePairs_.WriteTo(output, _repeated_keyValuePairs_codec);
-      if (ComparerId != 0) {
-        output.WriteRawTag(144, 3);
-        output.WriteUInt32(ComparerId);
-      }
-      if (arrayMetaInfoBox_ != null) {
-        output.WriteRawTag(226, 3);
-        output.WriteMessage(ArrayMetaInfoBox);
+      if (members_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(Members);
       }
     }
 
@@ -683,47 +471,17 @@ namespace HEAL.Attic {
       if (TypeBoxId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeBoxId);
       }
-      if (TypeId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
+      if (value_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Value);
       }
-      size += genericTypeBoxIds_.CalculateSize(_repeated_genericTypeBoxIds_codec);
-      if (Bool != false) {
-        size += 2 + 1;
+      if (type_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Type);
       }
-      if (Int != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeInt32Size(Int);
+      if (values_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Values);
       }
-      if (Long != 0L) {
-        size += 2 + pb::CodedOutputStream.ComputeInt64Size(Long);
-      }
-      if (UInt != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(UInt);
-      }
-      if (ULong != 0UL) {
-        size += 2 + pb::CodedOutputStream.ComputeUInt64Size(ULong);
-      }
-      if (Float != 0F) {
-        size += 2 + 4;
-      }
-      if (Double != 0D) {
-        size += 2 + 8;
-      }
-      if (Bytes.Length != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeBytesSize(Bytes);
-      }
-      size += bools_.CalculateSize(_repeated_bools_codec);
-      size += ints_.CalculateSize(_repeated_ints_codec);
-      size += longs_.CalculateSize(_repeated_longs_codec);
-      size += uInts_.CalculateSize(_repeated_uInts_codec);
-      size += uLongs_.CalculateSize(_repeated_uLongs_codec);
-      size += floats_.CalculateSize(_repeated_floats_codec);
-      size += doubles_.CalculateSize(_repeated_doubles_codec);
-      size += keyValuePairs_.CalculateSize(_repeated_keyValuePairs_codec);
-      if (ComparerId != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(ComparerId);
-      }
-      if (arrayMetaInfoBox_ != null) {
-        size += 2 + pb::CodedOutputStream.ComputeMessageSize(ArrayMetaInfoBox);
+      if (members_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Members);
       }
       return size;
     }
@@ -739,50 +497,29 @@ namespace HEAL.Attic {
       if (other.TypeBoxId != 0) {
         TypeBoxId = other.TypeBoxId;
       }
-      if (other.TypeId != 0) {
-        TypeId = other.TypeId;
-      }
-      genericTypeBoxIds_.Add(other.genericTypeBoxIds_);
-      if (other.Bool != false) {
-        Bool = other.Bool;
-      }
-      if (other.Int != 0) {
-        Int = other.Int;
-      }
-      if (other.Long != 0L) {
-        Long = other.Long;
-      }
-      if (other.UInt != 0) {
-        UInt = other.UInt;
-      }
-      if (other.ULong != 0UL) {
-        ULong = other.ULong;
-      }
-      if (other.Float != 0F) {
-        Float = other.Float;
-      }
-      if (other.Double != 0D) {
-        Double = other.Double;
-      }
-      if (other.Bytes.Length != 0) {
-        Bytes = other.Bytes;
-      }
-      bools_.Add(other.bools_);
-      ints_.Add(other.ints_);
-      longs_.Add(other.longs_);
-      uInts_.Add(other.uInts_);
-      uLongs_.Add(other.uLongs_);
-      floats_.Add(other.floats_);
-      doubles_.Add(other.doubles_);
-      keyValuePairs_.Add(other.keyValuePairs_);
-      if (other.ComparerId != 0) {
-        ComparerId = other.ComparerId;
-      }
-      if (other.arrayMetaInfoBox_ != null) {
-        if (arrayMetaInfoBox_ == null) {
-          arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
+      if (other.value_ != null) {
+        if (value_ == null) {
+          value_ = new global::HEAL.Attic.ScalarValueBox();
         }
-        ArrayMetaInfoBox.MergeFrom(other.ArrayMetaInfoBox);
+        Value.MergeFrom(other.Value);
+      }
+      if (other.type_ != null) {
+        if (type_ == null) {
+          type_ = new global::HEAL.Attic.TypeBox();
+        }
+        Type.MergeFrom(other.Type);
+      }
+      if (other.values_ != null) {
+        if (values_ == null) {
+          values_ = new global::HEAL.Attic.RepeatedValueBox();
+        }
+        Values.MergeFrom(other.Values);
+      }
+      if (other.members_ != null) {
+        if (members_ == null) {
+          members_ = new global::HEAL.Attic.StorableTypeMembersBox();
+        }
+        Members.MergeFrom(other.Members);
       }
     }
 
@@ -802,95 +539,32 @@ namespace HEAL.Attic {
             TypeBoxId = input.ReadUInt32();
             break;
           }
-          case 80: {
-            TypeId = input.ReadUInt32();
-            break;
-          }
-          case 90:
-          case 88: {
-            genericTypeBoxIds_.AddEntriesFrom(input, _repeated_genericTypeBoxIds_codec);
-            break;
-          }
-          case 160: {
-            Bool = input.ReadBool();
-            break;
-          }
-          case 168: {
-            Int = input.ReadInt32();
-            break;
-          }
-          case 176: {
-            Long = input.ReadInt64();
-            break;
-          }
-          case 184: {
-            UInt = input.ReadUInt32();
-            break;
-          }
-          case 192: {
-            ULong = input.ReadUInt64();
-            break;
-          }
-          case 205: {
-            Float = input.ReadFloat();
-            break;
-          }
-          case 209: {
-            Double = input.ReadDouble();
-            break;
-          }
-          case 218: {
-            Bytes = input.ReadBytes();
-            break;
-          }
-          case 242:
-          case 240: {
-            bools_.AddEntriesFrom(input, _repeated_bools_codec);
-            break;
-          }
-          case 250:
-          case 248: {
-            ints_.AddEntriesFrom(input, _repeated_ints_codec);
-            break;
-          }
-          case 258:
-          case 256: {
-            longs_.AddEntriesFrom(input, _repeated_longs_codec);
-            break;
-          }
-          case 266:
-          case 264: {
-            uInts_.AddEntriesFrom(input, _repeated_uInts_codec);
-            break;
-          }
-          case 274:
-          case 272: {
-            uLongs_.AddEntriesFrom(input, _repeated_uLongs_codec);
-            break;
-          }
-          case 282:
-          case 285: {
-            floats_.AddEntriesFrom(input, _repeated_floats_codec);
-            break;
-          }
-          case 290:
-          case 289: {
-            doubles_.AddEntriesFrom(input, _repeated_doubles_codec);
-            break;
-          }
-          case 322: {
-            keyValuePairs_.AddEntriesFrom(input, _repeated_keyValuePairs_codec);
-            break;
-          }
-          case 400: {
-            ComparerId = input.ReadUInt32();
-            break;
-          }
-          case 482: {
-            if (arrayMetaInfoBox_ == null) {
-              arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
+          case 26: {
+            if (value_ == null) {
+              value_ = new global::HEAL.Attic.ScalarValueBox();
             }
-            input.ReadMessage(arrayMetaInfoBox_);
+            input.ReadMessage(value_);
+            break;
+          }
+          case 34: {
+            if (type_ == null) {
+              type_ = new global::HEAL.Attic.TypeBox();
+            }
+            input.ReadMessage(type_);
+            break;
+          }
+          case 42: {
+            if (values_ == null) {
+              values_ = new global::HEAL.Attic.RepeatedValueBox();
+            }
+            input.ReadMessage(values_);
+            break;
+          }
+          case 82: {
+            if (members_ == null) {
+              members_ = new global::HEAL.Attic.StorableTypeMembersBox();
+            }
+            input.ReadMessage(members_);
             break;
           }
         }
@@ -899,6 +573,917 @@ namespace HEAL.Attic {
 
   }
 
+  public sealed partial class TypeBox : pb::IMessage<TypeBox> {
+    private static readonly pb::MessageParser<TypeBox> _parser = new pb::MessageParser<TypeBox>(() => new TypeBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<TypeBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public TypeBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public TypeBox(TypeBox other) : this() {
+      typeId_ = other.typeId_;
+      genericTypeBoxIds_ = other.genericTypeBoxIds_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public TypeBox Clone() {
+      return new TypeBox(this);
+    }
+
+    /// <summary>Field number for the "type_id" field.</summary>
+    public const int TypeIdFieldNumber = 1;
+    private uint typeId_;
+    /// <summary>
+    /// index into Bundle.type_guids
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint TypeId {
+      get { return typeId_; }
+      set {
+        typeId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "generic_type_box_ids" field.</summary>
+    public const int GenericTypeBoxIdsFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_genericTypeBoxIds_codec
+        = pb::FieldCodec.ForUInt32(18);
+    private readonly pbc::RepeatedField<uint> genericTypeBoxIds_ = new pbc::RepeatedField<uint>();
+    /// <summary>
+    /// index into Bundle.boxes (for each generic type argument)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> GenericTypeBoxIds {
+      get { return genericTypeBoxIds_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as TypeBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(TypeBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (TypeId != other.TypeId) return false;
+      if(!genericTypeBoxIds_.Equals(other.genericTypeBoxIds_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (TypeId != 0) hash ^= TypeId.GetHashCode();
+      hash ^= genericTypeBoxIds_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (TypeId != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(TypeId);
+      }
+      genericTypeBoxIds_.WriteTo(output, _repeated_genericTypeBoxIds_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (TypeId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
+      }
+      size += genericTypeBoxIds_.CalculateSize(_repeated_genericTypeBoxIds_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(TypeBox other) {
+      if (other == null) {
+        return;
+      }
+      if (other.TypeId != 0) {
+        TypeId = other.TypeId;
+      }
+      genericTypeBoxIds_.Add(other.genericTypeBoxIds_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            TypeId = input.ReadUInt32();
+            break;
+          }
+          case 18:
+          case 16: {
+            genericTypeBoxIds_.AddEntriesFrom(input, _repeated_genericTypeBoxIds_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class ScalarValueBox : pb::IMessage<ScalarValueBox> {
+    private static readonly pb::MessageParser<ScalarValueBox> _parser = new pb::MessageParser<ScalarValueBox>(() => new ScalarValueBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<ScalarValueBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ScalarValueBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ScalarValueBox(ScalarValueBox other) : this() {
+      long_ = other.long_;
+      uLong_ = other.uLong_;
+      float_ = other.float_;
+      double_ = other.double_;
+      bytes_ = other.bytes_;
+      sLong_ = other.sLong_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ScalarValueBox Clone() {
+      return new ScalarValueBox(this);
+    }
+
+    /// <summary>Field number for the "long" field.</summary>
+    public const int LongFieldNumber = 3;
+    private long long_;
+    /// <summary>
+    ///bool bool = 1;
+    ///int32 int = 2;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long Long {
+      get { return long_; }
+      set {
+        long_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "u_long" field.</summary>
+    public const int ULongFieldNumber = 5;
+    private ulong uLong_;
+    /// <summary>
+    ///uint32 u_int = 4;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong ULong {
+      get { return uLong_; }
+      set {
+        uLong_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "float" field.</summary>
+    public const int FloatFieldNumber = 6;
+    private float float_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Float {
+      get { return float_; }
+      set {
+        float_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "double" field.</summary>
+    public const int DoubleFieldNumber = 7;
+    private double double_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public double Double {
+      get { return double_; }
+      set {
+        double_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "bytes" field.</summary>
+    public const int BytesFieldNumber = 8;
+    private pb::ByteString bytes_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pb::ByteString Bytes {
+      get { return bytes_; }
+      set {
+        bytes_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "s_long" field.</summary>
+    public const int SLongFieldNumber = 10;
+    private long sLong_;
+    /// <summary>
+    ///sint32 s_int = 9;
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public long SLong {
+      get { return sLong_; }
+      set {
+        sLong_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as ScalarValueBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(ScalarValueBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Long != other.Long) return false;
+      if (ULong != other.ULong) return false;
+      if (Float != other.Float) return false;
+      if (Double != other.Double) return false;
+      if (Bytes != other.Bytes) return false;
+      if (SLong != other.SLong) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Long != 0L) hash ^= Long.GetHashCode();
+      if (ULong != 0UL) hash ^= ULong.GetHashCode();
+      if (Float != 0F) hash ^= Float.GetHashCode();
+      if (Double != 0D) hash ^= Double.GetHashCode();
+      if (Bytes.Length != 0) hash ^= Bytes.GetHashCode();
+      if (SLong != 0L) hash ^= SLong.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Long != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(Long);
+      }
+      if (ULong != 0UL) {
+        output.WriteRawTag(40);
+        output.WriteUInt64(ULong);
+      }
+      if (Float != 0F) {
+        output.WriteRawTag(53);
+        output.WriteFloat(Float);
+      }
+      if (Double != 0D) {
+        output.WriteRawTag(57);
+        output.WriteDouble(Double);
+      }
+      if (Bytes.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteBytes(Bytes);
+      }
+      if (SLong != 0L) {
+        output.WriteRawTag(80);
+        output.WriteSInt64(SLong);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Long != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Long);
+      }
+      if (ULong != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(ULong);
+      }
+      if (Float != 0F) {
+        size += 1 + 4;
+      }
+      if (Double != 0D) {
+        size += 1 + 8;
+      }
+      if (Bytes.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Bytes);
+      }
+      if (SLong != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeSInt64Size(SLong);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(ScalarValueBox other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Long != 0L) {
+        Long = other.Long;
+      }
+      if (other.ULong != 0UL) {
+        ULong = other.ULong;
+      }
+      if (other.Float != 0F) {
+        Float = other.Float;
+      }
+      if (other.Double != 0D) {
+        Double = other.Double;
+      }
+      if (other.Bytes.Length != 0) {
+        Bytes = other.Bytes;
+      }
+      if (other.SLong != 0L) {
+        SLong = other.SLong;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 24: {
+            Long = input.ReadInt64();
+            break;
+          }
+          case 40: {
+            ULong = input.ReadUInt64();
+            break;
+          }
+          case 53: {
+            Float = input.ReadFloat();
+            break;
+          }
+          case 57: {
+            Double = input.ReadDouble();
+            break;
+          }
+          case 66: {
+            Bytes = input.ReadBytes();
+            break;
+          }
+          case 80: {
+            SLong = input.ReadSInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// for collection types and arrays
+  /// </summary>
+  public sealed partial class RepeatedValueBox : pb::IMessage<RepeatedValueBox> {
+    private static readonly pb::MessageParser<RepeatedValueBox> _parser = new pb::MessageParser<RepeatedValueBox>(() => new RepeatedValueBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedValueBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedValueBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedValueBox(RepeatedValueBox other) : this() {
+      Bools = other.bools_ != null ? other.Bools.Clone() : null;
+      Ints = other.ints_ != null ? other.Ints.Clone() : null;
+      Longs = other.longs_ != null ? other.Longs.Clone() : null;
+      UInts = other.uInts_ != null ? other.UInts.Clone() : null;
+      ULongs = other.uLongs_ != null ? other.ULongs.Clone() : null;
+      Floats = other.floats_ != null ? other.Floats.Clone() : null;
+      Doubles = other.doubles_ != null ? other.Doubles.Clone() : null;
+      SInts = other.sInts_ != null ? other.SInts.Clone() : null;
+      SLongs = other.sLongs_ != null ? other.SLongs.Clone() : null;
+      Kvps = other.kvps_ != null ? other.Kvps.Clone() : null;
+      ArrayMetaInfoBox = other.arrayMetaInfoBox_ != null ? other.ArrayMetaInfoBox.Clone() : null;
+      comparerId_ = other.comparerId_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedValueBox Clone() {
+      return new RepeatedValueBox(this);
+    }
+
+    /// <summary>Field number for the "bools" field.</summary>
+    public const int BoolsFieldNumber = 1;
+    private global::HEAL.Attic.RepeatedBoolBox bools_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedBoolBox Bools {
+      get { return bools_; }
+      set {
+        bools_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ints" field.</summary>
+    public const int IntsFieldNumber = 2;
+    private global::HEAL.Attic.RepeatedIntBox ints_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedIntBox Ints {
+      get { return ints_; }
+      set {
+        ints_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "longs" field.</summary>
+    public const int LongsFieldNumber = 3;
+    private global::HEAL.Attic.RepeatedLongBox longs_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedLongBox Longs {
+      get { return longs_; }
+      set {
+        longs_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "u_ints" field.</summary>
+    public const int UIntsFieldNumber = 4;
+    private global::HEAL.Attic.RepeatedUIntBox uInts_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedUIntBox UInts {
+      get { return uInts_; }
+      set {
+        uInts_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "u_longs" field.</summary>
+    public const int ULongsFieldNumber = 5;
+    private global::HEAL.Attic.RepeatedULongBox uLongs_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedULongBox ULongs {
+      get { return uLongs_; }
+      set {
+        uLongs_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "floats" field.</summary>
+    public const int FloatsFieldNumber = 6;
+    private global::HEAL.Attic.RepeatedFloatBox floats_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedFloatBox Floats {
+      get { return floats_; }
+      set {
+        floats_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "doubles" field.</summary>
+    public const int DoublesFieldNumber = 7;
+    private global::HEAL.Attic.RepeatedDoubleBox doubles_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedDoubleBox Doubles {
+      get { return doubles_; }
+      set {
+        doubles_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "s_ints" field.</summary>
+    public const int SIntsFieldNumber = 8;
+    private global::HEAL.Attic.RepeatedSIntBox sInts_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedSIntBox SInts {
+      get { return sInts_; }
+      set {
+        sInts_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "s_longs" field.</summary>
+    public const int SLongsFieldNumber = 9;
+    private global::HEAL.Attic.RepeatedSLongBox sLongs_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedSLongBox SLongs {
+      get { return sLongs_; }
+      set {
+        sLongs_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "kvps" field.</summary>
+    public const int KvpsFieldNumber = 10;
+    private global::HEAL.Attic.RepeatedKeyValuePairsBox kvps_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.RepeatedKeyValuePairsBox Kvps {
+      get { return kvps_; }
+      set {
+        kvps_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "arrayMetaInfoBox" field.</summary>
+    public const int ArrayMetaInfoBoxFieldNumber = 13;
+    private global::HEAL.Attic.ArrayMetaInfoBox arrayMetaInfoBox_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.ArrayMetaInfoBox ArrayMetaInfoBox {
+      get { return arrayMetaInfoBox_; }
+      set {
+        arrayMetaInfoBox_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "comparer_id" field.</summary>
+    public const int ComparerIdFieldNumber = 20;
+    private uint comparerId_;
+    /// <summary>
+    /// some collections have a comparer (index into Bundle.boxes)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ComparerId {
+      get { return comparerId_; }
+      set {
+        comparerId_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedValueBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedValueBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Bools, other.Bools)) return false;
+      if (!object.Equals(Ints, other.Ints)) return false;
+      if (!object.Equals(Longs, other.Longs)) return false;
+      if (!object.Equals(UInts, other.UInts)) return false;
+      if (!object.Equals(ULongs, other.ULongs)) return false;
+      if (!object.Equals(Floats, other.Floats)) return false;
+      if (!object.Equals(Doubles, other.Doubles)) return false;
+      if (!object.Equals(SInts, other.SInts)) return false;
+      if (!object.Equals(SLongs, other.SLongs)) return false;
+      if (!object.Equals(Kvps, other.Kvps)) return false;
+      if (!object.Equals(ArrayMetaInfoBox, other.ArrayMetaInfoBox)) return false;
+      if (ComparerId != other.ComparerId) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (bools_ != null) hash ^= Bools.GetHashCode();
+      if (ints_ != null) hash ^= Ints.GetHashCode();
+      if (longs_ != null) hash ^= Longs.GetHashCode();
+      if (uInts_ != null) hash ^= UInts.GetHashCode();
+      if (uLongs_ != null) hash ^= ULongs.GetHashCode();
+      if (floats_ != null) hash ^= Floats.GetHashCode();
+      if (doubles_ != null) hash ^= Doubles.GetHashCode();
+      if (sInts_ != null) hash ^= SInts.GetHashCode();
+      if (sLongs_ != null) hash ^= SLongs.GetHashCode();
+      if (kvps_ != null) hash ^= Kvps.GetHashCode();
+      if (arrayMetaInfoBox_ != null) hash ^= ArrayMetaInfoBox.GetHashCode();
+      if (ComparerId != 0) hash ^= ComparerId.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (bools_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Bools);
+      }
+      if (ints_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Ints);
+      }
+      if (longs_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(Longs);
+      }
+      if (uInts_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(UInts);
+      }
+      if (uLongs_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(ULongs);
+      }
+      if (floats_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(Floats);
+      }
+      if (doubles_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(Doubles);
+      }
+      if (sInts_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(SInts);
+      }
+      if (sLongs_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(SLongs);
+      }
+      if (kvps_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(Kvps);
+      }
+      if (arrayMetaInfoBox_ != null) {
+        output.WriteRawTag(106);
+        output.WriteMessage(ArrayMetaInfoBox);
+      }
+      if (ComparerId != 0) {
+        output.WriteRawTag(160, 1);
+        output.WriteUInt32(ComparerId);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (bools_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Bools);
+      }
+      if (ints_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Ints);
+      }
+      if (longs_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Longs);
+      }
+      if (uInts_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UInts);
+      }
+      if (uLongs_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ULongs);
+      }
+      if (floats_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Floats);
+      }
+      if (doubles_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Doubles);
+      }
+      if (sInts_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SInts);
+      }
+      if (sLongs_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SLongs);
+      }
+      if (kvps_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Kvps);
+      }
+      if (arrayMetaInfoBox_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ArrayMetaInfoBox);
+      }
+      if (ComparerId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(ComparerId);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedValueBox other) {
+      if (other == null) {
+        return;
+      }
+      if (other.bools_ != null) {
+        if (bools_ == null) {
+          bools_ = new global::HEAL.Attic.RepeatedBoolBox();
+        }
+        Bools.MergeFrom(other.Bools);
+      }
+      if (other.ints_ != null) {
+        if (ints_ == null) {
+          ints_ = new global::HEAL.Attic.RepeatedIntBox();
+        }
+        Ints.MergeFrom(other.Ints);
+      }
+      if (other.longs_ != null) {
+        if (longs_ == null) {
+          longs_ = new global::HEAL.Attic.RepeatedLongBox();
+        }
+        Longs.MergeFrom(other.Longs);
+      }
+      if (other.uInts_ != null) {
+        if (uInts_ == null) {
+          uInts_ = new global::HEAL.Attic.RepeatedUIntBox();
+        }
+        UInts.MergeFrom(other.UInts);
+      }
+      if (other.uLongs_ != null) {
+        if (uLongs_ == null) {
+          uLongs_ = new global::HEAL.Attic.RepeatedULongBox();
+        }
+        ULongs.MergeFrom(other.ULongs);
+      }
+      if (other.floats_ != null) {
+        if (floats_ == null) {
+          floats_ = new global::HEAL.Attic.RepeatedFloatBox();
+        }
+        Floats.MergeFrom(other.Floats);
+      }
+      if (other.doubles_ != null) {
+        if (doubles_ == null) {
+          doubles_ = new global::HEAL.Attic.RepeatedDoubleBox();
+        }
+        Doubles.MergeFrom(other.Doubles);
+      }
+      if (other.sInts_ != null) {
+        if (sInts_ == null) {
+          sInts_ = new global::HEAL.Attic.RepeatedSIntBox();
+        }
+        SInts.MergeFrom(other.SInts);
+      }
+      if (other.sLongs_ != null) {
+        if (sLongs_ == null) {
+          sLongs_ = new global::HEAL.Attic.RepeatedSLongBox();
+        }
+        SLongs.MergeFrom(other.SLongs);
+      }
+      if (other.kvps_ != null) {
+        if (kvps_ == null) {
+          kvps_ = new global::HEAL.Attic.RepeatedKeyValuePairsBox();
+        }
+        Kvps.MergeFrom(other.Kvps);
+      }
+      if (other.arrayMetaInfoBox_ != null) {
+        if (arrayMetaInfoBox_ == null) {
+          arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
+        }
+        ArrayMetaInfoBox.MergeFrom(other.ArrayMetaInfoBox);
+      }
+      if (other.ComparerId != 0) {
+        ComparerId = other.ComparerId;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            if (bools_ == null) {
+              bools_ = new global::HEAL.Attic.RepeatedBoolBox();
+            }
+            input.ReadMessage(bools_);
+            break;
+          }
+          case 18: {
+            if (ints_ == null) {
+              ints_ = new global::HEAL.Attic.RepeatedIntBox();
+            }
+            input.ReadMessage(ints_);
+            break;
+          }
+          case 26: {
+            if (longs_ == null) {
+              longs_ = new global::HEAL.Attic.RepeatedLongBox();
+            }
+            input.ReadMessage(longs_);
+            break;
+          }
+          case 34: {
+            if (uInts_ == null) {
+              uInts_ = new global::HEAL.Attic.RepeatedUIntBox();
+            }
+            input.ReadMessage(uInts_);
+            break;
+          }
+          case 42: {
+            if (uLongs_ == null) {
+              uLongs_ = new global::HEAL.Attic.RepeatedULongBox();
+            }
+            input.ReadMessage(uLongs_);
+            break;
+          }
+          case 50: {
+            if (floats_ == null) {
+              floats_ = new global::HEAL.Attic.RepeatedFloatBox();
+            }
+            input.ReadMessage(floats_);
+            break;
+          }
+          case 58: {
+            if (doubles_ == null) {
+              doubles_ = new global::HEAL.Attic.RepeatedDoubleBox();
+            }
+            input.ReadMessage(doubles_);
+            break;
+          }
+          case 66: {
+            if (sInts_ == null) {
+              sInts_ = new global::HEAL.Attic.RepeatedSIntBox();
+            }
+            input.ReadMessage(sInts_);
+            break;
+          }
+          case 74: {
+            if (sLongs_ == null) {
+              sLongs_ = new global::HEAL.Attic.RepeatedSLongBox();
+            }
+            input.ReadMessage(sLongs_);
+            break;
+          }
+          case 82: {
+            if (kvps_ == null) {
+              kvps_ = new global::HEAL.Attic.RepeatedKeyValuePairsBox();
+            }
+            input.ReadMessage(kvps_);
+            break;
+          }
+          case 106: {
+            if (arrayMetaInfoBox_ == null) {
+              arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
+            }
+            input.ReadMessage(arrayMetaInfoBox_);
+            break;
+          }
+          case 160: {
+            ComparerId = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  /// TODO: potential for deduplication?
+  /// </summary>
   public sealed partial class ArrayMetaInfoBox : pb::IMessage<ArrayMetaInfoBox> {
     private static readonly pb::MessageParser<ArrayMetaInfoBox> _parser = new pb::MessageParser<ArrayMetaInfoBox>(() => new ArrayMetaInfoBox());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -906,7 +1491,7 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[2]; }
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1058,14 +1643,14 @@ namespace HEAL.Attic {
 
   }
 
-  public sealed partial class KeyValuePairBox : pb::IMessage<KeyValuePairBox> {
-    private static readonly pb::MessageParser<KeyValuePairBox> _parser = new pb::MessageParser<KeyValuePairBox>(() => new KeyValuePairBox());
+  public sealed partial class StorableTypeMembersBox : pb::IMessage<StorableTypeMembersBox> {
+    private static readonly pb::MessageParser<StorableTypeMembersBox> _parser = new pb::MessageParser<StorableTypeMembersBox>(() => new StorableTypeMembersBox());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<KeyValuePairBox> Parser { get { return _parser; } }
+    public static pb::MessageParser<StorableTypeMembersBox> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[3]; }
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1074,26 +1659,31 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public KeyValuePairBox() {
+    public StorableTypeMembersBox() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public KeyValuePairBox(KeyValuePairBox other) : this() {
+    public StorableTypeMembersBox(StorableTypeMembersBox other) : this() {
       typeId_ = other.typeId_;
-      keyValuePairs_ = other.keyValuePairs_.Clone();
+      keys_ = other.keys_.Clone();
+      values_ = other.values_.Clone();
+      Parent = other.parent_ != null ? other.Parent.Clone() : null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public KeyValuePairBox Clone() {
-      return new KeyValuePairBox(this);
+    public StorableTypeMembersBox Clone() {
+      return new StorableTypeMembersBox(this);
     }
 
     /// <summary>Field number for the "type_id" field.</summary>
     public const int TypeIdFieldNumber = 1;
     private uint typeId_;
+    /// <summary>
+    /// StorableType GUID (index into Bundle.type_guids)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint TypeId {
       get { return typeId_; }
@@ -1102,23 +1692,47 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "key_value_pairs" field.</summary>
-    public const int KeyValuePairsFieldNumber = 2;
-    private static readonly pbc::MapField<uint, uint>.Codec _map_keyValuePairs_codec
-        = new pbc::MapField<uint, uint>.Codec(pb::FieldCodec.ForUInt32(8), pb::FieldCodec.ForUInt32(16), 18);
-    private readonly pbc::MapField<uint, uint> keyValuePairs_ = new pbc::MapField<uint, uint>();
+    /// <summary>Field number for the "keys" field.</summary>
+    public const int KeysFieldNumber = 3;
+    private static readonly pb::FieldCodec<uint> _repeated_keys_codec
+        = pb::FieldCodec.ForUInt32(26);
+    private readonly pbc::RepeatedField<uint> keys_ = new pbc::RepeatedField<uint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<uint, uint> KeyValuePairs {
-      get { return keyValuePairs_; }
+    public pbc::RepeatedField<uint> Keys {
+      get { return keys_; }
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 4;
+    private static readonly pb::FieldCodec<uint> _repeated_values_codec
+        = pb::FieldCodec.ForUInt32(34);
+    private readonly pbc::RepeatedField<uint> values_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Values {
+      get { return values_; }
+    }
+
+    /// <summary>Field number for the "parent" field.</summary>
+    public const int ParentFieldNumber = 5;
+    private global::HEAL.Attic.StorableTypeMembersBox parent_;
+    /// <summary>
+    /// box with members of the base class
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::HEAL.Attic.StorableTypeMembersBox Parent {
+      get { return parent_; }
+      set {
+        parent_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as KeyValuePairBox);
+      return Equals(other as StorableTypeMembersBox);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(KeyValuePairBox other) {
+    public bool Equals(StorableTypeMembersBox other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1126,7 +1740,9 @@ namespace HEAL.Attic {
         return true;
       }
       if (TypeId != other.TypeId) return false;
-      if (!KeyValuePairs.Equals(other.KeyValuePairs)) return false;
+      if(!keys_.Equals(other.keys_)) return false;
+      if(!values_.Equals(other.values_)) return false;
+      if (!object.Equals(Parent, other.Parent)) return false;
       return true;
     }
 
@@ -1134,7 +1750,9 @@ namespace HEAL.Attic {
     public override int GetHashCode() {
       int hash = 1;
       if (TypeId != 0) hash ^= TypeId.GetHashCode();
-      hash ^= KeyValuePairs.GetHashCode();
+      hash ^= keys_.GetHashCode();
+      hash ^= values_.GetHashCode();
+      if (parent_ != null) hash ^= Parent.GetHashCode();
       return hash;
     }
 
@@ -1149,7 +1767,12 @@ namespace HEAL.Attic {
         output.WriteRawTag(8);
         output.WriteUInt32(TypeId);
       }
-      keyValuePairs_.WriteTo(output, _map_keyValuePairs_codec);
+      keys_.WriteTo(output, _repeated_keys_codec);
+      values_.WriteTo(output, _repeated_values_codec);
+      if (parent_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Parent);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1158,19 +1781,30 @@ namespace HEAL.Attic {
       if (TypeId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
       }
-      size += keyValuePairs_.CalculateSize(_map_keyValuePairs_codec);
+      size += keys_.CalculateSize(_repeated_keys_codec);
+      size += values_.CalculateSize(_repeated_values_codec);
+      if (parent_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Parent);
+      }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(KeyValuePairBox other) {
+    public void MergeFrom(StorableTypeMembersBox other) {
       if (other == null) {
         return;
       }
       if (other.TypeId != 0) {
         TypeId = other.TypeId;
       }
-      keyValuePairs_.Add(other.keyValuePairs_);
+      keys_.Add(other.keys_);
+      values_.Add(other.values_);
+      if (other.parent_ != null) {
+        if (parent_ == null) {
+          parent_ = new global::HEAL.Attic.StorableTypeMembersBox();
+        }
+        Parent.MergeFrom(other.Parent);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1185,8 +1819,1145 @@ namespace HEAL.Attic {
             TypeId = input.ReadUInt32();
             break;
           }
-          case 18: {
-            keyValuePairs_.AddEntriesFrom(input, _map_keyValuePairs_codec);
+          case 26:
+          case 24: {
+            keys_.AddEntriesFrom(input, _repeated_keys_codec);
+            break;
+          }
+          case 34:
+          case 32: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+          case 42: {
+            if (parent_ == null) {
+              parent_ = new global::HEAL.Attic.StorableTypeMembersBox();
+            }
+            input.ReadMessage(parent_);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedBoolBox : pb::IMessage<RepeatedBoolBox> {
+    private static readonly pb::MessageParser<RepeatedBoolBox> _parser = new pb::MessageParser<RepeatedBoolBox>(() => new RepeatedBoolBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedBoolBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedBoolBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedBoolBox(RepeatedBoolBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedBoolBox Clone() {
+      return new RepeatedBoolBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<bool> _repeated_values_codec
+        = pb::FieldCodec.ForBool(10);
+    private readonly pbc::RepeatedField<bool> values_ = new pbc::RepeatedField<bool>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<bool> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedBoolBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedBoolBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedBoolBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedIntBox : pb::IMessage<RepeatedIntBox> {
+    private static readonly pb::MessageParser<RepeatedIntBox> _parser = new pb::MessageParser<RepeatedIntBox>(() => new RepeatedIntBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedIntBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedIntBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedIntBox(RepeatedIntBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedIntBox Clone() {
+      return new RepeatedIntBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<int> _repeated_values_codec
+        = pb::FieldCodec.ForInt32(10);
+    private readonly pbc::RepeatedField<int> values_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedIntBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedIntBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedIntBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedLongBox : pb::IMessage<RepeatedLongBox> {
+    private static readonly pb::MessageParser<RepeatedLongBox> _parser = new pb::MessageParser<RepeatedLongBox>(() => new RepeatedLongBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedLongBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedLongBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedLongBox(RepeatedLongBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedLongBox Clone() {
+      return new RepeatedLongBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<long> _repeated_values_codec
+        = pb::FieldCodec.ForInt64(10);
+    private readonly pbc::RepeatedField<long> values_ = new pbc::RepeatedField<long>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<long> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedLongBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedLongBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedLongBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedUIntBox : pb::IMessage<RepeatedUIntBox> {
+    private static readonly pb::MessageParser<RepeatedUIntBox> _parser = new pb::MessageParser<RepeatedUIntBox>(() => new RepeatedUIntBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedUIntBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[10]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedUIntBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedUIntBox(RepeatedUIntBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedUIntBox Clone() {
+      return new RepeatedUIntBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<uint> _repeated_values_codec
+        = pb::FieldCodec.ForUInt32(10);
+    private readonly pbc::RepeatedField<uint> values_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedUIntBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedUIntBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedUIntBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedULongBox : pb::IMessage<RepeatedULongBox> {
+    private static readonly pb::MessageParser<RepeatedULongBox> _parser = new pb::MessageParser<RepeatedULongBox>(() => new RepeatedULongBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedULongBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[11]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedULongBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedULongBox(RepeatedULongBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedULongBox Clone() {
+      return new RepeatedULongBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<ulong> _repeated_values_codec
+        = pb::FieldCodec.ForUInt64(10);
+    private readonly pbc::RepeatedField<ulong> values_ = new pbc::RepeatedField<ulong>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<ulong> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedULongBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedULongBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedULongBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedFloatBox : pb::IMessage<RepeatedFloatBox> {
+    private static readonly pb::MessageParser<RepeatedFloatBox> _parser = new pb::MessageParser<RepeatedFloatBox>(() => new RepeatedFloatBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedFloatBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[12]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedFloatBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedFloatBox(RepeatedFloatBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedFloatBox Clone() {
+      return new RepeatedFloatBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<float> _repeated_values_codec
+        = pb::FieldCodec.ForFloat(10);
+    private readonly pbc::RepeatedField<float> values_ = new pbc::RepeatedField<float>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<float> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedFloatBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedFloatBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedFloatBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 13: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedDoubleBox : pb::IMessage<RepeatedDoubleBox> {
+    private static readonly pb::MessageParser<RepeatedDoubleBox> _parser = new pb::MessageParser<RepeatedDoubleBox>(() => new RepeatedDoubleBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedDoubleBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[13]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedDoubleBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedDoubleBox(RepeatedDoubleBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedDoubleBox Clone() {
+      return new RepeatedDoubleBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<double> _repeated_values_codec
+        = pb::FieldCodec.ForDouble(10);
+    private readonly pbc::RepeatedField<double> values_ = new pbc::RepeatedField<double>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<double> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedDoubleBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedDoubleBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedDoubleBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 9: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedSIntBox : pb::IMessage<RepeatedSIntBox> {
+    private static readonly pb::MessageParser<RepeatedSIntBox> _parser = new pb::MessageParser<RepeatedSIntBox>(() => new RepeatedSIntBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedSIntBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSIntBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSIntBox(RepeatedSIntBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSIntBox Clone() {
+      return new RepeatedSIntBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<int> _repeated_values_codec
+        = pb::FieldCodec.ForSInt32(10);
+    private readonly pbc::RepeatedField<int> values_ = new pbc::RepeatedField<int>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedSIntBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedSIntBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedSIntBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedSLongBox : pb::IMessage<RepeatedSLongBox> {
+    private static readonly pb::MessageParser<RepeatedSLongBox> _parser = new pb::MessageParser<RepeatedSLongBox>(() => new RepeatedSLongBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedSLongBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSLongBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSLongBox(RepeatedSLongBox other) : this() {
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedSLongBox Clone() {
+      return new RepeatedSLongBox(this);
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 1;
+    private static readonly pb::FieldCodec<long> _repeated_values_codec
+        = pb::FieldCodec.ForSInt64(10);
+    private readonly pbc::RepeatedField<long> values_ = new pbc::RepeatedField<long>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<long> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedSLongBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedSLongBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedSLongBox other) {
+      if (other == null) {
+        return;
+      }
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class RepeatedKeyValuePairsBox : pb::IMessage<RepeatedKeyValuePairsBox> {
+    private static readonly pb::MessageParser<RepeatedKeyValuePairsBox> _parser = new pb::MessageParser<RepeatedKeyValuePairsBox>(() => new RepeatedKeyValuePairsBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<RepeatedKeyValuePairsBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[16]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedKeyValuePairsBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedKeyValuePairsBox(RepeatedKeyValuePairsBox other) : this() {
+      keys_ = other.keys_.Clone();
+      values_ = other.values_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public RepeatedKeyValuePairsBox Clone() {
+      return new RepeatedKeyValuePairsBox(this);
+    }
+
+    /// <summary>Field number for the "keys" field.</summary>
+    public const int KeysFieldNumber = 1;
+    private static readonly pb::FieldCodec<uint> _repeated_keys_codec
+        = pb::FieldCodec.ForUInt32(10);
+    private readonly pbc::RepeatedField<uint> keys_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Keys {
+      get { return keys_; }
+    }
+
+    /// <summary>Field number for the "values" field.</summary>
+    public const int ValuesFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_values_codec
+        = pb::FieldCodec.ForUInt32(18);
+    private readonly pbc::RepeatedField<uint> values_ = new pbc::RepeatedField<uint>();
+    /// <summary>
+    /// map&lt;uint32, uint32> key_value_pairs = 10;   // separate repeated keys and values is more lightweight
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Values {
+      get { return values_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as RepeatedKeyValuePairsBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(RepeatedKeyValuePairsBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!keys_.Equals(other.keys_)) return false;
+      if(!values_.Equals(other.values_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= keys_.GetHashCode();
+      hash ^= values_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      keys_.WriteTo(output, _repeated_keys_codec);
+      values_.WriteTo(output, _repeated_values_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += keys_.CalculateSize(_repeated_keys_codec);
+      size += values_.CalculateSize(_repeated_values_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(RepeatedKeyValuePairsBox other) {
+      if (other == null) {
+        return;
+      }
+      keys_.Add(other.keys_);
+      values_.Add(other.values_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            keys_.AddEntriesFrom(input, _repeated_keys_codec);
+            break;
+          }
+          case 18:
+          case 16: {
+            values_.AddEntriesFrom(input, _repeated_values_codec);
             break;
           }
         }

@@ -6,48 +6,109 @@ message Bundle {
   repeated bytes transformer_guids = 1;
   repeated bytes type_guids = 2;
 
-  uint32 root_box_id = 10;
-  repeated Box boxes = 20;
-  repeated string strings = 30;
+  uint32 root_box_id = 3; // index into boxes
+  repeated Box boxes = 4;
+  repeated string strings = 5;
 }
 
+// each box represents and object in an object graph
 message Box {
   uint32 transformer_id = 1;
-  uint32 type_box_id = 2;
+  uint32 type_box_id = 2; // index within Bundle.boxes of the box for the type of the object
 
-  uint32 type_id = 10;
-  repeated uint32 generic_type_box_ids = 11;
-
-  bool bool = 20;
-  int32 int = 21;
-  int64 long = 22;
-  uint32 u_int = 23;
-  uint64 u_long = 24;
-  float float = 25;
-  double double = 26;
-  bytes bytes = 27;
-
-  repeated bool bools = 30;
-  repeated int32 ints = 31;
-  repeated int64 longs = 32;
-  repeated uint32 u_ints = 33;
-  repeated uint64 u_longs = 34;
-  repeated float floats = 35;
-  repeated double doubles = 36;
-
-  repeated KeyValuePairBox key_value_pairs = 40;
-  uint32 comparer_id = 50;
-
-  ArrayMetaInfoBox arrayMetaInfoBox = 60;
+  ScalarValueBox value = 3;
+  TypeBox type = 4;
+  RepeatedValueBox values = 5;
+  StorableTypeMembersBox members = 10;
 }
 
-message ArrayMetaInfoBox {
+message TypeBox {
+  uint32 type_id = 1;                           // index into Bundle.type_guids
+  repeated uint32 generic_type_box_ids = 2;     // index into Bundle.boxes (for each generic type argument)
+}
+
+message ScalarValueBox {
+  //bool bool = 1;
+  //int32 int = 2;
+  int64 long = 3; // on the wire there is no difference between int64, int32 and bool. The encoding uses only as much space as necessary
+  //uint32 u_int = 4;
+  uint64 u_long = 5; // on the wire there is no difference between uint64 and uint32
+  float float = 6;
+  double double = 7;
+  bytes bytes = 8;
+  //sint32 s_int = 9;
+  sint64 s_long = 10; // on the wire there is no different between sint32 and sint64
+}
+
+// for collection types and arrays
+message RepeatedValueBox {
+  RepeatedBoolBox bools = 1;
+  RepeatedIntBox ints = 2;
+  RepeatedLongBox longs = 3;
+  RepeatedUIntBox u_ints = 4;
+  RepeatedULongBox u_longs = 5;
+  RepeatedFloatBox floats = 6;
+  RepeatedDoubleBox doubles = 7;
+  RepeatedSIntBox s_ints = 8;
+  RepeatedSLongBox s_longs = 9;
+  RepeatedKeyValuePairsBox kvps = 10;
+
+  ArrayMetaInfoBox arrayMetaInfoBox = 13;
+  uint32 comparer_id = 20;                 // some collections have a comparer (index into Bundle.boxes)
+}
+
+message ArrayMetaInfoBox {                 // TODO: potential for deduplication?
   int32 rank = 1;
   repeated int32 lengths = 2;
   repeated int32 lowerBounds = 3;
 }
 
-message KeyValuePairBox {
-  uint32 type_id = 1;
-  map<uint32, uint32> key_value_pairs = 2;
+message StorableTypeMembersBox {
+  uint32 type_id = 1;                      // StorableType GUID (index into Bundle.type_guids)
+  repeated uint32 keys = 3;
+  repeated uint32 values = 4;
+  StorableTypeMembersBox parent = 5;       // box with members of the base class
 }
+
+message RepeatedBoolBox {
+  repeated bool values = 1;
+}
+
+message RepeatedIntBox {
+  repeated int32 values = 1;
+}
+
+message RepeatedLongBox {
+  repeated int64 values = 1;
+}
+
+message RepeatedUIntBox {
+  repeated uint32 values = 1;
+}
+
+message RepeatedULongBox {
+  repeated uint64 values = 1;
+}
+
+message RepeatedFloatBox {
+  repeated float values = 1;
+}
+
+message RepeatedDoubleBox {
+  repeated double values = 1;
+}
+
+message RepeatedSIntBox {
+  repeated sint32 values = 1;
+}
+
+message RepeatedSLongBox {
+  repeated sint64 values = 1;
+}
+
+message RepeatedKeyValuePairsBox {
+  repeated uint32 keys = 1;
+  repeated uint32 values = 2;
+  // map<uint32, uint32> key_value_pairs = 10;   // separate repeated keys and values is more lightweight
+}
+

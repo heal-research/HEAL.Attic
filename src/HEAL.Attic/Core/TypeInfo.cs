@@ -12,23 +12,28 @@ using System.Reflection;
 
 namespace HEAL.Attic {
   public sealed class TypeInfo {
-    private Func<object> constructor;
+    private ConstructorInfo storableConstructor;
+    private ConstructorInfo defaultConstructor;
 
     public Type Type { get; private set; }
     public ITransformer Transformer { get; private set; }
     public StorableTypeAttribute StorableTypeAttribute { get; private set; }
+    public string StorableTypeAttributeGuid { get; private set; }
     public IEnumerable<ComponentInfo<FieldInfo>> Fields { get; private set; }
-    public IEnumerable<ComponentInfo<PropertyInfo>> Properties { get; private set; }
+    // public IEnumerable<ComponentInfo<PropertyInfo>> Properties { get; private set; }
+    public IEnumerable<ComponentInfo<PropertyInfo>> WriteableProperties { get; private set; }
+    public IEnumerable<ComponentInfo<PropertyInfo>> ReadableProperties { get; private set; }
     public IEnumerable<MethodInfo> BeforeSerializationHooks { get; private set; }
     public IEnumerable<MethodInfo> AfterDeserializationHooks { get; private set; }
     public long Used { get; set; }
 
     public TypeInfo(Type type) {
-      constructor = null;
       Type = type;
       StorableTypeAttribute = StorableTypeAttribute.GetStorableTypeAttribute(type);
+      StorableTypeAttributeGuid = string.Empty;
       Fields = Enumerable.Empty<ComponentInfo<FieldInfo>>();
-      Properties = Enumerable.Empty<ComponentInfo<PropertyInfo>>();
+      WriteableProperties = Enumerable.Empty<ComponentInfo<PropertyInfo>>();
+      ReadableProperties = Enumerable.Empty<ComponentInfo<PropertyInfo>>();
       BeforeSerializationHooks = Enumerable.Empty<MethodInfo>();
       AfterDeserializationHooks = Enumerable.Empty<MethodInfo>();
       Used = 0;
@@ -41,9 +46,9 @@ namespace HEAL.Attic {
 
     private void Reflect() {
       var type = Type;
-
       if (StorableTypeAttribute != null) {
-        string guidPrefix = StorableTypeAttribute.Guid.ToString().ToUpper();
+        StorableTypeAttributeGuid = StorableTypeAttribute.Guid.ToString().ToUpperInvariant();
+        string guidPrefix = StorableTypeAttributeGuid;
         // check constructors
         if (!type.IsValueType && !type.IsEnum && !type.IsInterface &&
           GetStorableConstructor() == null && GetDefaultConstructor() == null)
@@ -92,7 +97,7 @@ namespace HEAL.Attic {
 
             if (sourceType != type) {
               name = nameParts[nameParts.Length - 1];
-              guidPrefix = StorableTypeAttribute.GetStorableTypeAttribute(sourceType).Guid.ToString().ToUpper();
+              guidPrefix = StorableTypeAttribute.GetStorableTypeAttribute(sourceType).Guid.ToString().ToUpperInvariant();
             } else if (tmpGuid != Guid.Empty) {
               name = nameParts[nameParts.Length - 1];
             }
@@ -169,24 +174,32 @@ namespace HEAL.Attic {
         }
 
         Fields = fields;
-        Properties = properties;
+        WriteableProperties = properties.Where(p => p.Writeable).ToArray();
+        ReadableProperties = properties.Where(p => p.Readable).ToArray();
         BeforeSerializationHooks = beforeSerializationHooks;
         AfterDeserializationHooks = afterDeserializationHooks;
       }
     }
 
+    private readonly object[] defaultConstructorParams = new object[] { StorableConstructorFlag.Default };
+    private readonly object[] emptyConstructorParams = new object[0];
     public Func<object> GetConstructor() {
-      if (constructor != null) return constructor;
+      if (storableConstructor != null) return () => storableConstructor.Invoke(defaultConstructorParams);
+      else if (defaultConstructor != null) return () => defaultConstructor.Invoke(emptyConstructorParams);
 
       // get storable constructor
       var ctor = GetStorableConstructor();
-      if (ctor != null)
-        return () => ctor.Invoke(new object[] { StorableConstructorFlag.Default });
-
+      if (ctor != null) {
+        storableConstructor = ctor;
+        return () => storableConstructor.Invoke(defaultConstructorParams);
+      }
+        
       // get default constructor
       ctor = GetDefaultConstructor();
-      if (ctor != null)
-        return () => ctor.Invoke(new object[0]);
+      if (ctor != null) {
+        defaultConstructor = ctor;
+        return () => defaultConstructor.Invoke(emptyConstructorParams);
+      }
 
       throw new PersistenceException("No storable constructor or parameterless constructor found.");
     }

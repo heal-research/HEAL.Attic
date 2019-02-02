@@ -14,7 +14,7 @@ using System.Linq;
 namespace HEAL.Attic {
   public sealed class StaticCache {
     private static readonly object locker = new object();
-
+    
     private readonly Dictionary<Guid, ITransformer> guid2Transformer;
     private readonly Dictionary<ITransformer, Guid> transformer2Guid;
     private readonly Dictionary<Guid, Type> guid2Type;
@@ -171,7 +171,14 @@ namespace HEAL.Attic {
       lock (locker) {
         TypeInfo typeInfo;
         if (!typeInfos.TryGetValue(type, out typeInfo)) {
-          var transformer = guid2Transformer.Values.OrderBy(x => x.Priority).FirstOrDefault(x => x.CanTransformType(type));
+          var transformers = guid2Transformer.Values.OrderBy(x => x.Priority);
+          ITransformer transformer = null;
+          foreach (var t in transformers) {
+            if(t.CanTransformType(type)) {
+              transformer = t;
+              break;
+            }
+          }
           if (transformer == null) throw new PersistenceException("No transformer found for type " + type.AssemblyQualifiedName);
           typeInfo = new TypeInfo(type, transformer);
           typeInfos.Add(type, typeInfo);

@@ -19,26 +19,22 @@ namespace HEAL.Attic {
       bool IEqualityComparer<object>.Equals(object x, object y) {
         if (x == null && y == null) return true;
         if (x == null ^ y == null) return false;
-        if (x.GetType() != y.GetType()) return false;
+        // if (x.GetType() != y.GetType()) return false;
 
-        var type = x.GetType();
-        if (type.IsValueType || type == typeof(string)) return x.Equals(y);
-        return object.ReferenceEquals(x, y);
+        if (x == y) return true; // same reference?
+
+        // for ValueTypes and strings also check Equals
+        var xVal = x as ValueType;
+        var yVal = y as ValueType;
+        if (xVal != null && yVal != null) return xVal.Equals(yVal);
+        var xStr = x as string;
+        var yStr = y as string;
+        if (xStr != null && yStr != null) return xStr.Equals(yStr);
+        return false;
       }
 
       int IEqualityComparer<object>.GetHashCode(object obj) {
         return obj == null ? 0 : obj.GetHashCode();
-      }
-    }
-
-    internal class ReferenceEqualityComparer : EqualityComparer<object> {
-      public override bool Equals(object x, object y) {
-        return ReferenceEquals(x, y);
-      }
-
-      public override int GetHashCode(object obj) {
-        if (obj == null) return 0;
-        return obj.GetHashCode();
       }
     }
 
@@ -154,11 +150,11 @@ namespace HEAL.Attic {
       return strings.GetValue(stringId);
     }
     public string GetComponentInfoKey(uint typeId, uint memberId) {
-      if(!componentInfoKeys.TryGetValue(typeId, out Dictionary<uint, string> dict)) {
+      if (!componentInfoKeys.TryGetValue(typeId, out Dictionary<uint, string> dict)) {
         dict = new Dictionary<uint, string>();
         componentInfoKeys.Add(typeId, dict);
       }
-      if(!dict.TryGetValue(memberId, out string componentInfoKey)) {
+      if (!dict.TryGetValue(memberId, out string componentInfoKey)) {
         componentInfoKey = GetString(typeId) + "." + GetString(memberId);
         dict.Add(memberId, componentInfoKey);
       }

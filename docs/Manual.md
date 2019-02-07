@@ -638,10 +638,12 @@ This method of registering types can be used for any type including types marked
 The source folder contains the `HEAL.Attic.Benchmarks` console application which runs a set of benchmark tests. The benchmarking results can be found in [Benchmarks](Benchmarks.md)
 
 ## License
-HEAL.Attic is released under the MIT license.
+HEAL.Attic is [licensed](../LICENSE.txt) under the MIT License.
 
-Copyright (C) 2018, 2019  
-Heuristic and Evolutionary Algorithms Laboratory (HEAL) and Contributors
+```
+MIT License
+
+Copyright (c) 2018-present Heuristic and Evolutionary Algorithms Laboratory
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -660,3 +662,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```

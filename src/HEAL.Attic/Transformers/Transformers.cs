@@ -6,26 +6,27 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 
 namespace HEAL.Attic {
-  
-  public abstract class BoxTransformer<T> : Transformer {
+  internal abstract class BoxTransformer<T> : Transformer {
     public override bool CanTransformType(Type type) {
       return type == typeof(T);
     }
 
-    public override Box ToBox(object o, Mapper mapper) {
+    public override Box CreateBox(object o, Mapper mapper) {
       var box = new Box {
         TransformerId = mapper.GetTransformerId(this),
         TypeBoxId = mapper.GetBoxId(o.GetType())
       };
-      Populate(box, (T)o, mapper);
       return box;
+    }
+
+    public override void FillBox(Box box, object o, Mapper mapper) {
+      Populate(box, (T)o, mapper);
     }
 
     public override object ToObject(Box box, Mapper mapper) {
@@ -38,16 +39,17 @@ namespace HEAL.Attic {
   }
 
   [Transformer("854156DA-2A37-450F-92ED-355FBBD8D131", 50)]
-  
   internal sealed class TypeTransformer : Transformer {
     public override bool CanTransformType(Type type) {
       return typeof(Type).IsAssignableFrom(type);
     }
 
-    public override Box ToBox(object o, Mapper mapper) {
-      var box = new Box { TransformerId = mapper.GetTransformerId(this) };
+    public override Box CreateBox(object o, Mapper mapper) {
+      return new Box { TransformerId = mapper.GetTransformerId(this) };
+    }
+
+    public override void FillBox(Box box, object o, Mapper mapper) {
       Populate(box, o, mapper);
-      return box;
     }
 
     private void Populate(Box box, object value, Mapper mapper) {
@@ -83,149 +85,81 @@ namespace HEAL.Attic {
   }
 
   [Transformer("4C610596-5234-4C49-998E-30007D64492E", 100)]
-  
   internal sealed class StringBoxTransformer : BoxTransformer<string> {
     protected override void Populate(Box box, string value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = mapper.GetStringId(value); box.Value = b; }
     protected override string Extract(Box box, Type type, Mapper mapper) { return mapper.GetString((uint)box.Value.ULong); }
   }
 
   [Transformer("58E69402-2533-426A-B9B5-9F2EB5241560", 101)]
-  
   internal sealed class BoolBoxTransformer : BoxTransformer<bool> {
     protected override void Populate(Box box, bool value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = Convert.ToUInt64(value); box.Value = b; }
     protected override bool Extract(Box box, Type type, Mapper mapper) { return Convert.ToBoolean(box.Value.ULong); }
   }
 
   [Transformer("D78F3391-3CAE-4376-9348-7FB38A4DE0EB", 102)]
-  
   internal sealed class IntBoxTransformer : BoxTransformer<int> {
     protected override void Populate(Box box, int value, Mapper mapper) { var b = new ScalarValueBox(); b.SLong = value; box.Value = b; }
     protected override int Extract(Box box, Type type, Mapper mapper) { return (int)box.Value.SLong; }
   }
 
   [Transformer("25881263-F452-492E-9FD1-24E1938B048B", 103)]
-  
   internal sealed class UIntBoxTransformer : BoxTransformer<uint> {
     protected override void Populate(Box box, uint value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = value; box.Value = b; }
     protected override uint Extract(Box box, Type type, Mapper mapper) { return (uint)box.Value.ULong; }
   }
 
   [Transformer("F4175165-382B-4B03-921E-5F923510FB1E", 104)]
-  
   internal sealed class LongBoxTransformer : BoxTransformer<long> {
     protected override void Populate(Box box, long value, Mapper mapper) { var b = new ScalarValueBox(); b.SLong = value; box.Value = b; }
     protected override long Extract(Box box, Type type, Mapper mapper) { return box.Value.SLong; }
   }
 
   [Transformer("E8F63973-3C0C-4FA9-B068-40EF4463B30B", 105)]
-  
   internal sealed class ULongBoxTransformer : BoxTransformer<ulong> {
     protected override void Populate(Box box, ulong value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = value; box.Value = b; }
     protected override ulong Extract(Box box, Type type, Mapper mapper) { return box.Value.ULong; }
   }
 
   [Transformer("15489146-EA11-4B90-8020-AF5C10A2531C", 106)]
-  
   internal sealed class FloatBoxTransformer : BoxTransformer<float> {
     protected override void Populate(Box box, float value, Mapper mapper) { var b = new ScalarValueBox(); b.Float = value; box.Value = b; }
     protected override float Extract(Box box, Type type, Mapper mapper) { return box.Value.Float; }
   }
 
   [Transformer("91FD51F3-9C47-4944-AC85-273ED0561E87", 107)]
-  
   internal sealed class DoubleBoxTransformer : BoxTransformer<double> {
     protected override void Populate(Box box, double value, Mapper mapper) { var b = new ScalarValueBox(); b.Double = value; box.Value = b; }
     protected override double Extract(Box box, Type type, Mapper mapper) { return box.Value.Double; }
   }
 
   [Transformer("BCB087EA-E477-47EB-9BCE-8C64BAC2F288", 108)]
-  
   internal sealed class ByteBoxTransformer : BoxTransformer<byte> {
     protected override void Populate(Box box, byte value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = value; box.Value = b; }
     protected override byte Extract(Box box, Type type, Mapper mapper) { return (byte)box.Value.ULong; }
   }
 
   [Transformer("B90F61D9-75D0-4CAC-AF93-B8C6AB68F642", 109)]
-  
   internal sealed class SByteBoxTransformer : BoxTransformer<sbyte> {
     protected override void Populate(Box box, sbyte value, Mapper mapper) { var b = new ScalarValueBox(); b.SLong = value; box.Value = b; }
     protected override sbyte Extract(Box box, Type type, Mapper mapper) { return (sbyte)box.Value.SLong; }
   }
 
   [Transformer("95EB44A4-EADD-4DA9-B60F-3262FAD6134B", 110)]
-  
   internal sealed class ShortBoxTransformer : BoxTransformer<short> {
     protected override void Populate(Box box, short value, Mapper mapper) { var b = new ScalarValueBox(); b.SLong = value; box.Value = b; }
     protected override short Extract(Box box, Type type, Mapper mapper) { return (short)box.Value.SLong; }
   }
 
   [Transformer("E3A33614-9120-400E-BAD9-2594F6804DA8", 111)]
-  
   internal sealed class UShortBoxTransformer : BoxTransformer<ushort> {
     protected override void Populate(Box box, ushort value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = value; box.Value = b; }
     protected override ushort Extract(Box box, Type type, Mapper mapper) { return (ushort)box.Value.ULong; }
   }
 
   [Transformer("C64EA534-E2E1-48F0-86C5-648AA02117BC", 112)]
-  
   internal sealed class CharBoxTransformer : BoxTransformer<char> {
     protected override void Populate(Box box, char value, Mapper mapper) { var b = new ScalarValueBox(); b.ULong = value; box.Value = b; }
     protected override char Extract(Box box, Type type, Mapper mapper) { return (char)box.Value.ULong; }
-  }
-
-  [Transformer("C47A62F5-F113-4A43-A8EE-CF817EC799A2", 303)]
-  internal sealed class DictionaryTransformer : BoxTransformer<object> {   // TODO dictionaries of value types can be stored more efficiently?
-    public override bool CanTransformType(Type type) {
-      return type.IsGenericType && typeof(Dictionary<,>) == type.GetGenericTypeDefinition();
-    }
-
-    protected override void Populate(Box box, object value, Mapper mapper) {
-      var kvpBox = new RepeatedValueBox();
-      kvpBox.Kvps = new RepeatedKeyValuePairsBox();
-      box.Values = kvpBox;
-
-      var keys = kvpBox.Kvps.Keys;
-      var values = kvpBox.Kvps.Values;
-      foreach (DictionaryEntry item in (IDictionary)value) {
-        if (mapper.CancellationToken.IsCancellationRequested) return;
-        keys.Add(mapper.GetBoxId(item.Key));
-        values.Add(mapper.GetBoxId(item.Value));
-      }
-
-      var type = value.GetType();
-      var propertyInfo = type.GetProperty("Comparer");
-      var comparer = propertyInfo.GetValue(value);
-
-      var comparerType = comparer.GetType();
-      if (StorableTypeAttribute.IsStorableType(comparerType))
-        kvpBox.ComparerId = mapper.GetBoxId(comparer);
-      else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
-        throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
-      else
-        kvpBox.ComparerId = mapper.GetBoxId(comparerType);
-    }
-
-    protected override object Extract(Box box, Type type, Mapper mapper) {
-      var comparerObj = mapper.GetObject(box.Values.ComparerId);
-      var comparer = comparerObj is Type ? Activator.CreateInstance((Type)comparerObj) : comparerObj;
-
-      return Activator.CreateInstance(type, box.Values.Kvps.Keys.Count, comparer);
-    }
-
-    public override void FillFromBox(object obj, Box box, Mapper mapper) {
-      var type = obj.GetType();
-      var dict = (IDictionary)obj;
-
-      var addMethod = type.GetMethod("Add");
-      var kvpBox = box.Values;
-      var keys = kvpBox.Kvps.Keys;
-      var values = kvpBox.Kvps.Values;
-      for (int i = 0; i < kvpBox.Kvps.Keys.Count; i++) {
-        var key = mapper.GetObject(keys[i]);
-        var value = mapper.GetObject(values[i]);
-        dict.Add(key, value);
-      }
-    }
   }
 
   [Transformer("93FF076B-BC4B-4C39-8C40-15E004468C98", 219)]
@@ -234,14 +168,17 @@ namespace HEAL.Attic {
       return typeof(Enum).IsAssignableFrom(type);
     }
 
-    public override Box ToBox(object o, Mapper mapper) {
+    public override Box CreateBox(object o, Mapper mapper) {
       var box = new Box {
         TransformerId = mapper.GetTransformerId(this),
         TypeBoxId = mapper.GetBoxId(o.GetType()),
       };
+      return box;
+    }
+
+    public override void FillBox(Box box, object o, Mapper mapper) {
       box.Value = new ScalarValueBox();
       box.Value.ULong = mapper.GetStringId(Enum.Format(o.GetType(), o, "G")); // TODO: introduce old names for enum values to enable refactoring
-      return box;
     }
 
     public override object ToObject(Box box, Mapper mapper) {
@@ -249,14 +186,6 @@ namespace HEAL.Attic {
       return type == null ? null : Enum.Parse(type, mapper.GetString((uint)box.Value.ULong));
     }
   }
-
-  // transforms objects (e.g. [Storable] object o = new object())
-  [Transformer("268617FE-3F0F-4029-8248-EDA420901FB6", 10000)]
-  internal sealed class ObjectBoxTransformer : BoxTransformer<object> {
-    protected override void Populate(Box box, object value, Mapper mapper) { }
-    protected override object Extract(Box box, Type type, Mapper mapper) { return new object(); }
-  }
-
 
   [Transformer("90F9F16D-9F94-491B-AC3B-E1C6F3432127", 400)]
   internal sealed class DecimalBoxTransformer : BoxTransformer<decimal> {
@@ -413,5 +342,12 @@ namespace HEAL.Attic {
 
       return obj;
     }
+  }
+
+  // transforms objects (e.g. [Storable] object o = new object())
+  [Transformer("268617FE-3F0F-4029-8248-EDA420901FB6", 10000)]
+  internal sealed class ObjectBoxTransformer : BoxTransformer<object> {
+    protected override void Populate(Box box, object value, Mapper mapper) { }
+    protected override object Extract(Box box, Type type, Mapper mapper) { return new object(); }
   }
 }

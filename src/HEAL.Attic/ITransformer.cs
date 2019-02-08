@@ -14,7 +14,8 @@ namespace HEAL.Attic {
     uint Priority { get; }
 
     bool CanTransformType(Type type);
-    Box ToBox(object o, Mapper mapper);
+    Box CreateBox(object o, Mapper mapper);
+    void FillBox(Box box, object o, Mapper mapper);
     object ToObject(Box box, Mapper mapper);
     void FillFromBox(object obj, Box box, Mapper mapper);
   }

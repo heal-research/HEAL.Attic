@@ -18,7 +18,8 @@ namespace HEAL.Attic {
     }
 
     public abstract bool CanTransformType(Type type);
-    public abstract Box ToBox(object o, Mapper mapper);
+    public abstract Box CreateBox(object o, Mapper mapper);
+    public abstract void FillBox(Box box, object o, Mapper mapper);
     public abstract object ToObject(Box box, Mapper mapper);
 
     public virtual void FillFromBox(object obj, Box box, Mapper mapper) { }

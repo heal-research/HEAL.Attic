@@ -6,11 +6,8 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using HEAL.Attic;
 
 namespace HEAL.Attic.Transformers {
   [Transformer("78556C88-0FEE-4602-95C7-A469B2DDB468", 600)]

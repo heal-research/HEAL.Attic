@@ -17,19 +17,12 @@ namespace HEAL.Attic {
   public sealed class Mapper {
     internal class MappingEqualityComparer : IEqualityComparer<object> {
       bool IEqualityComparer<object>.Equals(object x, object y) {
-        if (x == null && y == null) return true;
-        if (x == null ^ y == null) return false;
-        // if (x.GetType() != y.GetType()) return false;
-
-        if (x == y) return true; // same reference?
+        if (x == y) return true;
 
         // for ValueTypes and strings also check Equals
-        var xVal = x as ValueType;
-        var yVal = y as ValueType;
-        if (xVal != null && yVal != null) return xVal.Equals(yVal);
-        var xStr = x as string;
-        var yStr = y as string;
-        if (xStr != null && yStr != null) return xStr.Equals(yStr);
+        if (x is ValueType xVal && y is ValueType yVal) return xVal.Equals(yVal);
+        if (x is string xStr && y is string yStr) return xStr.Equals(yStr);
+
         return false;
       }
 
@@ -51,6 +44,8 @@ namespace HEAL.Attic {
 
     private Index<ITransformer> transformers;
     private Index<Type> types;
+
+    private Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
 
     private Dictionary<uint, Box> boxId2Box;
     private Dictionary<object, uint> object2BoxId;
@@ -113,7 +108,9 @@ namespace HEAL.Attic {
         boxId = ++BoxCount;
         typeInfo.Used++;
         object2BoxId.Add(o, boxId);
-        boxId2Box.Add(boxId, typeInfo.Transformer.ToBox(o, this));
+        var box = typeInfo.Transformer.CreateBox(o, this);
+        boxId2Box.Add(boxId, box);
+        objectsToProcess.Push(Tuple.Create(o, box));
       }
       return boxId;
     }
@@ -135,7 +132,6 @@ namespace HEAL.Attic {
         var transformer = transformers.GetValue(box.TransformerId);
         o = transformer.ToObject(box, this);
         boxId2Object.Add(boxId, o);
-        if (o != null) transformer.FillFromBox(o, box, this);
       }
 
       return o;
@@ -181,6 +177,15 @@ namespace HEAL.Attic {
       sw.Start();
 
       bundle.RootBoxId = mapper.GetBoxId(root);
+
+      while (mapper.objectsToProcess.Any()) {
+        var tuple = mapper.objectsToProcess.Pop();
+        var o = tuple.Item1;
+        var box = tuple.Item2;
+        var transformer = mapper.transformers.GetValue(box.TransformerId);
+        transformer.FillBox(box, o, mapper);
+      }
+
       bundle.TransformerGuids.AddRange(mapper.transformers.GetValues().Select(x => x.Guid).Select(x => ByteString.CopyFrom(x.ToByteArray())));
       bundle.TypeGuids.AddRange(mapper.types.GetValues().Select(x => ByteString.CopyFrom(StaticCache.GetGuid(x).ToByteArray())));
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
@@ -218,6 +223,21 @@ namespace HEAL.Attic {
       mapper.types = new Index<Type>(types);
       mapper.boxId2Box = bundle.Boxes.Select((b, i) => new { Box = b, Index = i }).ToDictionary(k => (uint)k.Index + 1, v => v.Box);
       mapper.strings = new Index<string>(bundle.Strings);
+
+      var boxes = bundle.Boxes;
+
+      for (int i = boxes.Count - 1; i >= 0; i--) {
+        mapper.GetObject((uint)i + 1);
+      }
+
+      for (int i = boxes.Count; i > 0; i--) {
+        var box = mapper.boxId2Box[(uint)i];
+        var o = mapper.boxId2Object[(uint)i];
+        if (o == null) continue;
+
+        var transformer = mapper.transformers.GetValue(box.TransformerId);
+        transformer.FillFromBox(o, box, mapper);
+      }
 
       var root = mapper.GetObject(bundle.RootBoxId);
 

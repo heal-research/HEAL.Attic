@@ -6,6 +6,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,6 +17,8 @@ using Google.Protobuf;
 namespace HEAL.Attic {
   public sealed class Mapper {
     internal class MappingEqualityComparer : IEqualityComparer<object> {
+      private Dictionary<string, int> collisionCount = new Dictionary<string, int>();
+
       bool IEqualityComparer<object>.Equals(object x, object y) {
         if (x == y) return true;
 
@@ -27,7 +30,7 @@ namespace HEAL.Attic {
       }
 
       int IEqualityComparer<object>.GetHashCode(object obj) {
-        return obj == null ? 0 : obj.GetHashCode();
+        return obj == null ? 0 : obj.GetHashCode() ^ obj.GetType().GetHashCode();
       }
     }
 

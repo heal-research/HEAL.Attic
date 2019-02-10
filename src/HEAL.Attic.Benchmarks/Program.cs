@@ -14,6 +14,10 @@ namespace HEAL.Attic.Benchmarks {
   public class Program {
     public static readonly int REPS = 10;
     public static void Main(string[] args) {
+      Console.WriteLine("Warmup (int[])");
+      Benchmark(MakeIntArray);
+      Console.WriteLine();
+
       Console.WriteLine("int[]");
       Benchmark(MakeIntArray);
       Console.WriteLine();
@@ -186,14 +190,12 @@ namespace HEAL.Attic.Benchmarks {
     private class ListNode {
       [Storable]
       public ListNode Next;
-      [Storable]
-      public int Value;
     }
     public static object MakeLinkedList(int size, Random rand) {
       var first = new ListNode();
       var cur = first;
       for (int i = 0; i < size; i++) {
-        cur.Next = new ListNode() { Value = rand.Next() };
+        cur.Next = new ListNode();
         cur = cur.Next;
       }
       return first;

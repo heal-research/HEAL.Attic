@@ -65,8 +65,9 @@ message ArrayMetaInfoBox {                 // TODO: potential for deduplication?
 
 message StorableTypeMembersBox {
   uint32 type_id = 1;                      // StorableType GUID (index into Bundle.type_guids)
-  repeated uint32 keys = 3;
-  repeated uint32 values = 4;
+  repeated uint32 keyValuePairs = 2;
+  // 3
+  // 4;
   StorableTypeMembersBox parent = 5;       // box with members of the base class
 }
 

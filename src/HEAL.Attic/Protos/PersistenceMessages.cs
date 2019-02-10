@@ -29,7 +29,7 @@ namespace HEAL.Attic {
             "YW5zZm9ybWVyX2lkGAEgASgNEhMKC3R5cGVfYm94X2lkGAIgASgNEikKBXZh",
             "bHVlGAMgASgLMhouSEVBTC5BdHRpYy5TY2FsYXJWYWx1ZUJveBIhCgR0eXBl",
             "GAQgASgLMhMuSEVBTC5BdHRpYy5UeXBlQm94EiwKBnZhbHVlcxgFIAEoCzIc",
-            "LkhFQUwuQXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAogASgL",
+            "LkhFQUwuQXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAYgASgL",
             "MiIuSEVBTC5BdHRpYy5TdG9yYWJsZVR5cGVNZW1iZXJzQm94IjgKB1R5cGVC",
             "b3gSDwoHdHlwZV9pZBgBIAEoDRIcChRnZW5lcmljX3R5cGVfYm94X2lkcxgC",
             "IAMoDSJsCg5TY2FsYXJWYWx1ZUJveBIMCgRsb25nGAMgASgDEg4KBnVfbG9u",
@@ -48,18 +48,18 @@ namespace HEAL.Attic {
             "dWVQYWlyc0JveBI2ChBhcnJheU1ldGFJbmZvQm94GA0gASgLMhwuSEVBTC5B",
             "dHRpYy5BcnJheU1ldGFJbmZvQm94EhMKC2NvbXBhcmVyX2lkGBQgASgNIkYK",
             "EEFycmF5TWV0YUluZm9Cb3gSDAoEcmFuaxgBIAEoBRIPCgdsZW5ndGhzGAIg",
-            "AygFEhMKC2xvd2VyQm91bmRzGAMgAygFInsKFlN0b3JhYmxlVHlwZU1lbWJl",
-            "cnNCb3gSDwoHdHlwZV9pZBgBIAEoDRIMCgRrZXlzGAMgAygNEg4KBnZhbHVl",
-            "cxgEIAMoDRIyCgZwYXJlbnQYBSABKAsyIi5IRUFMLkF0dGljLlN0b3JhYmxl",
-            "VHlwZU1lbWJlcnNCb3giIQoPUmVwZWF0ZWRCb29sQm94Eg4KBnZhbHVlcxgB",
-            "IAMoCCIgCg5SZXBlYXRlZEludEJveBIOCgZ2YWx1ZXMYASADKAUiIQoPUmVw",
-            "ZWF0ZWRMb25nQm94Eg4KBnZhbHVlcxgBIAMoAyIhCg9SZXBlYXRlZFVJbnRC",
-            "b3gSDgoGdmFsdWVzGAEgAygNIiIKEFJlcGVhdGVkVUxvbmdCb3gSDgoGdmFs",
-            "dWVzGAEgAygEIiIKEFJlcGVhdGVkRmxvYXRCb3gSDgoGdmFsdWVzGAEgAygC",
-            "IiMKEVJlcGVhdGVkRG91YmxlQm94Eg4KBnZhbHVlcxgBIAMoASIhCg9SZXBl",
-            "YXRlZFNJbnRCb3gSDgoGdmFsdWVzGAEgAygRIiIKEFJlcGVhdGVkU0xvbmdC",
-            "b3gSDgoGdmFsdWVzGAEgAygSIjgKGFJlcGVhdGVkS2V5VmFsdWVQYWlyc0Jv",
-            "eBIMCgRrZXlzGAEgAygNEg4KBnZhbHVlcxgCIAMoDWIGcHJvdG8z"));
+            "AygFEhMKC2xvd2VyQm91bmRzGAMgAygFInQKFlN0b3JhYmxlVHlwZU1lbWJl",
+            "cnNCb3gSDwoHdHlwZV9pZBgBIAEoDRIVCg1rZXlWYWx1ZVBhaXJzGAIgAygN",
+            "EjIKBnBhcmVudBgFIAEoCzIiLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTWVt",
+            "YmVyc0JveCIhCg9SZXBlYXRlZEJvb2xCb3gSDgoGdmFsdWVzGAEgAygIIiAK",
+            "DlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMoBSIhCg9SZXBlYXRlZExv",
+            "bmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVhdGVkVUludEJveBIOCgZ2",
+            "YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0JveBIOCgZ2YWx1ZXMYASAD",
+            "KAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1ZXMYASADKAIiIwoRUmVw",
+            "ZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygBIiEKD1JlcGVhdGVkU0lu",
+            "dEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0ZWRTTG9uZ0JveBIOCgZ2",
+            "YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1ZVBhaXJzQm94EgwKBGtl",
+            "eXMYASADKA0SDgoGdmFsdWVzGAIgAygNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -69,7 +69,7 @@ namespace HEAL.Attic {
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ArrayMetaInfoBox", "ComparerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetaInfoBox), global::HEAL.Attic.ArrayMetaInfoBox.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "TypeId", "Keys", "Values", "Parent" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "TypeId", "KeyValuePairs", "Parent" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedBoolBox), global::HEAL.Attic.RepeatedBoolBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedIntBox), global::HEAL.Attic.RepeatedIntBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedLongBox), global::HEAL.Attic.RepeatedLongBox.Parser, new[]{ "Values" }, null, null, null),
@@ -385,7 +385,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "members" field.</summary>
-    public const int MembersFieldNumber = 10;
+    public const int MembersFieldNumber = 6;
     private global::HEAL.Attic.StorableTypeMembersBox members_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.StorableTypeMembersBox Members {
@@ -457,7 +457,7 @@ namespace HEAL.Attic {
         output.WriteMessage(Values);
       }
       if (members_ != null) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(50);
         output.WriteMessage(Members);
       }
     }
@@ -560,7 +560,7 @@ namespace HEAL.Attic {
             input.ReadMessage(values_);
             break;
           }
-          case 82: {
+          case 50: {
             if (members_ == null) {
               members_ = new global::HEAL.Attic.StorableTypeMembersBox();
             }
@@ -1668,8 +1668,7 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public StorableTypeMembersBox(StorableTypeMembersBox other) : this() {
       typeId_ = other.typeId_;
-      keys_ = other.keys_.Clone();
-      values_ = other.values_.Clone();
+      keyValuePairs_ = other.keyValuePairs_.Clone();
       Parent = other.parent_ != null ? other.Parent.Clone() : null;
     }
 
@@ -1692,31 +1691,22 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "keys" field.</summary>
-    public const int KeysFieldNumber = 3;
-    private static readonly pb::FieldCodec<uint> _repeated_keys_codec
-        = pb::FieldCodec.ForUInt32(26);
-    private readonly pbc::RepeatedField<uint> keys_ = new pbc::RepeatedField<uint>();
+    /// <summary>Field number for the "keyValuePairs" field.</summary>
+    public const int KeyValuePairsFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_keyValuePairs_codec
+        = pb::FieldCodec.ForUInt32(18);
+    private readonly pbc::RepeatedField<uint> keyValuePairs_ = new pbc::RepeatedField<uint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> Keys {
-      get { return keys_; }
-    }
-
-    /// <summary>Field number for the "values" field.</summary>
-    public const int ValuesFieldNumber = 4;
-    private static readonly pb::FieldCodec<uint> _repeated_values_codec
-        = pb::FieldCodec.ForUInt32(34);
-    private readonly pbc::RepeatedField<uint> values_ = new pbc::RepeatedField<uint>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> Values {
-      get { return values_; }
+    public pbc::RepeatedField<uint> KeyValuePairs {
+      get { return keyValuePairs_; }
     }
 
     /// <summary>Field number for the "parent" field.</summary>
     public const int ParentFieldNumber = 5;
     private global::HEAL.Attic.StorableTypeMembersBox parent_;
     /// <summary>
-    /// box with members of the base class
+    /// 3
+    /// 4;
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.StorableTypeMembersBox Parent {
@@ -1740,8 +1730,7 @@ namespace HEAL.Attic {
         return true;
       }
       if (TypeId != other.TypeId) return false;
-      if(!keys_.Equals(other.keys_)) return false;
-      if(!values_.Equals(other.values_)) return false;
+      if(!keyValuePairs_.Equals(other.keyValuePairs_)) return false;
       if (!object.Equals(Parent, other.Parent)) return false;
       return true;
     }
@@ -1750,8 +1739,7 @@ namespace HEAL.Attic {
     public override int GetHashCode() {
       int hash = 1;
       if (TypeId != 0) hash ^= TypeId.GetHashCode();
-      hash ^= keys_.GetHashCode();
-      hash ^= values_.GetHashCode();
+      hash ^= keyValuePairs_.GetHashCode();
       if (parent_ != null) hash ^= Parent.GetHashCode();
       return hash;
     }
@@ -1767,8 +1755,7 @@ namespace HEAL.Attic {
         output.WriteRawTag(8);
         output.WriteUInt32(TypeId);
       }
-      keys_.WriteTo(output, _repeated_keys_codec);
-      values_.WriteTo(output, _repeated_values_codec);
+      keyValuePairs_.WriteTo(output, _repeated_keyValuePairs_codec);
       if (parent_ != null) {
         output.WriteRawTag(42);
         output.WriteMessage(Parent);
@@ -1781,8 +1768,7 @@ namespace HEAL.Attic {
       if (TypeId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
       }
-      size += keys_.CalculateSize(_repeated_keys_codec);
-      size += values_.CalculateSize(_repeated_values_codec);
+      size += keyValuePairs_.CalculateSize(_repeated_keyValuePairs_codec);
       if (parent_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Parent);
       }
@@ -1797,8 +1783,7 @@ namespace HEAL.Attic {
       if (other.TypeId != 0) {
         TypeId = other.TypeId;
       }
-      keys_.Add(other.keys_);
-      values_.Add(other.values_);
+      keyValuePairs_.Add(other.keyValuePairs_);
       if (other.parent_ != null) {
         if (parent_ == null) {
           parent_ = new global::HEAL.Attic.StorableTypeMembersBox();
@@ -1819,14 +1804,9 @@ namespace HEAL.Attic {
             TypeId = input.ReadUInt32();
             break;
           }
-          case 26:
-          case 24: {
-            keys_.AddEntriesFrom(input, _repeated_keys_codec);
-            break;
-          }
-          case 34:
-          case 32: {
-            values_.AddEntriesFrom(input, _repeated_values_codec);
+          case 18:
+          case 16: {
+            keyValuePairs_.AddEntriesFrom(input, _repeated_keyValuePairs_codec);
             break;
           }
           case 42: {

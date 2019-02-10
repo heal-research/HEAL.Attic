@@ -49,8 +49,8 @@ namespace HEAL.Attic.Transformers {
         membersBox.TypeId = mapper.GetStringId(typeInfo.StorableTypeAttributeGuid);
 
         foreach (var componentInfo in typeInfo.Fields) {
-          membersBox.Keys.Add(mapper.GetStringId(componentInfo.Name));
-          membersBox.Values.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value)));
+          membersBox.KeyValuePairs.Add(mapper.GetStringId(componentInfo.Name));
+          membersBox.KeyValuePairs.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value)));
         }
 
         foreach (var componentInfo in typeInfo.ReadableProperties) {
@@ -58,8 +58,8 @@ namespace HEAL.Attic.Transformers {
 
           if (!set.Add(Tuple.Create(declaringType, componentInfo.Name))) continue;
 
-          membersBox.Keys.Add(mapper.GetStringId(componentInfo.Name));
-          membersBox.Values.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value, null)));
+          membersBox.KeyValuePairs.Add(mapper.GetStringId(componentInfo.Name));
+          membersBox.KeyValuePairs.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value, null)));
         }
 
         type = type.BaseType;
@@ -76,9 +76,9 @@ namespace HEAL.Attic.Transformers {
       var dict = new Dictionary<string, object>();
       var members = box.Members;
       while (members != null) {
-        for (int i = 0; i < members.Keys.Count; i++) {
-          string key = mapper.GetComponentInfoKey(members.TypeId, members.Keys[i]);
-          object value = mapper.GetObject(members.Values[i]);
+        for (int i = 0; i < members.KeyValuePairs.Count; i += 2) {
+          string key = mapper.GetComponentInfoKey(members.TypeId, members.KeyValuePairs[i]);
+          object value = mapper.GetObject(members.KeyValuePairs[i + 1]);
           dict.Add(key, value);
         }
         members = members.Parent;

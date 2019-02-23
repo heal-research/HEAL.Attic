@@ -14,7 +14,7 @@ using System.Linq;
 namespace HEAL.Attic {
   public sealed class StaticCache {
     private static readonly object locker = new object();
-    
+
     private readonly Dictionary<Guid, ITransformer> guid2Transformer;
     private readonly Dictionary<ITransformer, Guid> transformer2Guid;
     private readonly Dictionary<Guid, Type> guid2Type;
@@ -174,7 +174,7 @@ namespace HEAL.Attic {
           var transformers = guid2Transformer.Values.OrderBy(x => x.Priority);
           ITransformer transformer = null;
           foreach (var t in transformers) {
-            if(t.CanTransformType(type)) {
+            if (t.CanTransformType(type)) {
               transformer = t;
               break;
             }

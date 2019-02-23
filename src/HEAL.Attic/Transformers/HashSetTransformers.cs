@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using HEAL.Attic;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   internal abstract class HashSetTransformer<T> : BoxTransformer<object> {
     public override bool CanTransformType(Type type) {
       return

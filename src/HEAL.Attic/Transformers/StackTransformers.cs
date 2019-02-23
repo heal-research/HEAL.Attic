@@ -10,9 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HEAL.Attic;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   internal abstract class StackTransformer<T> : BoxTransformer<object> {
     public override bool CanTransformType(Type type) {
       return
@@ -43,7 +42,7 @@ namespace HEAL.Attic.Transformers {
 
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
       var t = obj.GetType();
-      if(t.GetGenericArguments()[0].IsPrimitive) return;
+      if (t.GetGenericArguments()[0].IsPrimitive) return;
       var arrfi = t.GetField("_array", BindingFlags.NonPublic | BindingFlags.Instance);
       var _array = (Array)arrfi.GetValue(obj);
       var sizeFi = t.GetField("_size", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
 
   internal abstract class MultiDimStructArrayTransformer<T> : BoxTransformer<object> where T : struct {
     public override bool CanTransformType(Type type) {

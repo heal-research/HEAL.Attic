@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   [Transformer("C47A62F5-F113-4A43-A8EE-CF817EC799A2", 303)]
   internal sealed class DictionaryTransformer : BoxTransformer<object> {   // TODO dictionaries of value types can be stored more efficiently?
     public override bool CanTransformType(Type type) {

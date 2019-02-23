@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HEAL.Attic;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   internal abstract class ListTransformer<T> : BoxTransformer<object> {
     public override bool CanTransformType(Type type) {
       return
@@ -36,7 +36,7 @@ namespace HEAL.Attic.Transformers {
 
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
       var l = (IList)obj;
-      if(l.GetType().GetGenericArguments()[0].IsPrimitive) return;
+      if (l.GetType().GetGenericArguments()[0].IsPrimitive) return;
       foreach (var v in ExtractValues(box.Values, mapper)) l.Add(v);
     }
   }

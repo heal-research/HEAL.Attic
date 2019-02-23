@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using HEAL.Attic;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   [Transformer("F8A2F91F-3FCE-4514-A9E6-3B376BD3F379", 200)]
   internal abstract class QueueTransformer<T> : BoxTransformer<object> {
     public override bool CanTransformType(Type type) {
@@ -40,7 +40,7 @@ namespace HEAL.Attic.Transformers {
 
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
       var t = obj.GetType();
-      if(t.GetGenericArguments()[0].IsPrimitive) return;
+      if (t.GetGenericArguments()[0].IsPrimitive) return;
       var _arrayFieldInfo = t.GetField("_array", BindingFlags.NonPublic | BindingFlags.Instance);
       var _array = (Array)_arrayFieldInfo.GetValue(obj);
       var _headFieldInfo = t.GetField("_head", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -9,9 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace HEAL.Attic.Transformers {
+namespace HEAL.Attic {
   [Transformer("78556C88-0FEE-4602-95C7-A469B2DDB468", 600)]
   internal sealed class StorableTypeBoxTransformer : BoxTransformer<object> {
+
+
     public override bool CanTransformType(Type type) {
       return StorableTypeAttribute.IsStorableType(type) && !type.IsValueType && !type.IsEnum || // don't transform structs or enums
         type.BaseType != null && CanTransformType(type.BaseType);
@@ -23,9 +25,9 @@ namespace HEAL.Attic.Transformers {
       var type = value.GetType();
 
       // traverse type hierarchy
-      do {
-        var typeInfo = Mapper.StaticCache.GetTypeInfo(type);
 
+      var typeInfo = Mapper.StaticCache.GetTypeInfo(type);
+      do {
         foreach (var hook in typeInfo.BeforeSerializationHooks) {
           try {
             hook.Invoke(value, emptyArgs);
@@ -35,22 +37,27 @@ namespace HEAL.Attic.Transformers {
         }
 
         type = type.BaseType;
+        typeInfo = Mapper.StaticCache.GetTypeInfo(type);
       } while (StorableTypeAttribute.IsStorableType(type) && !mapper.CancellationToken.IsCancellationRequested);
 
-      type = value.GetType();
 
       var set = new HashSet<Tuple<Type, string>>();
 
       // traverse type hierarchy
       var membersBox = new StorableTypeMembersBox();
       box.Members = membersBox;
-      do {
-        var typeInfo = Mapper.StaticCache.GetTypeInfo(type);
-        membersBox.TypeId = mapper.GetStringId(typeInfo.StorableTypeAttributeGuid);
+
+      type = value.GetType();
+      typeInfo = Mapper.StaticCache.GetTypeInfo(type);
+
+      membersBox.StorableTypeLayoutId = mapper.GetStorableTypeLayoutIds(typeInfo.StorableTypeAttributeGuid);
+      var layout = mapper.GetStorableTypeLayout(membersBox.StorableTypeLayoutId);
+
+      while (StorableTypeAttribute.IsStorableType(type) && !mapper.CancellationToken.IsCancellationRequested) {
 
         foreach (var componentInfo in typeInfo.Fields) {
-          membersBox.KeyValuePairs.Add(mapper.GetStringId(componentInfo.Name));
-          membersBox.KeyValuePairs.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value)));
+          if (!layout.IsPopulated) layout.MemberNames.Add(componentInfo.Name);
+          membersBox.ValueBoxId.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value)));
         }
 
         foreach (var componentInfo in typeInfo.ReadableProperties) {
@@ -58,14 +65,20 @@ namespace HEAL.Attic.Transformers {
 
           if (!set.Add(Tuple.Create(declaringType, componentInfo.Name))) continue;
 
-          membersBox.KeyValuePairs.Add(mapper.GetStringId(componentInfo.Name));
-          membersBox.KeyValuePairs.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value, null)));
+          if (!layout.IsPopulated) layout.MemberNames.Add(componentInfo.Name);
+          membersBox.ValueBoxId.Add(mapper.GetBoxId(componentInfo.MemberInfo.GetValue(value, null)));
         }
 
+        layout.IsPopulated = true;
+
+        // prepare for next iteration
         type = type.BaseType;
-        membersBox.Parent = new StorableTypeMembersBox();
-        membersBox = membersBox.Parent;
-      } while (StorableTypeAttribute.IsStorableType(type) && !mapper.CancellationToken.IsCancellationRequested);
+        if (StorableTypeAttribute.IsStorableType(type)) {
+          typeInfo = Mapper.StaticCache.GetTypeInfo(type);
+          layout.ParentLayoutId = mapper.GetStorableTypeLayoutIds(typeInfo.StorableTypeAttributeGuid);
+          layout = mapper.GetStorableTypeLayout(layout.ParentLayoutId);
+        }
+      }
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
@@ -75,13 +88,16 @@ namespace HEAL.Attic.Transformers {
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
       var dict = new Dictionary<string, object>();
       var members = box.Members;
-      while (members != null) {
-        for (int i = 0; i < members.KeyValuePairs.Count; i += 2) {
-          string key = mapper.GetComponentInfoKey(members.TypeId, members.KeyValuePairs[i]);
-          object value = mapper.GetObject(members.KeyValuePairs[i + 1]);
+      var layout = mapper.GetStorableTypeLayout(members.StorableTypeLayoutId);
+
+      var valueIdx = 0;
+      while (layout != null) {
+        for (int j = 0; j < layout.MemberNames.Count; j++) {
+          string key = mapper.GetComponentInfoKey(layout.TypeGuid, layout.MemberNames[j]);
+          object value = mapper.GetObject(members.ValueBoxId[valueIdx++]);
           dict.Add(key, value);
         }
-        members = members.Parent;
+        layout = mapper.GetStorableTypeLayout(layout.ParentLayoutId);
       }
 
       var type = (Type)mapper.GetObject(box.TypeBoxId);

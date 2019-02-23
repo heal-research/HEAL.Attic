@@ -17,8 +17,6 @@ using Google.Protobuf;
 namespace HEAL.Attic {
   public sealed class Mapper {
     internal class MappingEqualityComparer : IEqualityComparer<object> {
-      private Dictionary<string, int> collisionCount = new Dictionary<string, int>();
-
       bool IEqualityComparer<object>.Equals(object x, object y) {
         if (x == y) return true;
 
@@ -47,14 +45,16 @@ namespace HEAL.Attic {
 
     private Index<ITransformer> transformers;
     private Index<Type> types;
-
-    private Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
-
-    private Dictionary<uint, Box> boxId2Box;
-    private Dictionary<object, uint> object2BoxId;
-    private Dictionary<uint, object> boxId2Object;
     private Index<string> strings;
-    private Dictionary<uint, Dictionary<uint, string>> componentInfoKeys; // cache for strings <TypeGUID>.<MemberName> for accessing fields and properties of StorableTypes
+    private Dictionary<uint, Box> boxId2Box;
+    private Index<StorableTypeLayout> storableTypeLayouts;
+
+    private readonly Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
+
+    private readonly Dictionary<object, uint> object2BoxId;
+    private readonly Dictionary<uint, object> boxId2Object;
+    private readonly Dictionary<string, Dictionary<string, string>> componentInfoKeys; // cache for strings <TypeGUID>.<MemberName> for accessing fields and properties of StorableTypes
+    private readonly Dictionary<string, StorableTypeLayout> type2layout; // GUID -> Layout
 
     public CancellationToken CancellationToken { get; private set; }
 
@@ -68,7 +68,10 @@ namespace HEAL.Attic {
       object2BoxId = new Dictionary<object, uint>(new MappingEqualityComparer());
       boxId2Object = new Dictionary<uint, object>();
       strings = new Index<string>();
-      componentInfoKeys = new Dictionary<uint, Dictionary<uint, string>>();
+      componentInfoKeys = new Dictionary<string, Dictionary<string, string>>();
+      type2layout = new Dictionary<string, StorableTypeLayout>();
+
+      storableTypeLayouts = new Index<StorableTypeLayout>();
 
       BoxCount = 0;
     }
@@ -94,6 +97,43 @@ namespace HEAL.Attic {
 
     public bool TryGetType(uint typeId, out Type type) {
       return types.TryGetValue(typeId, out type);
+    }
+    #endregion
+
+    #region StorableType layouts
+    internal uint GetStorableTypeLayoutIds(string typeGuid) {
+      if (!type2layout.TryGetValue(typeGuid, out StorableTypeLayout layout)) {
+        layout = new StorableTypeLayout();
+        layout.TypeGuid = typeGuid.ToString().ToUpperInvariant();
+        type2layout.Add(typeGuid, layout);
+        return storableTypeLayouts.GetIndex(layout); // add to index for storage
+      }
+      return storableTypeLayouts.GetIndex(layout);
+    }
+
+    internal uint GetStorableTypeLayoutId(StorableTypeLayout layout) {
+      return storableTypeLayouts.GetIndex(layout);
+    }
+
+    internal StorableTypeLayout GetStorableTypeLayout(uint layoutId) {
+      return storableTypeLayouts.GetValue(layoutId);
+    }
+
+    private static StorableTypeLayout LayoutBoxToLayout(StorableTypeLayoutBox box, Mapper mapper) {
+      var layout = new StorableTypeLayout();
+      layout.TypeGuid = mapper.GetString(box.TypeGuid);
+      layout.MemberNames = box.Names.Select(sId => mapper.GetString(sId)).ToList();
+      layout.ParentLayoutId = box.Parent;
+      layout.IsPopulated = true;
+      return layout;
+    }
+
+    private static StorableTypeLayoutBox LayoutToLayoutBox(StorableTypeLayout layout, Mapper mapper) {
+      var layoutBox = new StorableTypeLayoutBox();
+      layoutBox.Names.AddRange(layout.MemberNames.Select(name => mapper.GetStringId(name)));
+      layoutBox.TypeGuid = mapper.GetStringId(layout.TypeGuid);
+      layoutBox.Parent = layout.ParentLayoutId;
+      return layoutBox;
     }
     #endregion
 
@@ -126,8 +166,7 @@ namespace HEAL.Attic {
       object o;
       if (boxId2Object.TryGetValue(boxId, out o)) return o;
 
-      Box box;
-      boxId2Box.TryGetValue(boxId, out box);
+      boxId2Box.TryGetValue(boxId, out Box box);
 
       if (box == null)
         o = null;
@@ -139,6 +178,7 @@ namespace HEAL.Attic {
 
       return o;
     }
+
     #endregion
 
     #region Strings
@@ -148,14 +188,14 @@ namespace HEAL.Attic {
     public string GetString(uint stringId) {
       return strings.GetValue(stringId);
     }
-    public string GetComponentInfoKey(uint typeId, uint memberId) {
-      if (!componentInfoKeys.TryGetValue(typeId, out Dictionary<uint, string> dict)) {
-        dict = new Dictionary<uint, string>();
-        componentInfoKeys.Add(typeId, dict);
+    public string GetComponentInfoKey(string typeGuid, string memberName) {
+      if (!componentInfoKeys.TryGetValue(typeGuid, out Dictionary<string, string> dict)) {
+        dict = new Dictionary<string, string>();
+        componentInfoKeys.Add(typeGuid, dict);
       }
-      if (!dict.TryGetValue(memberId, out string componentInfoKey)) {
-        componentInfoKey = GetString(typeId) + "." + GetString(memberId);
-        dict.Add(memberId, componentInfoKey);
+      if (!dict.TryGetValue(memberName, out string componentInfoKey)) {
+        componentInfoKey = typeGuid + "." + memberName;
+        dict.Add(memberName, componentInfoKey);
       }
       return componentInfoKey;
     }
@@ -191,6 +231,7 @@ namespace HEAL.Attic {
 
       bundle.TransformerGuids.AddRange(mapper.transformers.GetValues().Select(x => x.Guid).Select(x => ByteString.CopyFrom(x.ToByteArray())));
       bundle.TypeGuids.AddRange(mapper.types.GetValues().Select(x => ByteString.CopyFrom(StaticCache.GetGuid(x).ToByteArray())));
+      bundle.Layouts.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => LayoutToLayoutBox(l, mapper)));
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
       bundle.Strings.AddRange(mapper.strings.GetValues());
 
@@ -202,6 +243,7 @@ namespace HEAL.Attic {
 
       return bundle;
     }
+
     public static object ToObject(Bundle bundle, out SerializationInfo info) {
       var mapper = new Mapper();
       info = new SerializationInfo();
@@ -226,6 +268,7 @@ namespace HEAL.Attic {
       mapper.types = new Index<Type>(types);
       mapper.boxId2Box = bundle.Boxes.Select((b, i) => new { Box = b, Index = i }).ToDictionary(k => (uint)k.Index + 1, v => v.Box);
       mapper.strings = new Index<string>(bundle.Strings);
+      mapper.storableTypeLayouts = new Index<StorableTypeLayout>(bundle.Layouts.Select(l => LayoutBoxToLayout(l, mapper)));
 
       var boxes = bundle.Boxes;
 

@@ -9,6 +9,7 @@ message Bundle {
   uint32 root_box_id = 3; // index into boxes
   repeated Box boxes = 4;
   repeated string strings = 5;
+  repeated StorableTypeLayoutBox layouts = 6;
 }
 
 // each box represents and object in an object graph
@@ -19,7 +20,7 @@ message Box {
   ScalarValueBox value = 3;
   TypeBox type = 4;
   RepeatedValueBox values = 5;
-  StorableTypeMembersBox members = 10;
+  StorableTypeMembersBox members = 6;
 }
 
 message TypeBox {
@@ -64,11 +65,11 @@ message ArrayMetaInfoBox {                 // TODO: potential for deduplication?
 }
 
 message StorableTypeMembersBox {
-  uint32 type_id = 1;                      // StorableType GUID (index into Bundle.type_guids)
-  repeated uint32 keyValuePairs = 2;
+  uint32 storable_type_layout_id = 1;         // index into Bundle.layouts
+  repeated uint32 value_box_id = 2;
   // 3
   // 4;
-  StorableTypeMembersBox parent = 5;       // box with members of the base class
+  // StorableTypeMembersBox parent = 5;       // box with members of the base class
 }
 
 message RepeatedBoolBox {
@@ -111,5 +112,11 @@ message RepeatedKeyValuePairsBox {
   repeated uint32 keys = 1;
   repeated uint32 values = 2;
   // map<uint32, uint32> key_value_pairs = 10;   // separate repeated keys and values is more lightweight
+}
+
+message StorableTypeLayoutBox {
+  uint32 type_guid = 1;      // index into Bundle.type_guids
+  uint32 parent = 2; 
+  repeated uint32 names = 3; // index into Bundle.strings
 }
 

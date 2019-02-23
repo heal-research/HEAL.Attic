@@ -22,54 +22,56 @@ namespace HEAL.Attic {
     static PersistenceMessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIn0KBkJ1",
-            "bmRsZRIZChF0cmFuc2Zvcm1lcl9ndWlkcxgBIAMoDBISCgp0eXBlX2d1aWRz",
-            "GAIgAygMEhMKC3Jvb3RfYm94X2lkGAMgASgNEh4KBWJveGVzGAQgAygLMg8u",
-            "SEVBTC5BdHRpYy5Cb3gSDwoHc3RyaW5ncxgFIAMoCSLjAQoDQm94EhYKDnRy",
-            "YW5zZm9ybWVyX2lkGAEgASgNEhMKC3R5cGVfYm94X2lkGAIgASgNEikKBXZh",
-            "bHVlGAMgASgLMhouSEVBTC5BdHRpYy5TY2FsYXJWYWx1ZUJveBIhCgR0eXBl",
-            "GAQgASgLMhMuSEVBTC5BdHRpYy5UeXBlQm94EiwKBnZhbHVlcxgFIAEoCzIc",
-            "LkhFQUwuQXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAYgASgL",
-            "MiIuSEVBTC5BdHRpYy5TdG9yYWJsZVR5cGVNZW1iZXJzQm94IjgKB1R5cGVC",
-            "b3gSDwoHdHlwZV9pZBgBIAEoDRIcChRnZW5lcmljX3R5cGVfYm94X2lkcxgC",
-            "IAMoDSJsCg5TY2FsYXJWYWx1ZUJveBIMCgRsb25nGAMgASgDEg4KBnVfbG9u",
-            "ZxgFIAEoBBINCgVmbG9hdBgGIAEoAhIOCgZkb3VibGUYByABKAESDQoFYnl0",
-            "ZXMYCCABKAwSDgoGc19sb25nGAogASgSIqsEChBSZXBlYXRlZFZhbHVlQm94",
-            "EioKBWJvb2xzGAEgASgLMhsuSEVBTC5BdHRpYy5SZXBlYXRlZEJvb2xCb3gS",
-            "KAoEaW50cxgCIAEoCzIaLkhFQUwuQXR0aWMuUmVwZWF0ZWRJbnRCb3gSKgoF",
-            "bG9uZ3MYAyABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkTG9uZ0JveBIrCgZ1",
-            "X2ludHMYBCABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkVUludEJveBItCgd1",
-            "X2xvbmdzGAUgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFVMb25nQm94EiwK",
-            "BmZsb2F0cxgGIAEoCzIcLkhFQUwuQXR0aWMuUmVwZWF0ZWRGbG9hdEJveBIu",
-            "Cgdkb3VibGVzGAcgASgLMh0uSEVBTC5BdHRpYy5SZXBlYXRlZERvdWJsZUJv",
-            "eBIrCgZzX2ludHMYCCABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVkU0ludEJv",
-            "eBItCgdzX2xvbmdzGAkgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFNMb25n",
-            "Qm94EjIKBGt2cHMYCiABKAsyJC5IRUFMLkF0dGljLlJlcGVhdGVkS2V5VmFs",
-            "dWVQYWlyc0JveBI2ChBhcnJheU1ldGFJbmZvQm94GA0gASgLMhwuSEVBTC5B",
-            "dHRpYy5BcnJheU1ldGFJbmZvQm94EhMKC2NvbXBhcmVyX2lkGBQgASgNIkYK",
-            "EEFycmF5TWV0YUluZm9Cb3gSDAoEcmFuaxgBIAEoBRIPCgdsZW5ndGhzGAIg",
-            "AygFEhMKC2xvd2VyQm91bmRzGAMgAygFInQKFlN0b3JhYmxlVHlwZU1lbWJl",
-            "cnNCb3gSDwoHdHlwZV9pZBgBIAEoDRIVCg1rZXlWYWx1ZVBhaXJzGAIgAygN",
-            "EjIKBnBhcmVudBgFIAEoCzIiLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTWVt",
-            "YmVyc0JveCIhCg9SZXBlYXRlZEJvb2xCb3gSDgoGdmFsdWVzGAEgAygIIiAK",
-            "DlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMoBSIhCg9SZXBlYXRlZExv",
-            "bmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVhdGVkVUludEJveBIOCgZ2",
-            "YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0JveBIOCgZ2YWx1ZXMYASAD",
-            "KAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1ZXMYASADKAIiIwoRUmVw",
-            "ZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygBIiEKD1JlcGVhdGVkU0lu",
-            "dEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0ZWRTTG9uZ0JveBIOCgZ2",
-            "YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1ZVBhaXJzQm94EgwKBGtl",
-            "eXMYASADKA0SDgoGdmFsdWVzGAIgAygNYgZwcm90bzM="));
+            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIrEBCgZC",
+            "dW5kbGUSGQoRdHJhbnNmb3JtZXJfZ3VpZHMYASADKAwSEgoKdHlwZV9ndWlk",
+            "cxgCIAMoDBITCgtyb290X2JveF9pZBgDIAEoDRIeCgVib3hlcxgEIAMoCzIP",
+            "LkhFQUwuQXR0aWMuQm94Eg8KB3N0cmluZ3MYBSADKAkSMgoHbGF5b3V0cxgG",
+            "IAMoCzIhLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTGF5b3V0Qm94IuMBCgNC",
+            "b3gSFgoOdHJhbnNmb3JtZXJfaWQYASABKA0SEwoLdHlwZV9ib3hfaWQYAiAB",
+            "KA0SKQoFdmFsdWUYAyABKAsyGi5IRUFMLkF0dGljLlNjYWxhclZhbHVlQm94",
+            "EiEKBHR5cGUYBCABKAsyEy5IRUFMLkF0dGljLlR5cGVCb3gSLAoGdmFsdWVz",
+            "GAUgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFZhbHVlQm94EjMKB21lbWJl",
+            "cnMYCiABKAsyIi5IRUFMLkF0dGljLlN0b3JhYmxlVHlwZU1lbWJlcnNCb3gi",
+            "OAoHVHlwZUJveBIPCgd0eXBlX2lkGAEgASgNEhwKFGdlbmVyaWNfdHlwZV9i",
+            "b3hfaWRzGAIgAygNImwKDlNjYWxhclZhbHVlQm94EgwKBGxvbmcYAyABKAMS",
+            "DgoGdV9sb25nGAUgASgEEg0KBWZsb2F0GAYgASgCEg4KBmRvdWJsZRgHIAEo",
+            "ARINCgVieXRlcxgIIAEoDBIOCgZzX2xvbmcYCiABKBIiqwQKEFJlcGVhdGVk",
+            "VmFsdWVCb3gSKgoFYm9vbHMYASABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVk",
+            "Qm9vbEJveBIoCgRpbnRzGAIgASgLMhouSEVBTC5BdHRpYy5SZXBlYXRlZElu",
+            "dEJveBIqCgVsb25ncxgDIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0ZWRMb25n",
+            "Qm94EisKBnVfaW50cxgEIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0ZWRVSW50",
+            "Qm94Ei0KB3VfbG9uZ3MYBSABKAsyHC5IRUFMLkF0dGljLlJlcGVhdGVkVUxv",
+            "bmdCb3gSLAoGZmxvYXRzGAYgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZEZs",
+            "b2F0Qm94Ei4KB2RvdWJsZXMYByABKAsyHS5IRUFMLkF0dGljLlJlcGVhdGVk",
+            "RG91YmxlQm94EisKBnNfaW50cxgIIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0",
+            "ZWRTSW50Qm94Ei0KB3NfbG9uZ3MYCSABKAsyHC5IRUFMLkF0dGljLlJlcGVh",
+            "dGVkU0xvbmdCb3gSMgoEa3ZwcxgKIAEoCzIkLkhFQUwuQXR0aWMuUmVwZWF0",
+            "ZWRLZXlWYWx1ZVBhaXJzQm94EjYKEGFycmF5TWV0YUluZm9Cb3gYDSABKAsy",
+            "HC5IRUFMLkF0dGljLkFycmF5TWV0YUluZm9Cb3gSEwoLY29tcGFyZXJfaWQY",
+            "FCABKA0iRgoQQXJyYXlNZXRhSW5mb0JveBIMCgRyYW5rGAEgASgFEg8KB2xl",
+            "bmd0aHMYAiADKAUSEwoLbG93ZXJCb3VuZHMYAyADKAUiTwoWU3RvcmFibGVU",
+            "eXBlTWVtYmVyc0JveBIfChdzdG9yYWJsZV90eXBlX2xheW91dF9pZBgBIAEo",
+            "DRIUCgx2YWx1ZV9ib3hfaWQYAiADKA0iIQoPUmVwZWF0ZWRCb29sQm94Eg4K",
+            "BnZhbHVlcxgBIAMoCCIgCg5SZXBlYXRlZEludEJveBIOCgZ2YWx1ZXMYASAD",
+            "KAUiIQoPUmVwZWF0ZWRMb25nQm94Eg4KBnZhbHVlcxgBIAMoAyIhCg9SZXBl",
+            "YXRlZFVJbnRCb3gSDgoGdmFsdWVzGAEgAygNIiIKEFJlcGVhdGVkVUxvbmdC",
+            "b3gSDgoGdmFsdWVzGAEgAygEIiIKEFJlcGVhdGVkRmxvYXRCb3gSDgoGdmFs",
+            "dWVzGAEgAygCIiMKEVJlcGVhdGVkRG91YmxlQm94Eg4KBnZhbHVlcxgBIAMo",
+            "ASIhCg9SZXBlYXRlZFNJbnRCb3gSDgoGdmFsdWVzGAEgAygRIiIKEFJlcGVh",
+            "dGVkU0xvbmdCb3gSDgoGdmFsdWVzGAEgAygSIjgKGFJlcGVhdGVkS2V5VmFs",
+            "dWVQYWlyc0JveBIMCgRrZXlzGAEgAygNEg4KBnZhbHVlcxgCIAMoDSJJChVT",
+            "dG9yYWJsZVR5cGVMYXlvdXRCb3gSEQoJdHlwZV9ndWlkGAEgASgNEg4KBnBh",
+            "cmVudBgCIAEoDRINCgVuYW1lcxgDIAMoDWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "Layouts" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TransformerId", "TypeBoxId", "Value", "Type", "Values", "Members" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeBox), global::HEAL.Attic.TypeBox.Parser, new[]{ "TypeId", "GenericTypeBoxIds" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ArrayMetaInfoBox", "ComparerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetaInfoBox), global::HEAL.Attic.ArrayMetaInfoBox.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "TypeId", "KeyValuePairs", "Parent" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "StorableTypeLayoutId", "ValueBoxId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedBoolBox), global::HEAL.Attic.RepeatedBoolBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedIntBox), global::HEAL.Attic.RepeatedIntBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedLongBox), global::HEAL.Attic.RepeatedLongBox.Parser, new[]{ "Values" }, null, null, null),
@@ -79,7 +81,8 @@ namespace HEAL.Attic {
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedDoubleBox), global::HEAL.Attic.RepeatedDoubleBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSIntBox), global::HEAL.Attic.RepeatedSIntBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSLongBox), global::HEAL.Attic.RepeatedSLongBox.Parser, new[]{ "Values" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedKeyValuePairsBox), global::HEAL.Attic.RepeatedKeyValuePairsBox.Parser, new[]{ "Keys", "Values" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedKeyValuePairsBox), global::HEAL.Attic.RepeatedKeyValuePairsBox.Parser, new[]{ "Keys", "Values" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeLayoutBox), global::HEAL.Attic.StorableTypeLayoutBox.Parser, new[]{ "TypeGuid", "Parent", "Names" }, null, null, null)
           }));
     }
     #endregion
@@ -115,6 +118,7 @@ namespace HEAL.Attic {
       rootBoxId_ = other.rootBoxId_;
       boxes_ = other.boxes_.Clone();
       strings_ = other.strings_.Clone();
+      layouts_ = other.layouts_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -176,6 +180,16 @@ namespace HEAL.Attic {
       get { return strings_; }
     }
 
+    /// <summary>Field number for the "layouts" field.</summary>
+    public const int LayoutsFieldNumber = 6;
+    private static readonly pb::FieldCodec<global::HEAL.Attic.StorableTypeLayoutBox> _repeated_layouts_codec
+        = pb::FieldCodec.ForMessage(50, global::HEAL.Attic.StorableTypeLayoutBox.Parser);
+    private readonly pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> layouts_ = new pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> Layouts {
+      get { return layouts_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Bundle);
@@ -194,6 +208,7 @@ namespace HEAL.Attic {
       if (RootBoxId != other.RootBoxId) return false;
       if(!boxes_.Equals(other.boxes_)) return false;
       if(!strings_.Equals(other.strings_)) return false;
+      if(!layouts_.Equals(other.layouts_)) return false;
       return true;
     }
 
@@ -205,6 +220,7 @@ namespace HEAL.Attic {
       if (RootBoxId != 0) hash ^= RootBoxId.GetHashCode();
       hash ^= boxes_.GetHashCode();
       hash ^= strings_.GetHashCode();
+      hash ^= layouts_.GetHashCode();
       return hash;
     }
 
@@ -223,6 +239,7 @@ namespace HEAL.Attic {
       }
       boxes_.WriteTo(output, _repeated_boxes_codec);
       strings_.WriteTo(output, _repeated_strings_codec);
+      layouts_.WriteTo(output, _repeated_layouts_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -235,6 +252,7 @@ namespace HEAL.Attic {
       }
       size += boxes_.CalculateSize(_repeated_boxes_codec);
       size += strings_.CalculateSize(_repeated_strings_codec);
+      size += layouts_.CalculateSize(_repeated_layouts_codec);
       return size;
     }
 
@@ -250,6 +268,7 @@ namespace HEAL.Attic {
       }
       boxes_.Add(other.boxes_);
       strings_.Add(other.strings_);
+      layouts_.Add(other.layouts_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -278,6 +297,10 @@ namespace HEAL.Attic {
           }
           case 42: {
             strings_.AddEntriesFrom(input, _repeated_strings_codec);
+            break;
+          }
+          case 50: {
+            layouts_.AddEntriesFrom(input, _repeated_layouts_codec);
             break;
           }
         }
@@ -385,7 +408,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "members" field.</summary>
-    public const int MembersFieldNumber = 6;
+    public const int MembersFieldNumber = 10;
     private global::HEAL.Attic.StorableTypeMembersBox members_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.StorableTypeMembersBox Members {
@@ -457,7 +480,7 @@ namespace HEAL.Attic {
         output.WriteMessage(Values);
       }
       if (members_ != null) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(82);
         output.WriteMessage(Members);
       }
     }
@@ -560,7 +583,7 @@ namespace HEAL.Attic {
             input.ReadMessage(values_);
             break;
           }
-          case 50: {
+          case 82: {
             if (members_ == null) {
               members_ = new global::HEAL.Attic.StorableTypeMembersBox();
             }
@@ -1667,9 +1690,8 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public StorableTypeMembersBox(StorableTypeMembersBox other) : this() {
-      typeId_ = other.typeId_;
-      keyValuePairs_ = other.keyValuePairs_.Clone();
-      Parent = other.parent_ != null ? other.Parent.Clone() : null;
+      storableTypeLayoutId_ = other.storableTypeLayoutId_;
+      valueBoxId_ = other.valueBoxId_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1677,43 +1699,33 @@ namespace HEAL.Attic {
       return new StorableTypeMembersBox(this);
     }
 
-    /// <summary>Field number for the "type_id" field.</summary>
-    public const int TypeIdFieldNumber = 1;
-    private uint typeId_;
+    /// <summary>Field number for the "storable_type_layout_id" field.</summary>
+    public const int StorableTypeLayoutIdFieldNumber = 1;
+    private uint storableTypeLayoutId_;
     /// <summary>
-    /// StorableType GUID (index into Bundle.type_guids)
+    /// index into Bundle.layouts
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TypeId {
-      get { return typeId_; }
+    public uint StorableTypeLayoutId {
+      get { return storableTypeLayoutId_; }
       set {
-        typeId_ = value;
+        storableTypeLayoutId_ = value;
       }
     }
 
-    /// <summary>Field number for the "keyValuePairs" field.</summary>
-    public const int KeyValuePairsFieldNumber = 2;
-    private static readonly pb::FieldCodec<uint> _repeated_keyValuePairs_codec
+    /// <summary>Field number for the "value_box_id" field.</summary>
+    public const int ValueBoxIdFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_valueBoxId_codec
         = pb::FieldCodec.ForUInt32(18);
-    private readonly pbc::RepeatedField<uint> keyValuePairs_ = new pbc::RepeatedField<uint>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> KeyValuePairs {
-      get { return keyValuePairs_; }
-    }
-
-    /// <summary>Field number for the "parent" field.</summary>
-    public const int ParentFieldNumber = 5;
-    private global::HEAL.Attic.StorableTypeMembersBox parent_;
+    private readonly pbc::RepeatedField<uint> valueBoxId_ = new pbc::RepeatedField<uint>();
     /// <summary>
     /// 3
     /// 4;
+    /// StorableTypeMembersBox parent = 5;       // box with members of the base class
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::HEAL.Attic.StorableTypeMembersBox Parent {
-      get { return parent_; }
-      set {
-        parent_ = value;
-      }
+    public pbc::RepeatedField<uint> ValueBoxId {
+      get { return valueBoxId_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1729,18 +1741,16 @@ namespace HEAL.Attic {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (TypeId != other.TypeId) return false;
-      if(!keyValuePairs_.Equals(other.keyValuePairs_)) return false;
-      if (!object.Equals(Parent, other.Parent)) return false;
+      if (StorableTypeLayoutId != other.StorableTypeLayoutId) return false;
+      if(!valueBoxId_.Equals(other.valueBoxId_)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (TypeId != 0) hash ^= TypeId.GetHashCode();
-      hash ^= keyValuePairs_.GetHashCode();
-      if (parent_ != null) hash ^= Parent.GetHashCode();
+      if (StorableTypeLayoutId != 0) hash ^= StorableTypeLayoutId.GetHashCode();
+      hash ^= valueBoxId_.GetHashCode();
       return hash;
     }
 
@@ -1751,27 +1761,20 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (TypeId != 0) {
+      if (StorableTypeLayoutId != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(TypeId);
+        output.WriteUInt32(StorableTypeLayoutId);
       }
-      keyValuePairs_.WriteTo(output, _repeated_keyValuePairs_codec);
-      if (parent_ != null) {
-        output.WriteRawTag(42);
-        output.WriteMessage(Parent);
-      }
+      valueBoxId_.WriteTo(output, _repeated_valueBoxId_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (TypeId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
+      if (StorableTypeLayoutId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(StorableTypeLayoutId);
       }
-      size += keyValuePairs_.CalculateSize(_repeated_keyValuePairs_codec);
-      if (parent_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Parent);
-      }
+      size += valueBoxId_.CalculateSize(_repeated_valueBoxId_codec);
       return size;
     }
 
@@ -1780,16 +1783,10 @@ namespace HEAL.Attic {
       if (other == null) {
         return;
       }
-      if (other.TypeId != 0) {
-        TypeId = other.TypeId;
+      if (other.StorableTypeLayoutId != 0) {
+        StorableTypeLayoutId = other.StorableTypeLayoutId;
       }
-      keyValuePairs_.Add(other.keyValuePairs_);
-      if (other.parent_ != null) {
-        if (parent_ == null) {
-          parent_ = new global::HEAL.Attic.StorableTypeMembersBox();
-        }
-        Parent.MergeFrom(other.Parent);
-      }
+      valueBoxId_.Add(other.valueBoxId_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1801,19 +1798,12 @@ namespace HEAL.Attic {
             input.SkipLastField();
             break;
           case 8: {
-            TypeId = input.ReadUInt32();
+            StorableTypeLayoutId = input.ReadUInt32();
             break;
           }
           case 18:
           case 16: {
-            keyValuePairs_.AddEntriesFrom(input, _repeated_keyValuePairs_codec);
-            break;
-          }
-          case 42: {
-            if (parent_ == null) {
-              parent_ = new global::HEAL.Attic.StorableTypeMembersBox();
-            }
-            input.ReadMessage(parent_);
+            valueBoxId_.AddEntriesFrom(input, _repeated_valueBoxId_codec);
             break;
           }
         }
@@ -2938,6 +2928,178 @@ namespace HEAL.Attic {
           case 18:
           case 16: {
             values_.AddEntriesFrom(input, _repeated_values_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class StorableTypeLayoutBox : pb::IMessage<StorableTypeLayoutBox> {
+    private static readonly pb::MessageParser<StorableTypeLayoutBox> _parser = new pb::MessageParser<StorableTypeLayoutBox>(() => new StorableTypeLayoutBox());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<StorableTypeLayoutBox> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::HEAL.Attic.PersistenceMessagesReflection.Descriptor.MessageTypes[17]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StorableTypeLayoutBox() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StorableTypeLayoutBox(StorableTypeLayoutBox other) : this() {
+      typeGuid_ = other.typeGuid_;
+      parent_ = other.parent_;
+      names_ = other.names_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public StorableTypeLayoutBox Clone() {
+      return new StorableTypeLayoutBox(this);
+    }
+
+    /// <summary>Field number for the "type_guid" field.</summary>
+    public const int TypeGuidFieldNumber = 1;
+    private uint typeGuid_;
+    /// <summary>
+    /// index into Bundle.type_guids
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint TypeGuid {
+      get { return typeGuid_; }
+      set {
+        typeGuid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "parent" field.</summary>
+    public const int ParentFieldNumber = 2;
+    private uint parent_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Parent {
+      get { return parent_; }
+      set {
+        parent_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "names" field.</summary>
+    public const int NamesFieldNumber = 3;
+    private static readonly pb::FieldCodec<uint> _repeated_names_codec
+        = pb::FieldCodec.ForUInt32(26);
+    private readonly pbc::RepeatedField<uint> names_ = new pbc::RepeatedField<uint>();
+    /// <summary>
+    /// index into Bundle.strings
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Names {
+      get { return names_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as StorableTypeLayoutBox);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(StorableTypeLayoutBox other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (TypeGuid != other.TypeGuid) return false;
+      if (Parent != other.Parent) return false;
+      if(!names_.Equals(other.names_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (TypeGuid != 0) hash ^= TypeGuid.GetHashCode();
+      if (Parent != 0) hash ^= Parent.GetHashCode();
+      hash ^= names_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (TypeGuid != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(TypeGuid);
+      }
+      if (Parent != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Parent);
+      }
+      names_.WriteTo(output, _repeated_names_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (TypeGuid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeGuid);
+      }
+      if (Parent != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Parent);
+      }
+      size += names_.CalculateSize(_repeated_names_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(StorableTypeLayoutBox other) {
+      if (other == null) {
+        return;
+      }
+      if (other.TypeGuid != 0) {
+        TypeGuid = other.TypeGuid;
+      }
+      if (other.Parent != 0) {
+        Parent = other.Parent;
+      }
+      names_.Add(other.names_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            TypeGuid = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            Parent = input.ReadUInt32();
+            break;
+          }
+          case 26:
+          case 24: {
+            names_.AddEntriesFrom(input, _repeated_names_codec);
             break;
           }
         }

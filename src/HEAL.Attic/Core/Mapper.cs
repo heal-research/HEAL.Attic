@@ -48,6 +48,7 @@ namespace HEAL.Attic {
     private Index<string> strings;
     private Dictionary<uint, Box> boxId2Box;
     private Index<StorableTypeLayout> storableTypeLayouts;
+    private Index<TypeMessage> typeMessages;
 
     private readonly Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
 
@@ -55,6 +56,7 @@ namespace HEAL.Attic {
     private readonly Dictionary<uint, object> boxId2Object;
     private readonly Dictionary<string, Dictionary<string, string>> componentInfoKeys; // cache for strings <TypeGUID>.<MemberName> for accessing fields and properties of StorableTypes
     private readonly Dictionary<string, StorableTypeLayout> type2layout; // GUID -> Layout
+    private readonly Dictionary<Type, uint> type2TypeMessageId;
 
     public CancellationToken CancellationToken { get; private set; }
 
@@ -70,6 +72,9 @@ namespace HEAL.Attic {
       strings = new Index<string>();
       componentInfoKeys = new Dictionary<string, Dictionary<string, string>>();
       type2layout = new Dictionary<string, StorableTypeLayout>();
+
+      typeMessages = new Index<TypeMessage>();
+      type2TypeMessageId = new Dictionary<Type, uint>();
 
       GetTypeId(typeof(Type).GetType());
 
@@ -139,6 +144,48 @@ namespace HEAL.Attic {
     }
     #endregion
 
+    #region TypeMessages
+    internal uint TypeToTypeMessageId(Type type, out TypeMessage typeMessage) {
+      if (type2TypeMessageId.TryGetValue(type, out uint id)) {
+        typeMessage = typeMessages.GetValue(id);
+        return id;
+      } else {
+        typeMessage = new TypeMessage();
+        if (type.IsGenericType) {
+          typeMessage.TypeId = GetTypeId(type.GetGenericTypeDefinition());
+          typeMessage.GenericTypeMsgIds.AddRange(type.GetGenericArguments().Select(t => TypeToTypeMessageId(t, out TypeMessage _)));
+        } else if (type.IsArray) {
+          typeMessage.TypeId = GetTypeId(typeof(Array));
+          typeMessage.GenericTypeMsgIds.Add(TypeToTypeMessageId(type.GetElementType(), out TypeMessage _));
+        } else {
+          typeMessage.TypeId = GetTypeId(type);
+        }
+        id = typeMessages.GetIndex(typeMessage);
+        type2TypeMessageId.Add(type, id);
+        return id;
+      }
+    }
+
+    internal Type TypeMessageToType(TypeMessage typeMsg) {
+      TryGetType(typeMsg.TypeId, out Type type);
+      if (type == null) return null;
+      else {
+        if (type.IsGenericType) {
+          var genericArgumentTypes = typeMsg.GenericTypeMsgIds.Select(x => TypeMessageToType(GetTypeMessage(x))).ToArray();
+          return genericArgumentTypes.Any(x => x == null) ? null : type.MakeGenericType(genericArgumentTypes);
+        } else if (type == typeof(Array)) {
+          var arrayType = (Type)TypeMessageToType(GetTypeMessage(typeMsg.GenericTypeMsgIds[0]));
+          return arrayType?.MakeArrayType();
+        } else {
+          return type;
+        }
+      }
+    }
+    internal TypeMessage GetTypeMessage(uint typeMessageId) {
+      return typeMessages.GetValue(typeMessageId);
+    }
+    #endregion
+
     #region Boxes
     public uint GetBoxId(object o) {
       uint boxId;
@@ -155,8 +202,7 @@ namespace HEAL.Attic {
         object2BoxId.Add(o, boxId);
         var box = typeInfo.Transformer.CreateBox(o, this);
         boxId2Box.Add(boxId, box);
-        if (!(typeInfo.Transformer is TypeTransformer))
-          objectsToProcess.Push(Tuple.Create(o, box));
+        objectsToProcess.Push(Tuple.Create(o, box));
       }
       return boxId;
     }
@@ -175,12 +221,9 @@ namespace HEAL.Attic {
         o = null;
       else {
         // to find the transformer we first need to find the type and then we get the corresponding transformer
-        ITransformer transformer;
-        if (box.TypeBoxId == 0) {
-          transformer = new TypeTransformer();
-        } else {
-          transformer = GetTransformer(GetBox(box.TypeBoxId).Type.TransformerId);
-        }
+        var typeMessage = GetTypeMessage(box.TypeMsgId);
+        var transformer = GetTransformer(typeMessage.TransformerId);
+
         o = transformer.ToObject(box, this);
         boxId2Object.Add(boxId, o);
       }
@@ -237,7 +280,7 @@ namespace HEAL.Attic {
         var tuple = mapper.objectsToProcess.Pop();
         var o = tuple.Item1;
         var box = tuple.Item2;
-        var transformer = mapper.GetTransformer(mapper.GetBox(box.TypeBoxId).Type.TransformerId);
+        var transformer = mapper.GetTransformer(mapper.GetTypeMessage(box.TypeMsgId).TransformerId);
         transformer.FillBox(box, o, mapper);
       }
 
@@ -246,7 +289,7 @@ namespace HEAL.Attic {
       bundle.Layouts.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => LayoutToLayoutBox(l, mapper)));
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
       bundle.Strings.AddRange(mapper.strings.GetValues());
-      // bundle.TransformerIds.AddRange(mapper.types.GetValues().Select(t => mapper.GetTransformerId(mapper.type2transformer[t])));
+      bundle.TypeMessages.AddRange(mapper.typeMessages.GetValues());
 
 
       sw.Stop();
@@ -273,10 +316,8 @@ namespace HEAL.Attic {
       for (int i = 0; i < bundle.TypeGuids.Count; i++) {
         var x = bundle.TypeGuids[i];
         var guid = new Guid(x.ToByteArray());
-        //var transformerId = bundle.TransformerIds[i];
         if (StaticCache.TryGetType(guid, out Type type)) {
           types.Add(type);
-          //mapper.type2transformer.Add(type, mapper.GetTransformer(transformerId));
         } else {
           unknownTypeGuids.Add(guid);
           types.Add(null);
@@ -284,6 +325,7 @@ namespace HEAL.Attic {
       }
 
       mapper.types = new Index<Type>(types);
+      mapper.typeMessages = new Index<TypeMessage>(bundle.TypeMessages);
       mapper.boxId2Box = bundle.Boxes.Select((b, i) => new { Box = b, Index = i }).ToDictionary(k => (uint)k.Index + 1, v => v.Box);
       mapper.strings = new Index<string>(bundle.Strings);
       mapper.storableTypeLayouts = new Index<StorableTypeLayout>(bundle.Layouts.Select(l => LayoutBoxToLayout(l, mapper)));
@@ -298,13 +340,7 @@ namespace HEAL.Attic {
         var box = mapper.boxId2Box[(uint)i];
         var o = mapper.boxId2Object[(uint)i];
         if (o == null) continue;
-
-        ITransformer transformer;
-        if (box.TypeBoxId == 0) {
-          transformer = new TypeTransformer();
-        } else {
-          transformer = mapper.GetTransformer(mapper.GetBox(box.TypeBoxId).Type.TransformerId);
-        }
+        var transformer = mapper.GetTransformer(mapper.GetTypeMessage(box.TypeMsgId).TransformerId);
         transformer.FillFromBox(o, box, mapper);
       }
 

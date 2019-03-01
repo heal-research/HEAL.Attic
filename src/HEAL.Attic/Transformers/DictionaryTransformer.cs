@@ -41,13 +41,16 @@ namespace HEAL.Attic {
       else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
         throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
       else
-        kvpBox.ComparerId = mapper.GetBoxId(comparerType);
+        kvpBox.ComparerTypeId = mapper.TypeToTypeMessageId(comparerType, out TypeMessage _);
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var comparerObj = mapper.GetObject(box.Values.ComparerId);
-      var comparer = comparerObj is Type ? Activator.CreateInstance((Type)comparerObj) : comparerObj;
-
+      object comparer;
+      if (box.Values.ComparerId != 0) {
+        comparer = mapper.GetObject(box.Values.ComparerId);
+      } else {
+        comparer = Activator.CreateInstance(mapper.TypeMessageToType(mapper.GetTypeMessage(box.Values.ComparerTypeId)));
+      }
       return Activator.CreateInstance(type, box.Values.Kvps.Keys.Count, comparer);
     }
 

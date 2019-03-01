@@ -100,7 +100,7 @@ namespace HEAL.Attic {
         layout = mapper.GetStorableTypeLayout(layout.ParentLayoutId);
       }
 
-      var type = (Type)mapper.GetObject(box.TypeBoxId);
+      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
       var typeInfo = Mapper.StaticCache.GetTypeInfo(type);
       var typeStack = new Stack<Tuple<Type, TypeInfo>>();
 

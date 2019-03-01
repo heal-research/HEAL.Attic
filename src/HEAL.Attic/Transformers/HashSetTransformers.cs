@@ -34,13 +34,17 @@ namespace HEAL.Attic {
       else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
         throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
       else
-        box.Values.ComparerId = mapper.GetBoxId(comparerType);
+        box.Values.ComparerTypeId = mapper.TypeToTypeMessageId(comparerType, out TypeMessage _);
       AddRange((IEnumerable)value, box.Values, mapper);
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var comparerObj = mapper.GetObject(box.Values.ComparerId);
-      var comparer = comparerObj is Type ? Activator.CreateInstance((Type)comparerObj) : comparerObj;
+      object comparer;
+      if (box.Values.ComparerId != 0) {
+        comparer = mapper.GetObject(box.Values.ComparerId);
+      } else {
+        comparer = Activator.CreateInstance(mapper.TypeMessageToType(mapper.GetTypeMessage(box.Values.ComparerTypeId)));
+      }
       if (type.GetGenericArguments()[0].IsPrimitive) {
         return Activator.CreateInstance(type, new object[] {
           ExtractValues(box.Values, mapper), comparer

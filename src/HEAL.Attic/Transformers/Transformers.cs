@@ -18,12 +18,11 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
-      var type = o.GetType();
       var box = new Box {
-        TypeBoxId = mapper.GetBoxId(type)
+        TypeMsgId = mapper.TypeToTypeMessageId(o.GetType(), out TypeMessage typeMsg)
       };
 
-      mapper.GetBox(box.TypeBoxId).Type.TransformerId = mapper.GetTransformerId(this);
+      typeMsg.TransformerId = mapper.GetTransformerId(this);
 
       return box;
     }
@@ -33,7 +32,7 @@ namespace HEAL.Attic {
     }
 
     public override object ToObject(Box box, Mapper mapper) {
-      var type = (Type)mapper.GetObject(box.TypeBoxId);
+      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
       return type == null ? default(T) : Extract(box, type, mapper);
     }
 
@@ -41,54 +40,35 @@ namespace HEAL.Attic {
     protected abstract T Extract(Box box, Type type, Mapper mapper);
   }
 
-  [Transformer("854156DA-2A37-450F-92ED-355FBBD8D131", 50)]
-  internal sealed class TypeTransformer : Transformer {
-    public override bool CanTransformType(Type type) {
-      return typeof(Type).IsAssignableFrom(type);
-    }
-
-    public override Box CreateBox(object o, Mapper mapper) {
-      var box = new Box { };
-      Populate(box, o, mapper);
-      return box;
-    }
-
-    public override void FillBox(Box box, object o, Mapper mapper) {
-      // already filled in CreateBox
-      // nothing to do
-    }
-
-    private void Populate(Box box, object value, Mapper mapper) {
-      var type = (Type)value;
-      var typeBox = new TypeBox();
-      box.Type = typeBox;
-      if (type.IsGenericType) {
-        typeBox.TypeId = mapper.GetTypeId(type.GetGenericTypeDefinition());
-        typeBox.GenericTypeBoxIds.AddRange(type.GetGenericArguments().Select(mapper.GetBoxId));
-      } else if (type.IsArray) {
-        typeBox.TypeId = mapper.GetTypeId(typeof(Array));
-        typeBox.GenericTypeBoxIds.Add(mapper.GetBoxId(type.GetElementType()));
-      } else {
-        typeBox.TypeId = mapper.GetTypeId(type);
-      }
-    }
-
-    public override object ToObject(Box box, Mapper mapper) {
-      return mapper.TryGetType(box.Type.TypeId, out Type type) ? Extract(box, type, mapper) : null;
-    }
-
-    private object Extract(Box box, Type type, Mapper mapper) {
-      if (type.IsGenericType) {
-        var genericArgumentTypes = box.Type.GenericTypeBoxIds.Select(x => (Type)mapper.GetObject(x)).ToArray();
-        return genericArgumentTypes.Any(x => x == null) ? null : type.MakeGenericType(genericArgumentTypes);
-      } else if (type == typeof(Array)) {
-        var arrayType = (Type)mapper.GetObject(box.Type.GenericTypeBoxIds[0]);
-        return arrayType?.MakeArrayType();
-      } else {
-        return type;
-      }
-    }
-  }
+  // [Transformer("854156DA-2A37-450F-92ED-355FBBD8D131", 50)]
+  // internal sealed class TypeTransformer : Transformer {
+  //   public override bool CanTransformType(Type type) {
+  //     return typeof(Type).IsAssignableFrom(type);
+  //   }
+  // 
+  //   public override Box CreateBox(object o, Mapper mapper) {
+  //     var box = new Box { };
+  //     Populate(box, o, mapper);
+  //     return box;
+  //   }
+  // 
+  //   public override void FillBox(Box box, object o, Mapper mapper) {
+  //     // already filled in CreateBox
+  //     // nothing to do
+  //   }
+  // 
+  //   private void Populate(Box box, object value, Mapper mapper) {
+  // 
+  //   }
+  // 
+  //   public override object ToObject(Box box, Mapper mapper) {
+  // 
+  //   }
+  // 
+  //   private object Extract(Box box, Type type, Mapper mapper) {
+  // 
+  //   }
+  // }
 
   [Transformer("4C610596-5234-4C49-998E-30007D64492E", 100)]
   internal sealed class StringBoxTransformer : BoxTransformer<string> {
@@ -177,10 +157,9 @@ namespace HEAL.Attic {
     public override Box CreateBox(object o, Mapper mapper) {
       var type = o.GetType();
       var box = new Box {
-        TypeBoxId = mapper.GetBoxId(type),
+        TypeMsgId = mapper.TypeToTypeMessageId(type, out TypeMessage typeMsg),
       };
-
-      mapper.GetBox(box.TypeBoxId).Type.TransformerId = mapper.GetTransformerId(this);
+      typeMsg.TransformerId = mapper.GetTransformerId(this);
       return box;
     }
 
@@ -190,7 +169,7 @@ namespace HEAL.Attic {
     }
 
     public override object ToObject(Box box, Mapper mapper) {
-      var type = (Type)mapper.GetObject(box.TypeBoxId);
+      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
       return type == null ? null : Enum.Parse(type, mapper.GetString((uint)box.Value.ULong));
     }
   }

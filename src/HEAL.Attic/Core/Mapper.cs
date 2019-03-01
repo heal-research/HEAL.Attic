@@ -71,6 +71,8 @@ namespace HEAL.Attic {
       componentInfoKeys = new Dictionary<string, Dictionary<string, string>>();
       type2layout = new Dictionary<string, StorableTypeLayout>();
 
+      GetTypeId(typeof(Type).GetType());
+
       storableTypeLayouts = new Index<StorableTypeLayout>();
 
       BoxCount = 0;
@@ -153,7 +155,8 @@ namespace HEAL.Attic {
         object2BoxId.Add(o, boxId);
         var box = typeInfo.Transformer.CreateBox(o, this);
         boxId2Box.Add(boxId, box);
-        objectsToProcess.Push(Tuple.Create(o, box));
+        if (!(typeInfo.Transformer is TypeTransformer))
+          objectsToProcess.Push(Tuple.Create(o, box));
       }
       return boxId;
     }
@@ -171,7 +174,13 @@ namespace HEAL.Attic {
       if (box == null)
         o = null;
       else {
-        var transformer = transformers.GetValue(box.TransformerId);
+        // to find the transformer we first need to find the type and then we get the corresponding transformer
+        ITransformer transformer;
+        if (box.TypeBoxId == 0) {
+          transformer = new TypeTransformer();
+        } else {
+          transformer = GetTransformer(GetBox(box.TypeBoxId).Type.TransformerId);
+        }
         o = transformer.ToObject(box, this);
         boxId2Object.Add(boxId, o);
       }
@@ -201,6 +210,9 @@ namespace HEAL.Attic {
     }
     #endregion
 
+
+
+
     public object CreateInstance(Type type) {
       try {
         return StaticCache.GetTypeInfo(type).GetConstructor()();
@@ -225,7 +237,7 @@ namespace HEAL.Attic {
         var tuple = mapper.objectsToProcess.Pop();
         var o = tuple.Item1;
         var box = tuple.Item2;
-        var transformer = mapper.transformers.GetValue(box.TransformerId);
+        var transformer = mapper.GetTransformer(mapper.GetBox(box.TypeBoxId).Type.TransformerId);
         transformer.FillBox(box, o, mapper);
       }
 
@@ -234,6 +246,8 @@ namespace HEAL.Attic {
       bundle.Layouts.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => LayoutToLayoutBox(l, mapper)));
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
       bundle.Strings.AddRange(mapper.strings.GetValues());
+      // bundle.TransformerIds.AddRange(mapper.types.GetValues().Select(t => mapper.GetTransformerId(mapper.type2transformer[t])));
+
 
       sw.Stop();
 
@@ -253,12 +267,16 @@ namespace HEAL.Attic {
 
       mapper.transformers = new Index<ITransformer>(bundle.TransformerGuids.Select(x => new Guid(x.ToByteArray())).Select(StaticCache.GetTransformer));
 
+
       var types = new List<Type>();
       var unknownTypeGuids = new List<Guid>();
-      foreach (var x in bundle.TypeGuids) {
+      for (int i = 0; i < bundle.TypeGuids.Count; i++) {
+        var x = bundle.TypeGuids[i];
         var guid = new Guid(x.ToByteArray());
+        //var transformerId = bundle.TransformerIds[i];
         if (StaticCache.TryGetType(guid, out Type type)) {
           types.Add(type);
+          //mapper.type2transformer.Add(type, mapper.GetTransformer(transformerId));
         } else {
           unknownTypeGuids.Add(guid);
           types.Add(null);
@@ -281,7 +299,12 @@ namespace HEAL.Attic {
         var o = mapper.boxId2Object[(uint)i];
         if (o == null) continue;
 
-        var transformer = mapper.transformers.GetValue(box.TransformerId);
+        ITransformer transformer;
+        if (box.TypeBoxId == 0) {
+          transformer = new TypeTransformer();
+        } else {
+          transformer = mapper.GetTransformer(mapper.GetBox(box.TypeBoxId).Type.TransformerId);
+        }
         transformer.FillFromBox(o, box, mapper);
       }
 

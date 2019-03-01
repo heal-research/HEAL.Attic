@@ -82,6 +82,7 @@ namespace HEAL.Attic {
       RegisterType(new Guid("E92C35AD-32B1-4F37-B8D2-BE2F5FEB465B"), typeof(Dictionary<,>));
       RegisterType(new Guid("18504ADF-2332-4497-8CA0-B2F00CA2EBA2"), typeof(Type));
 
+      RegisterType(new Guid("5EB35840-875C-4649-ACE1-8D16B86B0122"), Type.GetType("System.RuntimeType"));
       RegisterType(new Guid("67C35B3B-DC23-4929-9BA9-0A0CD5FE17F5"), Type.GetType("System.StringComparer"));
       RegisterType(new Guid("C7FDE8F0-EF3F-4A4D-8D87-5559C32A8B90"), Type.GetType("System.CultureAwareComparer"));
       RegisterType(new Guid("6A80741F-066D-460B-B333-4F766A4D4AEF"), Type.GetType("System.OrdinalComparer"));

@@ -26,48 +26,48 @@ namespace HEAL.Attic {
             "dW5kbGUSGQoRdHJhbnNmb3JtZXJfZ3VpZHMYASADKAwSEgoKdHlwZV9ndWlk",
             "cxgCIAMoDBITCgtyb290X2JveF9pZBgDIAEoDRIeCgVib3hlcxgEIAMoCzIP",
             "LkhFQUwuQXR0aWMuQm94Eg8KB3N0cmluZ3MYBSADKAkSMgoHbGF5b3V0cxgG",
-            "IAMoCzIhLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTGF5b3V0Qm94IuMBCgNC",
-            "b3gSFgoOdHJhbnNmb3JtZXJfaWQYASABKA0SEwoLdHlwZV9ib3hfaWQYAiAB",
-            "KA0SKQoFdmFsdWUYAyABKAsyGi5IRUFMLkF0dGljLlNjYWxhclZhbHVlQm94",
-            "EiEKBHR5cGUYBCABKAsyEy5IRUFMLkF0dGljLlR5cGVCb3gSLAoGdmFsdWVz",
-            "GAUgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFZhbHVlQm94EjMKB21lbWJl",
-            "cnMYCiABKAsyIi5IRUFMLkF0dGljLlN0b3JhYmxlVHlwZU1lbWJlcnNCb3gi",
-            "OAoHVHlwZUJveBIPCgd0eXBlX2lkGAEgASgNEhwKFGdlbmVyaWNfdHlwZV9i",
-            "b3hfaWRzGAIgAygNImwKDlNjYWxhclZhbHVlQm94EgwKBGxvbmcYAyABKAMS",
-            "DgoGdV9sb25nGAUgASgEEg0KBWZsb2F0GAYgASgCEg4KBmRvdWJsZRgHIAEo",
-            "ARINCgVieXRlcxgIIAEoDBIOCgZzX2xvbmcYCiABKBIiqwQKEFJlcGVhdGVk",
-            "VmFsdWVCb3gSKgoFYm9vbHMYASABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVk",
-            "Qm9vbEJveBIoCgRpbnRzGAIgASgLMhouSEVBTC5BdHRpYy5SZXBlYXRlZElu",
-            "dEJveBIqCgVsb25ncxgDIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0ZWRMb25n",
-            "Qm94EisKBnVfaW50cxgEIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0ZWRVSW50",
-            "Qm94Ei0KB3VfbG9uZ3MYBSABKAsyHC5IRUFMLkF0dGljLlJlcGVhdGVkVUxv",
-            "bmdCb3gSLAoGZmxvYXRzGAYgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZEZs",
-            "b2F0Qm94Ei4KB2RvdWJsZXMYByABKAsyHS5IRUFMLkF0dGljLlJlcGVhdGVk",
-            "RG91YmxlQm94EisKBnNfaW50cxgIIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0",
-            "ZWRTSW50Qm94Ei0KB3NfbG9uZ3MYCSABKAsyHC5IRUFMLkF0dGljLlJlcGVh",
-            "dGVkU0xvbmdCb3gSMgoEa3ZwcxgKIAEoCzIkLkhFQUwuQXR0aWMuUmVwZWF0",
-            "ZWRLZXlWYWx1ZVBhaXJzQm94EjYKEGFycmF5TWV0YUluZm9Cb3gYDSABKAsy",
-            "HC5IRUFMLkF0dGljLkFycmF5TWV0YUluZm9Cb3gSEwoLY29tcGFyZXJfaWQY",
-            "FCABKA0iRgoQQXJyYXlNZXRhSW5mb0JveBIMCgRyYW5rGAEgASgFEg8KB2xl",
-            "bmd0aHMYAiADKAUSEwoLbG93ZXJCb3VuZHMYAyADKAUiTwoWU3RvcmFibGVU",
-            "eXBlTWVtYmVyc0JveBIfChdzdG9yYWJsZV90eXBlX2xheW91dF9pZBgBIAEo",
-            "DRIUCgx2YWx1ZV9ib3hfaWQYAiADKA0iIQoPUmVwZWF0ZWRCb29sQm94Eg4K",
-            "BnZhbHVlcxgBIAMoCCIgCg5SZXBlYXRlZEludEJveBIOCgZ2YWx1ZXMYASAD",
-            "KAUiIQoPUmVwZWF0ZWRMb25nQm94Eg4KBnZhbHVlcxgBIAMoAyIhCg9SZXBl",
-            "YXRlZFVJbnRCb3gSDgoGdmFsdWVzGAEgAygNIiIKEFJlcGVhdGVkVUxvbmdC",
-            "b3gSDgoGdmFsdWVzGAEgAygEIiIKEFJlcGVhdGVkRmxvYXRCb3gSDgoGdmFs",
-            "dWVzGAEgAygCIiMKEVJlcGVhdGVkRG91YmxlQm94Eg4KBnZhbHVlcxgBIAMo",
-            "ASIhCg9SZXBlYXRlZFNJbnRCb3gSDgoGdmFsdWVzGAEgAygRIiIKEFJlcGVh",
-            "dGVkU0xvbmdCb3gSDgoGdmFsdWVzGAEgAygSIjgKGFJlcGVhdGVkS2V5VmFs",
-            "dWVQYWlyc0JveBIMCgRrZXlzGAEgAygNEg4KBnZhbHVlcxgCIAMoDSJJChVT",
-            "dG9yYWJsZVR5cGVMYXlvdXRCb3gSEQoJdHlwZV9ndWlkGAEgASgNEg4KBnBh",
-            "cmVudBgCIAEoDRINCgVuYW1lcxgDIAMoDWIGcHJvdG8z"));
+            "IAMoCzIhLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTGF5b3V0Qm94IssBCgNC",
+            "b3gSEwoLdHlwZV9ib3hfaWQYAiABKA0SKQoFdmFsdWUYAyABKAsyGi5IRUFM",
+            "LkF0dGljLlNjYWxhclZhbHVlQm94EiEKBHR5cGUYBCABKAsyEy5IRUFMLkF0",
+            "dGljLlR5cGVCb3gSLAoGdmFsdWVzGAUgASgLMhwuSEVBTC5BdHRpYy5SZXBl",
+            "YXRlZFZhbHVlQm94EjMKB21lbWJlcnMYBiABKAsyIi5IRUFMLkF0dGljLlN0",
+            "b3JhYmxlVHlwZU1lbWJlcnNCb3giTwoHVHlwZUJveBIPCgd0eXBlX2lkGAEg",
+            "ASgNEhwKFGdlbmVyaWNfdHlwZV9ib3hfaWRzGAIgAygNEhUKDXRyYW5zZm9y",
+            "bWVySWQYAyABKA0ibAoOU2NhbGFyVmFsdWVCb3gSDAoEbG9uZxgDIAEoAxIO",
+            "CgZ1X2xvbmcYBSABKAQSDQoFZmxvYXQYBiABKAISDgoGZG91YmxlGAcgASgB",
+            "Eg0KBWJ5dGVzGAggASgMEg4KBnNfbG9uZxgKIAEoEiKrBAoQUmVwZWF0ZWRW",
+            "YWx1ZUJveBIqCgVib29scxgBIAEoCzIbLkhFQUwuQXR0aWMuUmVwZWF0ZWRC",
+            "b29sQm94EigKBGludHMYAiABKAsyGi5IRUFMLkF0dGljLlJlcGVhdGVkSW50",
+            "Qm94EioKBWxvbmdzGAMgASgLMhsuSEVBTC5BdHRpYy5SZXBlYXRlZExvbmdC",
+            "b3gSKwoGdV9pbnRzGAQgASgLMhsuSEVBTC5BdHRpYy5SZXBlYXRlZFVJbnRC",
+            "b3gSLQoHdV9sb25ncxgFIAEoCzIcLkhFQUwuQXR0aWMuUmVwZWF0ZWRVTG9u",
+            "Z0JveBIsCgZmbG9hdHMYBiABKAsyHC5IRUFMLkF0dGljLlJlcGVhdGVkRmxv",
+            "YXRCb3gSLgoHZG91YmxlcxgHIAEoCzIdLkhFQUwuQXR0aWMuUmVwZWF0ZWRE",
+            "b3VibGVCb3gSKwoGc19pbnRzGAggASgLMhsuSEVBTC5BdHRpYy5SZXBlYXRl",
+            "ZFNJbnRCb3gSLQoHc19sb25ncxgJIAEoCzIcLkhFQUwuQXR0aWMuUmVwZWF0",
+            "ZWRTTG9uZ0JveBIyCgRrdnBzGAogASgLMiQuSEVBTC5BdHRpYy5SZXBlYXRl",
+            "ZEtleVZhbHVlUGFpcnNCb3gSNgoQYXJyYXlNZXRhSW5mb0JveBgNIAEoCzIc",
+            "LkhFQUwuQXR0aWMuQXJyYXlNZXRhSW5mb0JveBITCgtjb21wYXJlcl9pZBgU",
+            "IAEoDSJGChBBcnJheU1ldGFJbmZvQm94EgwKBHJhbmsYASABKAUSDwoHbGVu",
+            "Z3RocxgCIAMoBRITCgtsb3dlckJvdW5kcxgDIAMoBSJPChZTdG9yYWJsZVR5",
+            "cGVNZW1iZXJzQm94Eh8KF3N0b3JhYmxlX3R5cGVfbGF5b3V0X2lkGAEgASgN",
+            "EhQKDHZhbHVlX2JveF9pZBgCIAMoDSIhCg9SZXBlYXRlZEJvb2xCb3gSDgoG",
+            "dmFsdWVzGAEgAygIIiAKDlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMo",
+            "BSIhCg9SZXBlYXRlZExvbmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVh",
+            "dGVkVUludEJveBIOCgZ2YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0Jv",
+            "eBIOCgZ2YWx1ZXMYASADKAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1",
+            "ZXMYASADKAIiIwoRUmVwZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygB",
+            "IiEKD1JlcGVhdGVkU0ludEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0",
+            "ZWRTTG9uZ0JveBIOCgZ2YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1",
+            "ZVBhaXJzQm94EgwKBGtleXMYASADKA0SDgoGdmFsdWVzGAIgAygNIkkKFVN0",
+            "b3JhYmxlVHlwZUxheW91dEJveBIRCgl0eXBlX2d1aWQYASABKA0SDgoGcGFy",
+            "ZW50GAIgASgNEg0KBW5hbWVzGAMgAygNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "Layouts" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TransformerId", "TypeBoxId", "Value", "Type", "Values", "Members" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeBox), global::HEAL.Attic.TypeBox.Parser, new[]{ "TypeId", "GenericTypeBoxIds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TypeBoxId", "Value", "Type", "Values", "Members" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeBox), global::HEAL.Attic.TypeBox.Parser, new[]{ "TypeId", "GenericTypeBoxIds", "TransformerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ArrayMetaInfoBox", "ComparerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetaInfoBox), global::HEAL.Attic.ArrayMetaInfoBox.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
@@ -185,6 +185,9 @@ namespace HEAL.Attic {
     private static readonly pb::FieldCodec<global::HEAL.Attic.StorableTypeLayoutBox> _repeated_layouts_codec
         = pb::FieldCodec.ForMessage(50, global::HEAL.Attic.StorableTypeLayoutBox.Parser);
     private readonly pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> layouts_ = new pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox>();
+    /// <summary>
+    ///repeated uint32 transformer_ids = 7;          // transformer_id for each element of type_guids (same order)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> Layouts {
       get { return layouts_; }
@@ -336,7 +339,6 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Box(Box other) : this() {
-      transformerId_ = other.transformerId_;
       typeBoxId_ = other.typeBoxId_;
       Value = other.value_ != null ? other.Value.Clone() : null;
       Type = other.type_ != null ? other.Type.Clone() : null;
@@ -349,22 +351,11 @@ namespace HEAL.Attic {
       return new Box(this);
     }
 
-    /// <summary>Field number for the "transformer_id" field.</summary>
-    public const int TransformerIdFieldNumber = 1;
-    private uint transformerId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TransformerId {
-      get { return transformerId_; }
-      set {
-        transformerId_ = value;
-      }
-    }
-
     /// <summary>Field number for the "type_box_id" field.</summary>
     public const int TypeBoxIdFieldNumber = 2;
     private uint typeBoxId_;
     /// <summary>
-    /// index within Bundle.boxes of the box for the type of the object
+    /// uint32 transformer_id = 1;
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint TypeBoxId {
@@ -408,7 +399,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "members" field.</summary>
-    public const int MembersFieldNumber = 10;
+    public const int MembersFieldNumber = 6;
     private global::HEAL.Attic.StorableTypeMembersBox members_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.StorableTypeMembersBox Members {
@@ -431,7 +422,6 @@ namespace HEAL.Attic {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (TransformerId != other.TransformerId) return false;
       if (TypeBoxId != other.TypeBoxId) return false;
       if (!object.Equals(Value, other.Value)) return false;
       if (!object.Equals(Type, other.Type)) return false;
@@ -443,7 +433,6 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (TransformerId != 0) hash ^= TransformerId.GetHashCode();
       if (TypeBoxId != 0) hash ^= TypeBoxId.GetHashCode();
       if (value_ != null) hash ^= Value.GetHashCode();
       if (type_ != null) hash ^= Type.GetHashCode();
@@ -459,10 +448,6 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (TransformerId != 0) {
-        output.WriteRawTag(8);
-        output.WriteUInt32(TransformerId);
-      }
       if (TypeBoxId != 0) {
         output.WriteRawTag(16);
         output.WriteUInt32(TypeBoxId);
@@ -480,7 +465,7 @@ namespace HEAL.Attic {
         output.WriteMessage(Values);
       }
       if (members_ != null) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(50);
         output.WriteMessage(Members);
       }
     }
@@ -488,9 +473,6 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (TransformerId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TransformerId);
-      }
       if (TypeBoxId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeBoxId);
       }
@@ -513,9 +495,6 @@ namespace HEAL.Attic {
     public void MergeFrom(Box other) {
       if (other == null) {
         return;
-      }
-      if (other.TransformerId != 0) {
-        TransformerId = other.TransformerId;
       }
       if (other.TypeBoxId != 0) {
         TypeBoxId = other.TypeBoxId;
@@ -554,10 +533,6 @@ namespace HEAL.Attic {
           default:
             input.SkipLastField();
             break;
-          case 8: {
-            TransformerId = input.ReadUInt32();
-            break;
-          }
           case 16: {
             TypeBoxId = input.ReadUInt32();
             break;
@@ -583,7 +558,7 @@ namespace HEAL.Attic {
             input.ReadMessage(values_);
             break;
           }
-          case 82: {
+          case 50: {
             if (members_ == null) {
               members_ = new global::HEAL.Attic.StorableTypeMembersBox();
             }
@@ -622,6 +597,7 @@ namespace HEAL.Attic {
     public TypeBox(TypeBox other) : this() {
       typeId_ = other.typeId_;
       genericTypeBoxIds_ = other.genericTypeBoxIds_.Clone();
+      transformerId_ = other.transformerId_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -656,6 +632,17 @@ namespace HEAL.Attic {
       get { return genericTypeBoxIds_; }
     }
 
+    /// <summary>Field number for the "transformerId" field.</summary>
+    public const int TransformerIdFieldNumber = 3;
+    private uint transformerId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint TransformerId {
+      get { return transformerId_; }
+      set {
+        transformerId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as TypeBox);
@@ -671,6 +658,7 @@ namespace HEAL.Attic {
       }
       if (TypeId != other.TypeId) return false;
       if(!genericTypeBoxIds_.Equals(other.genericTypeBoxIds_)) return false;
+      if (TransformerId != other.TransformerId) return false;
       return true;
     }
 
@@ -679,6 +667,7 @@ namespace HEAL.Attic {
       int hash = 1;
       if (TypeId != 0) hash ^= TypeId.GetHashCode();
       hash ^= genericTypeBoxIds_.GetHashCode();
+      if (TransformerId != 0) hash ^= TransformerId.GetHashCode();
       return hash;
     }
 
@@ -694,6 +683,10 @@ namespace HEAL.Attic {
         output.WriteUInt32(TypeId);
       }
       genericTypeBoxIds_.WriteTo(output, _repeated_genericTypeBoxIds_codec);
+      if (TransformerId != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(TransformerId);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -703,6 +696,9 @@ namespace HEAL.Attic {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
       }
       size += genericTypeBoxIds_.CalculateSize(_repeated_genericTypeBoxIds_codec);
+      if (TransformerId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TransformerId);
+      }
       return size;
     }
 
@@ -715,6 +711,9 @@ namespace HEAL.Attic {
         TypeId = other.TypeId;
       }
       genericTypeBoxIds_.Add(other.genericTypeBoxIds_);
+      if (other.TransformerId != 0) {
+        TransformerId = other.TransformerId;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -732,6 +731,10 @@ namespace HEAL.Attic {
           case 18:
           case 16: {
             genericTypeBoxIds_.AddEntriesFrom(input, _repeated_genericTypeBoxIds_codec);
+            break;
+          }
+          case 24: {
+            TransformerId = input.ReadUInt32();
             break;
           }
         }

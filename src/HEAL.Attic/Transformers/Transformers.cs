@@ -18,10 +18,13 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
+      var type = o.GetType();
       var box = new Box {
-        TransformerId = mapper.GetTransformerId(this),
-        TypeBoxId = mapper.GetBoxId(o.GetType())
+        TypeBoxId = mapper.GetBoxId(type)
       };
+
+      mapper.GetBox(box.TypeBoxId).Type.TransformerId = mapper.GetTransformerId(this);
+
       return box;
     }
 
@@ -45,11 +48,14 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
-      return new Box { TransformerId = mapper.GetTransformerId(this) };
+      var box = new Box { };
+      Populate(box, o, mapper);
+      return box;
     }
 
     public override void FillBox(Box box, object o, Mapper mapper) {
-      Populate(box, o, mapper);
+      // already filled in CreateBox
+      // nothing to do
     }
 
     private void Populate(Box box, object value, Mapper mapper) {
@@ -169,10 +175,12 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
+      var type = o.GetType();
       var box = new Box {
-        TransformerId = mapper.GetTransformerId(this),
-        TypeBoxId = mapper.GetBoxId(o.GetType()),
+        TypeBoxId = mapper.GetBoxId(type),
       };
+
+      mapper.GetBox(box.TypeBoxId).Type.TransformerId = mapper.GetTransformerId(this);
       return box;
     }
 

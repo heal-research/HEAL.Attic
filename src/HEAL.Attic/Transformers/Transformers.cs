@@ -18,13 +18,9 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
-      var box = new Box {
-        TypeMsgId = mapper.TypeToTypeMessageId(o.GetType(), out TypeMessage typeMsg)
+      return new Box {
+        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this)
       };
-
-      typeMsg.TransformerId = mapper.GetTransformerId(this);
-
-      return box;
     }
 
     public override void FillBox(Box box, object o, Mapper mapper) {
@@ -40,35 +36,29 @@ namespace HEAL.Attic {
     protected abstract T Extract(Box box, Type type, Mapper mapper);
   }
 
-  // [Transformer("854156DA-2A37-450F-92ED-355FBBD8D131", 50)]
-  // internal sealed class TypeTransformer : Transformer {
-  //   public override bool CanTransformType(Type type) {
-  //     return typeof(Type).IsAssignableFrom(type);
-  //   }
-  // 
-  //   public override Box CreateBox(object o, Mapper mapper) {
-  //     var box = new Box { };
-  //     Populate(box, o, mapper);
-  //     return box;
-  //   }
-  // 
-  //   public override void FillBox(Box box, object o, Mapper mapper) {
-  //     // already filled in CreateBox
-  //     // nothing to do
-  //   }
-  // 
-  //   private void Populate(Box box, object value, Mapper mapper) {
-  // 
-  //   }
-  // 
-  //   public override object ToObject(Box box, Mapper mapper) {
-  // 
-  //   }
-  // 
-  //   private object Extract(Box box, Type type, Mapper mapper) {
-  // 
-  //   }
-  // }
+  [Transformer("854156DA-2A37-450F-92ED-355FBBD8D131", 50)]
+  internal sealed class TypeTransformer : Transformer {
+    public override bool CanTransformType(Type type) {
+      return typeof(Type).IsAssignableFrom(type);
+    }
+
+    public override Box CreateBox(object o, Mapper mapper) {
+      return new Box {
+        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this)
+      };
+    }
+
+    public override void FillBox(Box box, object o, Mapper mapper) {
+      // we store the id of the type message in an uint
+      var valueBox = new ScalarValueBox();
+      valueBox.ULong = mapper.GetTypeMessageId((Type)o, null); // don't change the transformer that is used for objects / boxes of this type!
+      box.Value = valueBox;
+    }
+
+    public override object ToObject(Box box, Mapper mapper) {
+      return mapper.TypeMessageToType(mapper.GetTypeMessage((uint)box.Value.ULong));
+    }
+  }
 
   [Transformer("4C610596-5234-4C49-998E-30007D64492E", 100)]
   internal sealed class StringBoxTransformer : BoxTransformer<string> {
@@ -155,12 +145,9 @@ namespace HEAL.Attic {
     }
 
     public override Box CreateBox(object o, Mapper mapper) {
-      var type = o.GetType();
-      var box = new Box {
-        TypeMsgId = mapper.TypeToTypeMessageId(type, out TypeMessage typeMsg),
+      return new Box {
+        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this),
       };
-      typeMsg.TransformerId = mapper.GetTransformerId(this);
-      return box;
     }
 
     public override void FillBox(Box box, object o, Mapper mapper) {

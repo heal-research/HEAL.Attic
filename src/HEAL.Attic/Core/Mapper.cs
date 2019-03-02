@@ -49,6 +49,7 @@ namespace HEAL.Attic {
     private Dictionary<uint, Box> boxId2Box;
     private Index<StorableTypeLayout> storableTypeLayouts;
     private Index<TypeMessage> typeMessages;
+    private Index<ArrayInfo> arrayInfos;
 
     private readonly Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
 
@@ -75,6 +76,8 @@ namespace HEAL.Attic {
 
       typeMessages = new Index<TypeMessage>();
       type2TypeMessageId = new Dictionary<Type, uint>();
+
+      arrayInfos = new Index<ArrayInfo>();
 
       GetTypeId(typeof(Type).GetType());
 
@@ -145,18 +148,20 @@ namespace HEAL.Attic {
     #endregion
 
     #region TypeMessages
-    internal uint TypeToTypeMessageId(Type type, out TypeMessage typeMessage) {
+    internal uint GetTypeMessageId(Type type, ITransformer transformer) {
       if (type2TypeMessageId.TryGetValue(type, out uint id)) {
-        typeMessage = typeMessages.GetValue(id);
+        var typeMsg = typeMessages.GetValue(id);
+        if (typeMsg.TransformerId == 0) typeMsg.TransformerId = GetTransformerId(transformer); // GetTransformerId returns 0 when transformer is null
         return id;
       } else {
-        typeMessage = new TypeMessage();
+        var typeMessage = new TypeMessage();
+        typeMessage.TransformerId = GetTransformerId(transformer);
         if (type.IsGenericType) {
           typeMessage.TypeId = GetTypeId(type.GetGenericTypeDefinition());
-          typeMessage.GenericTypeMsgIds.AddRange(type.GetGenericArguments().Select(t => TypeToTypeMessageId(t, out TypeMessage _)));
+          typeMessage.GenericTypeMsgIds.AddRange(type.GetGenericArguments().Select(t => GetTypeMessageId(t, null)));
         } else if (type.IsArray) {
           typeMessage.TypeId = GetTypeId(typeof(Array));
-          typeMessage.GenericTypeMsgIds.Add(TypeToTypeMessageId(type.GetElementType(), out TypeMessage _));
+          typeMessage.GenericTypeMsgIds.Add(GetTypeMessageId(type.GetElementType(), null));
         } else {
           typeMessage.TypeId = GetTypeId(type);
         }
@@ -253,6 +258,15 @@ namespace HEAL.Attic {
     }
     #endregion
 
+    #region ArrayInfos
+    internal uint GetArrayInfoId(ArrayInfo arrayInfo) {
+      return arrayInfos.GetIndex(arrayInfo);
+    }
+    internal ArrayInfo GetArrayInfo(uint id) {
+      return arrayInfos.GetValue(id);
+    }
+    #endregion
+
 
 
 
@@ -287,6 +301,7 @@ namespace HEAL.Attic {
       bundle.TransformerGuids.AddRange(mapper.transformers.GetValues().Select(x => x.Guid).Select(x => ByteString.CopyFrom(x.ToByteArray())));
       bundle.TypeGuids.AddRange(mapper.types.GetValues().Select(x => ByteString.CopyFrom(StaticCache.GetGuid(x).ToByteArray())));
       bundle.Layouts.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => LayoutToLayoutBox(l, mapper)));
+      bundle.ArrayInfos.AddRange(mapper.arrayInfos.GetValues());
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
       bundle.Strings.AddRange(mapper.strings.GetValues());
       bundle.TypeMessages.AddRange(mapper.typeMessages.GetValues());
@@ -329,6 +344,7 @@ namespace HEAL.Attic {
       mapper.boxId2Box = bundle.Boxes.Select((b, i) => new { Box = b, Index = i }).ToDictionary(k => (uint)k.Index + 1, v => v.Box);
       mapper.strings = new Index<string>(bundle.Strings);
       mapper.storableTypeLayouts = new Index<StorableTypeLayout>(bundle.Layouts.Select(l => LayoutBoxToLayout(l, mapper)));
+      mapper.arrayInfos = new Index<ArrayInfo>(bundle.ArrayInfos);
 
       var boxes = bundle.Boxes;
 

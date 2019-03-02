@@ -12,6 +12,7 @@ message Bundle {
   repeated StorableTypeLayoutBox layouts = 6;
   //repeated uint32 transformer_ids = 7;          // transformer_id for each element of type_guids (same order)
   repeated TypeMessage typeMessages = 8;
+  repeated ArrayInfo arrayInfos = 9;
 }
 
 // each box represents and object in an object graph
@@ -57,12 +58,13 @@ message RepeatedValueBox {
   RepeatedSLongBox s_longs = 9;
   RepeatedKeyValuePairsBox kvps = 10;
 
-  ArrayMetaInfoBox arrayMetaInfoBox = 13;
-  uint32 comparer_id = 20;                 // some collections have a StorableType comparer (index into Bundle.boxes)
-  uint32 comparer_type_id = 21;            // other collection only have a comparer type (index into Bundle.typeMessages)
+  uint32 comparer_id = 11;                 // some collections have a StorableType comparer (index into Bundle.boxes)
+  uint32 comparer_type_id = 12;            // other collection only have a comparer type (index into Bundle.typeMessages)
+
+  uint32 array_info_id = 13;               // index into Boxes.arrayInfos
 }
 
-message ArrayMetaInfoBox {                 // TODO: potential for deduplication?
+message ArrayInfo {                 
   int32 rank = 1;
   repeated int32 lengths = 2;
   repeated int32 lowerBounds = 3;

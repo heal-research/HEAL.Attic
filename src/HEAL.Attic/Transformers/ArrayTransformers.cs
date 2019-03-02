@@ -25,20 +25,20 @@ namespace HEAL.Attic {
       var a = (Array)value;
 
       box.Values = new RepeatedValueBox();
-      var arrInfoBox = new ArrayMetaInfoBox();
-      box.Values.ArrayMetaInfoBox = arrInfoBox;
-      arrInfoBox.Rank = a.Rank;
+      var arrInfo = new ArrayInfo();
+      arrInfo.Rank = a.Rank;
       for (int d = 0; d < a.Rank; d++) {
-        arrInfoBox.Lengths.Add(a.GetLength(d));
-        arrInfoBox.LowerBounds.Add(a.GetLowerBound(d));
+        arrInfo.Lengths.Add(a.GetLength(d));
+        arrInfo.LowerBounds.Add(a.GetLowerBound(d));
       }
+      box.Values.ArrayInfoId = mapper.GetArrayInfoId(arrInfo);
       AddRange(new ArrayWrapper<T>(a), box.Values, mapper); // RepeatedField.AddRange expects IEnumerable<T> and is efficient for ICollection
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var arrInfoBox = box.Values.ArrayMetaInfoBox;
-      var lower = arrInfoBox.LowerBounds.ToArray();
-      var lenghts = arrInfoBox.Lengths.ToArray();
+      var arrInfo = mapper.GetArrayInfo(box.Values.ArrayInfoId);
+      var lower = arrInfo.LowerBounds.ToArray();
+      var lenghts = arrInfo.Lengths.ToArray();
       return Array.CreateInstance(type.GetElementType(), lenghts, lower);
     }
 
@@ -67,18 +67,18 @@ namespace HEAL.Attic {
       var a = (Array)value;
 
       box.Values = new RepeatedValueBox();
-      var arrInfoBox = new ArrayMetaInfoBox();
-      box.Values.ArrayMetaInfoBox = arrInfoBox;
-      arrInfoBox.Rank = a.Rank;
+      var arrInfo = new ArrayInfo();
+      arrInfo.Rank = a.Rank;
       for (int d = 0; d < a.Rank; d++) {
-        arrInfoBox.Lengths.Add(a.GetLength(d));
-        arrInfoBox.LowerBounds.Add(a.GetLowerBound(d));
+        arrInfo.Lengths.Add(a.GetLength(d));
+        arrInfo.LowerBounds.Add(a.GetLowerBound(d));
       }
+      box.Values.ArrayInfoId = mapper.GetArrayInfoId(arrInfo);
       AddRange(a, box.Values, mapper);
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var arrInfoBox = box.Values.ArrayMetaInfoBox;
+      var arrInfoBox = mapper.GetArrayInfo(box.Values.ArrayInfoId);
       var lower = arrInfoBox.LowerBounds.ToArray();
       var lenghts = arrInfoBox.Lengths.ToArray();
       return Array.CreateInstance(type.GetElementType(), lenghts, lower);

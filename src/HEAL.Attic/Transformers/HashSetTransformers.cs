@@ -34,7 +34,7 @@ namespace HEAL.Attic {
       else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
         throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
       else
-        box.Values.ComparerTypeId = mapper.TypeToTypeMessageId(comparerType, out TypeMessage _);
+        box.Values.ComparerTypeId = mapper.GetTypeMessageId(comparerType, transformer: null); // there is no transformer for the comparer type
       AddRange((IEnumerable)value, box.Values, mapper);
     }
 

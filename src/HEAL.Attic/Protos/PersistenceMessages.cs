@@ -22,56 +22,56 @@ namespace HEAL.Attic {
     static PersistenceMessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIuABCgZC",
+            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIosCCgZC",
             "dW5kbGUSGQoRdHJhbnNmb3JtZXJfZ3VpZHMYASADKAwSEgoKdHlwZV9ndWlk",
             "cxgCIAMoDBITCgtyb290X2JveF9pZBgDIAEoDRIeCgVib3hlcxgEIAMoCzIP",
             "LkhFQUwuQXR0aWMuQm94Eg8KB3N0cmluZ3MYBSADKAkSMgoHbGF5b3V0cxgG",
             "IAMoCzIhLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTGF5b3V0Qm94Ei0KDHR5",
-            "cGVNZXNzYWdlcxgIIAMoCzIXLkhFQUwuQXR0aWMuVHlwZU1lc3NhZ2UiqAEK",
-            "A0JveBITCgt0eXBlX21zZ19pZBgCIAEoDRIpCgV2YWx1ZRgDIAEoCzIaLkhF",
-            "QUwuQXR0aWMuU2NhbGFyVmFsdWVCb3gSLAoGdmFsdWVzGAUgASgLMhwuSEVB",
-            "TC5BdHRpYy5SZXBlYXRlZFZhbHVlQm94EjMKB21lbWJlcnMYBiABKAsyIi5I",
-            "RUFMLkF0dGljLlN0b3JhYmxlVHlwZU1lbWJlcnNCb3giUwoLVHlwZU1lc3Nh",
-            "Z2USDwoHdHlwZV9pZBgBIAEoDRIcChRnZW5lcmljX3R5cGVfbXNnX2lkcxgC",
-            "IAMoDRIVCg10cmFuc2Zvcm1lcklkGAMgASgNImwKDlNjYWxhclZhbHVlQm94",
-            "EgwKBGxvbmcYAyABKAMSDgoGdV9sb25nGAUgASgEEg0KBWZsb2F0GAYgASgC",
-            "Eg4KBmRvdWJsZRgHIAEoARINCgVieXRlcxgIIAEoDBIOCgZzX2xvbmcYCiAB",
-            "KBIixQQKEFJlcGVhdGVkVmFsdWVCb3gSKgoFYm9vbHMYASABKAsyGy5IRUFM",
-            "LkF0dGljLlJlcGVhdGVkQm9vbEJveBIoCgRpbnRzGAIgASgLMhouSEVBTC5B",
-            "dHRpYy5SZXBlYXRlZEludEJveBIqCgVsb25ncxgDIAEoCzIbLkhFQUwuQXR0",
-            "aWMuUmVwZWF0ZWRMb25nQm94EisKBnVfaW50cxgEIAEoCzIbLkhFQUwuQXR0",
-            "aWMuUmVwZWF0ZWRVSW50Qm94Ei0KB3VfbG9uZ3MYBSABKAsyHC5IRUFMLkF0",
-            "dGljLlJlcGVhdGVkVUxvbmdCb3gSLAoGZmxvYXRzGAYgASgLMhwuSEVBTC5B",
-            "dHRpYy5SZXBlYXRlZEZsb2F0Qm94Ei4KB2RvdWJsZXMYByABKAsyHS5IRUFM",
-            "LkF0dGljLlJlcGVhdGVkRG91YmxlQm94EisKBnNfaW50cxgIIAEoCzIbLkhF",
-            "QUwuQXR0aWMuUmVwZWF0ZWRTSW50Qm94Ei0KB3NfbG9uZ3MYCSABKAsyHC5I",
-            "RUFMLkF0dGljLlJlcGVhdGVkU0xvbmdCb3gSMgoEa3ZwcxgKIAEoCzIkLkhF",
-            "QUwuQXR0aWMuUmVwZWF0ZWRLZXlWYWx1ZVBhaXJzQm94EjYKEGFycmF5TWV0",
-            "YUluZm9Cb3gYDSABKAsyHC5IRUFMLkF0dGljLkFycmF5TWV0YUluZm9Cb3gS",
-            "EwoLY29tcGFyZXJfaWQYFCABKA0SGAoQY29tcGFyZXJfdHlwZV9pZBgVIAEo",
-            "DSJGChBBcnJheU1ldGFJbmZvQm94EgwKBHJhbmsYASABKAUSDwoHbGVuZ3Ro",
-            "cxgCIAMoBRITCgtsb3dlckJvdW5kcxgDIAMoBSJPChZTdG9yYWJsZVR5cGVN",
-            "ZW1iZXJzQm94Eh8KF3N0b3JhYmxlX3R5cGVfbGF5b3V0X2lkGAEgASgNEhQK",
-            "DHZhbHVlX2JveF9pZBgCIAMoDSIhCg9SZXBlYXRlZEJvb2xCb3gSDgoGdmFs",
-            "dWVzGAEgAygIIiAKDlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMoBSIh",
-            "Cg9SZXBlYXRlZExvbmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVhdGVk",
-            "VUludEJveBIOCgZ2YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0JveBIO",
-            "CgZ2YWx1ZXMYASADKAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1ZXMY",
-            "ASADKAIiIwoRUmVwZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygBIiEK",
-            "D1JlcGVhdGVkU0ludEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0ZWRT",
-            "TG9uZ0JveBIOCgZ2YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1ZVBh",
-            "aXJzQm94EgwKBGtleXMYASADKA0SDgoGdmFsdWVzGAIgAygNIkkKFVN0b3Jh",
-            "YmxlVHlwZUxheW91dEJveBIRCgl0eXBlX2d1aWQYASABKA0SDgoGcGFyZW50",
-            "GAIgASgNEg0KBW5hbWVzGAMgAygNYgZwcm90bzM="));
+            "cGVNZXNzYWdlcxgIIAMoCzIXLkhFQUwuQXR0aWMuVHlwZU1lc3NhZ2USKQoK",
+            "YXJyYXlJbmZvcxgJIAMoCzIVLkhFQUwuQXR0aWMuQXJyYXlJbmZvIqgBCgNC",
+            "b3gSEwoLdHlwZV9tc2dfaWQYAiABKA0SKQoFdmFsdWUYAyABKAsyGi5IRUFM",
+            "LkF0dGljLlNjYWxhclZhbHVlQm94EiwKBnZhbHVlcxgFIAEoCzIcLkhFQUwu",
+            "QXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAYgASgLMiIuSEVB",
+            "TC5BdHRpYy5TdG9yYWJsZVR5cGVNZW1iZXJzQm94IlMKC1R5cGVNZXNzYWdl",
+            "Eg8KB3R5cGVfaWQYASABKA0SHAoUZ2VuZXJpY190eXBlX21zZ19pZHMYAiAD",
+            "KA0SFQoNdHJhbnNmb3JtZXJJZBgDIAEoDSJsCg5TY2FsYXJWYWx1ZUJveBIM",
+            "CgRsb25nGAMgASgDEg4KBnVfbG9uZxgFIAEoBBINCgVmbG9hdBgGIAEoAhIO",
+            "CgZkb3VibGUYByABKAESDQoFYnl0ZXMYCCABKAwSDgoGc19sb25nGAogASgS",
+            "IqQEChBSZXBlYXRlZFZhbHVlQm94EioKBWJvb2xzGAEgASgLMhsuSEVBTC5B",
+            "dHRpYy5SZXBlYXRlZEJvb2xCb3gSKAoEaW50cxgCIAEoCzIaLkhFQUwuQXR0",
+            "aWMuUmVwZWF0ZWRJbnRCb3gSKgoFbG9uZ3MYAyABKAsyGy5IRUFMLkF0dGlj",
+            "LlJlcGVhdGVkTG9uZ0JveBIrCgZ1X2ludHMYBCABKAsyGy5IRUFMLkF0dGlj",
+            "LlJlcGVhdGVkVUludEJveBItCgd1X2xvbmdzGAUgASgLMhwuSEVBTC5BdHRp",
+            "Yy5SZXBlYXRlZFVMb25nQm94EiwKBmZsb2F0cxgGIAEoCzIcLkhFQUwuQXR0",
+            "aWMuUmVwZWF0ZWRGbG9hdEJveBIuCgdkb3VibGVzGAcgASgLMh0uSEVBTC5B",
+            "dHRpYy5SZXBlYXRlZERvdWJsZUJveBIrCgZzX2ludHMYCCABKAsyGy5IRUFM",
+            "LkF0dGljLlJlcGVhdGVkU0ludEJveBItCgdzX2xvbmdzGAkgASgLMhwuSEVB",
+            "TC5BdHRpYy5SZXBlYXRlZFNMb25nQm94EjIKBGt2cHMYCiABKAsyJC5IRUFM",
+            "LkF0dGljLlJlcGVhdGVkS2V5VmFsdWVQYWlyc0JveBITCgtjb21wYXJlcl9p",
+            "ZBgLIAEoDRIYChBjb21wYXJlcl90eXBlX2lkGAwgASgNEhUKDWFycmF5X2lu",
+            "Zm9faWQYDSABKA0iPwoJQXJyYXlJbmZvEgwKBHJhbmsYASABKAUSDwoHbGVu",
+            "Z3RocxgCIAMoBRITCgtsb3dlckJvdW5kcxgDIAMoBSJPChZTdG9yYWJsZVR5",
+            "cGVNZW1iZXJzQm94Eh8KF3N0b3JhYmxlX3R5cGVfbGF5b3V0X2lkGAEgASgN",
+            "EhQKDHZhbHVlX2JveF9pZBgCIAMoDSIhCg9SZXBlYXRlZEJvb2xCb3gSDgoG",
+            "dmFsdWVzGAEgAygIIiAKDlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMo",
+            "BSIhCg9SZXBlYXRlZExvbmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVh",
+            "dGVkVUludEJveBIOCgZ2YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0Jv",
+            "eBIOCgZ2YWx1ZXMYASADKAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1",
+            "ZXMYASADKAIiIwoRUmVwZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygB",
+            "IiEKD1JlcGVhdGVkU0ludEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0",
+            "ZWRTTG9uZ0JveBIOCgZ2YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1",
+            "ZVBhaXJzQm94EgwKBGtleXMYASADKA0SDgoGdmFsdWVzGAIgAygNIkkKFVN0",
+            "b3JhYmxlVHlwZUxheW91dEJveBIRCgl0eXBlX2d1aWQYASABKA0SDgoGcGFy",
+            "ZW50GAIgASgNEg0KBW5hbWVzGAMgAygNYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "Layouts", "TypeMessages" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "Layouts", "TypeMessages", "ArrayInfos" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TypeMsgId", "Value", "Values", "Members" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeMessage), global::HEAL.Attic.TypeMessage.Parser, new[]{ "TypeId", "GenericTypeMsgIds", "TransformerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ArrayMetaInfoBox", "ComparerId", "ComparerTypeId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetaInfoBox), global::HEAL.Attic.ArrayMetaInfoBox.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ComparerId", "ComparerTypeId", "ArrayInfoId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayInfo), global::HEAL.Attic.ArrayInfo.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "StorableTypeLayoutId", "ValueBoxId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedBoolBox), global::HEAL.Attic.RepeatedBoolBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedIntBox), global::HEAL.Attic.RepeatedIntBox.Parser, new[]{ "Values" }, null, null, null),
@@ -121,6 +121,7 @@ namespace HEAL.Attic {
       strings_ = other.strings_.Clone();
       layouts_ = other.layouts_.Clone();
       typeMessages_ = other.typeMessages_.Clone();
+      arrayInfos_ = other.arrayInfos_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -205,6 +206,16 @@ namespace HEAL.Attic {
       get { return typeMessages_; }
     }
 
+    /// <summary>Field number for the "arrayInfos" field.</summary>
+    public const int ArrayInfosFieldNumber = 9;
+    private static readonly pb::FieldCodec<global::HEAL.Attic.ArrayInfo> _repeated_arrayInfos_codec
+        = pb::FieldCodec.ForMessage(74, global::HEAL.Attic.ArrayInfo.Parser);
+    private readonly pbc::RepeatedField<global::HEAL.Attic.ArrayInfo> arrayInfos_ = new pbc::RepeatedField<global::HEAL.Attic.ArrayInfo>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::HEAL.Attic.ArrayInfo> ArrayInfos {
+      get { return arrayInfos_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Bundle);
@@ -225,6 +236,7 @@ namespace HEAL.Attic {
       if(!strings_.Equals(other.strings_)) return false;
       if(!layouts_.Equals(other.layouts_)) return false;
       if(!typeMessages_.Equals(other.typeMessages_)) return false;
+      if(!arrayInfos_.Equals(other.arrayInfos_)) return false;
       return true;
     }
 
@@ -238,6 +250,7 @@ namespace HEAL.Attic {
       hash ^= strings_.GetHashCode();
       hash ^= layouts_.GetHashCode();
       hash ^= typeMessages_.GetHashCode();
+      hash ^= arrayInfos_.GetHashCode();
       return hash;
     }
 
@@ -258,6 +271,7 @@ namespace HEAL.Attic {
       strings_.WriteTo(output, _repeated_strings_codec);
       layouts_.WriteTo(output, _repeated_layouts_codec);
       typeMessages_.WriteTo(output, _repeated_typeMessages_codec);
+      arrayInfos_.WriteTo(output, _repeated_arrayInfos_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -272,6 +286,7 @@ namespace HEAL.Attic {
       size += strings_.CalculateSize(_repeated_strings_codec);
       size += layouts_.CalculateSize(_repeated_layouts_codec);
       size += typeMessages_.CalculateSize(_repeated_typeMessages_codec);
+      size += arrayInfos_.CalculateSize(_repeated_arrayInfos_codec);
       return size;
     }
 
@@ -289,6 +304,7 @@ namespace HEAL.Attic {
       strings_.Add(other.strings_);
       layouts_.Add(other.layouts_);
       typeMessages_.Add(other.typeMessages_);
+      arrayInfos_.Add(other.arrayInfos_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -325,6 +341,10 @@ namespace HEAL.Attic {
           }
           case 66: {
             typeMessages_.AddEntriesFrom(input, _repeated_typeMessages_codec);
+            break;
+          }
+          case 74: {
+            arrayInfos_.AddEntriesFrom(input, _repeated_arrayInfos_codec);
             break;
           }
         }
@@ -1040,9 +1060,9 @@ namespace HEAL.Attic {
       SInts = other.sInts_ != null ? other.SInts.Clone() : null;
       SLongs = other.sLongs_ != null ? other.SLongs.Clone() : null;
       Kvps = other.kvps_ != null ? other.Kvps.Clone() : null;
-      ArrayMetaInfoBox = other.arrayMetaInfoBox_ != null ? other.ArrayMetaInfoBox.Clone() : null;
       comparerId_ = other.comparerId_;
       comparerTypeId_ = other.comparerTypeId_;
+      arrayInfoId_ = other.arrayInfoId_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1160,19 +1180,8 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "arrayMetaInfoBox" field.</summary>
-    public const int ArrayMetaInfoBoxFieldNumber = 13;
-    private global::HEAL.Attic.ArrayMetaInfoBox arrayMetaInfoBox_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::HEAL.Attic.ArrayMetaInfoBox ArrayMetaInfoBox {
-      get { return arrayMetaInfoBox_; }
-      set {
-        arrayMetaInfoBox_ = value;
-      }
-    }
-
     /// <summary>Field number for the "comparer_id" field.</summary>
-    public const int ComparerIdFieldNumber = 20;
+    public const int ComparerIdFieldNumber = 11;
     private uint comparerId_;
     /// <summary>
     /// some collections have a StorableType comparer (index into Bundle.boxes)
@@ -1186,7 +1195,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "comparer_type_id" field.</summary>
-    public const int ComparerTypeIdFieldNumber = 21;
+    public const int ComparerTypeIdFieldNumber = 12;
     private uint comparerTypeId_;
     /// <summary>
     /// other collection only have a comparer type (index into Bundle.typeMessages)
@@ -1196,6 +1205,20 @@ namespace HEAL.Attic {
       get { return comparerTypeId_; }
       set {
         comparerTypeId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "array_info_id" field.</summary>
+    public const int ArrayInfoIdFieldNumber = 13;
+    private uint arrayInfoId_;
+    /// <summary>
+    /// index into Boxes.arrayInfos
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ArrayInfoId {
+      get { return arrayInfoId_; }
+      set {
+        arrayInfoId_ = value;
       }
     }
 
@@ -1222,9 +1245,9 @@ namespace HEAL.Attic {
       if (!object.Equals(SInts, other.SInts)) return false;
       if (!object.Equals(SLongs, other.SLongs)) return false;
       if (!object.Equals(Kvps, other.Kvps)) return false;
-      if (!object.Equals(ArrayMetaInfoBox, other.ArrayMetaInfoBox)) return false;
       if (ComparerId != other.ComparerId) return false;
       if (ComparerTypeId != other.ComparerTypeId) return false;
+      if (ArrayInfoId != other.ArrayInfoId) return false;
       return true;
     }
 
@@ -1241,9 +1264,9 @@ namespace HEAL.Attic {
       if (sInts_ != null) hash ^= SInts.GetHashCode();
       if (sLongs_ != null) hash ^= SLongs.GetHashCode();
       if (kvps_ != null) hash ^= Kvps.GetHashCode();
-      if (arrayMetaInfoBox_ != null) hash ^= ArrayMetaInfoBox.GetHashCode();
       if (ComparerId != 0) hash ^= ComparerId.GetHashCode();
       if (ComparerTypeId != 0) hash ^= ComparerTypeId.GetHashCode();
+      if (ArrayInfoId != 0) hash ^= ArrayInfoId.GetHashCode();
       return hash;
     }
 
@@ -1294,17 +1317,17 @@ namespace HEAL.Attic {
         output.WriteRawTag(82);
         output.WriteMessage(Kvps);
       }
-      if (arrayMetaInfoBox_ != null) {
-        output.WriteRawTag(106);
-        output.WriteMessage(ArrayMetaInfoBox);
-      }
       if (ComparerId != 0) {
-        output.WriteRawTag(160, 1);
+        output.WriteRawTag(88);
         output.WriteUInt32(ComparerId);
       }
       if (ComparerTypeId != 0) {
-        output.WriteRawTag(168, 1);
+        output.WriteRawTag(96);
         output.WriteUInt32(ComparerTypeId);
+      }
+      if (ArrayInfoId != 0) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(ArrayInfoId);
       }
     }
 
@@ -1341,14 +1364,14 @@ namespace HEAL.Attic {
       if (kvps_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Kvps);
       }
-      if (arrayMetaInfoBox_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ArrayMetaInfoBox);
-      }
       if (ComparerId != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(ComparerId);
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ComparerId);
       }
       if (ComparerTypeId != 0) {
-        size += 2 + pb::CodedOutputStream.ComputeUInt32Size(ComparerTypeId);
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ComparerTypeId);
+      }
+      if (ArrayInfoId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ArrayInfoId);
       }
       return size;
     }
@@ -1418,17 +1441,14 @@ namespace HEAL.Attic {
         }
         Kvps.MergeFrom(other.Kvps);
       }
-      if (other.arrayMetaInfoBox_ != null) {
-        if (arrayMetaInfoBox_ == null) {
-          arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
-        }
-        ArrayMetaInfoBox.MergeFrom(other.ArrayMetaInfoBox);
-      }
       if (other.ComparerId != 0) {
         ComparerId = other.ComparerId;
       }
       if (other.ComparerTypeId != 0) {
         ComparerTypeId = other.ComparerTypeId;
+      }
+      if (other.ArrayInfoId != 0) {
+        ArrayInfoId = other.ArrayInfoId;
       }
     }
 
@@ -1510,19 +1530,16 @@ namespace HEAL.Attic {
             input.ReadMessage(kvps_);
             break;
           }
-          case 106: {
-            if (arrayMetaInfoBox_ == null) {
-              arrayMetaInfoBox_ = new global::HEAL.Attic.ArrayMetaInfoBox();
-            }
-            input.ReadMessage(arrayMetaInfoBox_);
-            break;
-          }
-          case 160: {
+          case 88: {
             ComparerId = input.ReadUInt32();
             break;
           }
-          case 168: {
+          case 96: {
             ComparerTypeId = input.ReadUInt32();
+            break;
+          }
+          case 104: {
+            ArrayInfoId = input.ReadUInt32();
             break;
           }
         }
@@ -1531,13 +1548,10 @@ namespace HEAL.Attic {
 
   }
 
-  /// <summary>
-  /// TODO: potential for deduplication?
-  /// </summary>
-  public sealed partial class ArrayMetaInfoBox : pb::IMessage<ArrayMetaInfoBox> {
-    private static readonly pb::MessageParser<ArrayMetaInfoBox> _parser = new pb::MessageParser<ArrayMetaInfoBox>(() => new ArrayMetaInfoBox());
+  public sealed partial class ArrayInfo : pb::IMessage<ArrayInfo> {
+    private static readonly pb::MessageParser<ArrayInfo> _parser = new pb::MessageParser<ArrayInfo>(() => new ArrayInfo());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ArrayMetaInfoBox> Parser { get { return _parser; } }
+    public static pb::MessageParser<ArrayInfo> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1550,22 +1564,22 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayMetaInfoBox() {
+    public ArrayInfo() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayMetaInfoBox(ArrayMetaInfoBox other) : this() {
+    public ArrayInfo(ArrayInfo other) : this() {
       rank_ = other.rank_;
       lengths_ = other.lengths_.Clone();
       lowerBounds_ = other.lowerBounds_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayMetaInfoBox Clone() {
-      return new ArrayMetaInfoBox(this);
+    public ArrayInfo Clone() {
+      return new ArrayInfo(this);
     }
 
     /// <summary>Field number for the "rank" field.</summary>
@@ -1601,11 +1615,11 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ArrayMetaInfoBox);
+      return Equals(other as ArrayInfo);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ArrayMetaInfoBox other) {
+    public bool Equals(ArrayInfo other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1654,7 +1668,7 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ArrayMetaInfoBox other) {
+    public void MergeFrom(ArrayInfo other) {
       if (other == null) {
         return;
       }

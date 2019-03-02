@@ -223,6 +223,8 @@ namespace HEAL.Attic.Tests {
     public Dictionary<string, int> dict = new Dictionary<string, int>();
     [Storable(DefaultValue = "default")]
     public string uninitialized;
+    [Storable]
+    public Type dataType = typeof(Root);
 
     [StorableConstructor]
     protected Root(StorableConstructorFlag _) : base(_) {

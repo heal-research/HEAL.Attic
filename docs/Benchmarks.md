@@ -16,7 +16,7 @@ Microsoft Windows 10 Education
       }
 ```
 
-int[]
+
 | Elements | Serialization time (ms) | Deserialization time (ms) | File size (kB) | avg. bytes per element |
 |---------:|------------------------:|--------------------------:|---------------:|------------------------|
 |     8192 |                     0,1 |                       0,0 |           39,2 |                    4,9 |

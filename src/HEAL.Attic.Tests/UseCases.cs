@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HEAL.Attic;
 
 namespace HEAL.Attic.Tests {
 
@@ -2082,6 +2083,58 @@ namespace HEAL.Attic.Tests {
               Assert.AreEqual("abc", arr2[i - 1, j + 0, k + 1, l + 2]);
     }
 
+
+    [StorableType("4624BEBE-C795-4A80-B5FC-87B99BFD214E")]
+    public class ObjectFilledOnAssignment_A {
+      private ObjectFilledOnAssignment_B b;
+      [Storable]
+      public ObjectFilledOnAssignment_B Value {
+        get { return b; }
+        set {
+          b = value;
+          //  a should be completely restored at this point. Check whether the a.o property is set
+          Assert.IsNotNull(b.Value);
+        }
+      }
+
+      [StorableConstructor]
+      public ObjectFilledOnAssignment_A(StorableConstructorFlag _) { }
+      public ObjectFilledOnAssignment_A() {
+      }
+    }
+
+
+    [StorableType("E21F1305-8C8E-4E9F-9717-9586EE3A560E")]
+    public class ObjectFilledOnAssignment_B {
+      private ObjectFilledOnAssignment_A b;
+      [Storable]
+      public ObjectFilledOnAssignment_A Value {
+        get { return b; }
+        set {
+          b = value;
+          //  b should be completely restored at this point. Check whether the b.A property is set
+          Assert.IsNotNull(b.Value);
+        }
+      }
+
+      [StorableConstructor]
+      public ObjectFilledOnAssignment_B(StorableConstructorFlag _) { }
+      public ObjectFilledOnAssignment_B() {
+      }
+    }
+
+    [TestMethod]
+    public void TestObjectFilledOnAssignment() {
+      var test_a = new ObjectFilledOnAssignment_A();
+      var test_b = new ObjectFilledOnAssignment_B();
+      test_a.Value = test_b;
+      test_b.Value = test_a;
+      var ser = new ProtoBufSerializer();
+      ser.Serialize(test_a, tempFile);
+      var test2 = (ObjectFilledOnAssignment_A)ser.Deserialize(tempFile);
+      Assert.IsNotNull(test2.Value);
+      Assert.IsNotNull(test2.Value.Value);
+    }
 
     #region backwards compatibility tests
     #region helpers

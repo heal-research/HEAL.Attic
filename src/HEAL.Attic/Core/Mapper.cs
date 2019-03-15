@@ -51,7 +51,7 @@ namespace HEAL.Attic {
     private Index<TypeMessage> typeMessages;
     private Index<ArrayInfo> arrayInfos;
 
-    private readonly Stack<Tuple<object, Box>> objectsToProcess = new Stack<Tuple<object, Box>>();
+    private readonly Queue<Tuple<object, Box>> objectsToProcess = new Queue<Tuple<object, Box>>();
 
     private readonly Dictionary<object, uint> object2BoxId;
     private readonly Dictionary<uint, object> boxId2Object;
@@ -207,7 +207,7 @@ namespace HEAL.Attic {
         object2BoxId.Add(o, boxId);
         var box = typeInfo.Transformer.CreateBox(o, this);
         boxId2Box.Add(boxId, box);
-        objectsToProcess.Push(Tuple.Create(o, box));
+        objectsToProcess.Enqueue(Tuple.Create(o, box));
       }
       return boxId;
     }
@@ -291,7 +291,7 @@ namespace HEAL.Attic {
       bundle.RootBoxId = mapper.GetBoxId(root);
 
       while (mapper.objectsToProcess.Any()) {
-        var tuple = mapper.objectsToProcess.Pop();
+        var tuple = mapper.objectsToProcess.Dequeue();
         var o = tuple.Item1;
         var box = tuple.Item2;
         var transformer = mapper.GetTransformer(mapper.GetTypeMessage(box.TypeMsgId).TransformerId);

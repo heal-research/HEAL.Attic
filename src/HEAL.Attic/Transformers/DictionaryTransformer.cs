@@ -41,7 +41,7 @@ namespace HEAL.Attic {
       else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
         throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
       else
-        kvpBox.ComparerTypeId = mapper.GetTypeMessageId(comparerType, transformer: null); // there is no transformer for the comparer type
+        kvpBox.ComparerTypeId = mapper.GetTypeMetadataId(comparerType, transformer: null); // there is no transformer for the comparer type
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
@@ -49,7 +49,7 @@ namespace HEAL.Attic {
       if (box.Values.ComparerId != 0) {
         comparer = mapper.GetObject(box.Values.ComparerId);
       } else {
-        comparer = Activator.CreateInstance(mapper.TypeMessageToType(mapper.GetTypeMessage(box.Values.ComparerTypeId)));
+        comparer = Activator.CreateInstance(mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata(box.Values.ComparerTypeId)));
       }
       return Activator.CreateInstance(type, box.Values.Kvps.Keys.Count, comparer);
     }

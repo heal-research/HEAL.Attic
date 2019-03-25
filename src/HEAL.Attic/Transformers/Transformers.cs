@@ -19,7 +19,7 @@ namespace HEAL.Attic {
 
     public override Box CreateBox(object o, Mapper mapper) {
       return new Box {
-        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this)
+        TypeMetadataId = mapper.GetTypeMetadataId(o.GetType(), this)
       };
     }
 
@@ -28,7 +28,7 @@ namespace HEAL.Attic {
     }
 
     public override object ToObject(Box box, Mapper mapper) {
-      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
+      var type = mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata(box.TypeMetadataId));
       return type == null ? default(T) : Extract(box, type, mapper);
     }
 
@@ -44,19 +44,19 @@ namespace HEAL.Attic {
 
     public override Box CreateBox(object o, Mapper mapper) {
       return new Box {
-        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this)
+        TypeMetadataId = mapper.GetTypeMetadataId(o.GetType(), this)
       };
     }
 
     public override void FillBox(Box box, object o, Mapper mapper) {
       // we store the id of the type message in an uint
       var valueBox = new ScalarValueBox();
-      valueBox.ULong = mapper.GetTypeMessageId((Type)o, null); // don't change the transformer that is used for objects / boxes of this type!
+      valueBox.ULong = mapper.GetTypeMetadataId((Type)o, null); // don't change the transformer that is used for objects / boxes of this type!
       box.Value = valueBox;
     }
 
     public override object ToObject(Box box, Mapper mapper) {
-      return mapper.TypeMessageToType(mapper.GetTypeMessage((uint)box.Value.ULong));
+      return mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata((uint)box.Value.ULong));
     }
   }
 
@@ -146,17 +146,17 @@ namespace HEAL.Attic {
 
     public override Box CreateBox(object o, Mapper mapper) {
       return new Box {
-        TypeMsgId = mapper.GetTypeMessageId(o.GetType(), this),
+        TypeMetadataId = mapper.GetTypeMetadataId(o.GetType(), this),
       };
     }
 
     public override void FillBox(Box box, object o, Mapper mapper) {
       box.Value = new ScalarValueBox();
-      box.Value.ULong = mapper.GetStringId(Enum.Format(o.GetType(), o, "G")); // TODO: introduce old names for enum values to enable refactoring
+      box.Value.ULong = mapper.GetStringId(Enum.Format(o.GetType(), o, "G"));
     }
 
     public override object ToObject(Box box, Mapper mapper) {
-      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
+      var type = mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata(box.TypeMetadataId));
       return type == null ? null : Enum.Parse(type, mapper.GetString((uint)box.Value.ULong));
     }
   }

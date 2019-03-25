@@ -50,8 +50,8 @@ namespace HEAL.Attic {
       type = value.GetType();
       typeInfo = Mapper.StaticCache.GetTypeInfo(type);
 
-      membersBox.StorableTypeLayoutId = mapper.GetStorableTypeLayoutIds(typeInfo.StorableTypeAttributeGuid);
-      var layout = mapper.GetStorableTypeLayout(membersBox.StorableTypeLayoutId);
+      membersBox.StorableTypeMetadataId = mapper.GetStorableTypeMetadata(typeInfo.StorableTypeAttributeGuid);
+      var layout = mapper.GetStorableTypeLayout(membersBox.StorableTypeMetadataId);
 
       while (StorableTypeAttribute.IsStorableType(type) && !mapper.CancellationToken.IsCancellationRequested) {
 
@@ -75,7 +75,7 @@ namespace HEAL.Attic {
         type = type.BaseType;
         if (StorableTypeAttribute.IsStorableType(type)) {
           typeInfo = Mapper.StaticCache.GetTypeInfo(type);
-          layout.ParentLayoutId = mapper.GetStorableTypeLayoutIds(typeInfo.StorableTypeAttributeGuid);
+          layout.ParentLayoutId = mapper.GetStorableTypeMetadata(typeInfo.StorableTypeAttributeGuid);
           layout = mapper.GetStorableTypeLayout(layout.ParentLayoutId);
         }
       }
@@ -88,7 +88,7 @@ namespace HEAL.Attic {
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
       var dict = new Dictionary<string, object>();
       var members = box.Members;
-      var layout = mapper.GetStorableTypeLayout(members.StorableTypeLayoutId);
+      var layout = mapper.GetStorableTypeLayout(members.StorableTypeMetadataId);
 
       var valueIdx = 0;
       while (layout != null) {
@@ -100,7 +100,7 @@ namespace HEAL.Attic {
         layout = mapper.GetStorableTypeLayout(layout.ParentLayoutId);
       }
 
-      var type = mapper.TypeMessageToType(mapper.GetTypeMessage(box.TypeMsgId));
+      var type = mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata(box.TypeMetadataId));
       var typeInfo = Mapper.StaticCache.GetTypeInfo(type);
       var typeStack = new Stack<Tuple<Type, TypeInfo>>();
 

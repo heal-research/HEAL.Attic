@@ -25,20 +25,20 @@ namespace HEAL.Attic {
       var a = (Array)value;
 
       box.Values = new RepeatedValueBox();
-      var arrInfo = new ArrayInfo();
-      arrInfo.Rank = a.Rank;
+      var arrMetadata = new ArrayMetadata();
+      arrMetadata.Rank = a.Rank;
       for (int d = 0; d < a.Rank; d++) {
-        arrInfo.Lengths.Add(a.GetLength(d));
-        arrInfo.LowerBounds.Add(a.GetLowerBound(d));
+        arrMetadata.Lengths.Add(a.GetLength(d));
+        arrMetadata.LowerBounds.Add(a.GetLowerBound(d));
       }
-      box.Values.ArrayInfoId = mapper.GetArrayInfoId(arrInfo);
+      box.Values.ArrayMetadataId = mapper.GetArrayMetadataId(arrMetadata);
       AddRange(new ArrayWrapper<T>(a), box.Values, mapper); // RepeatedField.AddRange expects IEnumerable<T> and is efficient for ICollection
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var arrInfo = mapper.GetArrayInfo(box.Values.ArrayInfoId);
-      var lower = arrInfo.LowerBounds.ToArray();
-      var lenghts = arrInfo.Lengths.ToArray();
+      var arrMetadata = mapper.GetArrayMetadata(box.Values.ArrayMetadataId);
+      var lower = arrMetadata.LowerBounds.ToArray();
+      var lenghts = arrMetadata.Lengths.ToArray();
       return Array.CreateInstance(type.GetElementType(), lenghts, lower);
     }
 
@@ -67,20 +67,20 @@ namespace HEAL.Attic {
       var a = (Array)value;
 
       box.Values = new RepeatedValueBox();
-      var arrInfo = new ArrayInfo();
-      arrInfo.Rank = a.Rank;
+      var arrMetadata = new ArrayMetadata();
+      arrMetadata.Rank = a.Rank;
       for (int d = 0; d < a.Rank; d++) {
-        arrInfo.Lengths.Add(a.GetLength(d));
-        arrInfo.LowerBounds.Add(a.GetLowerBound(d));
+        arrMetadata.Lengths.Add(a.GetLength(d));
+        arrMetadata.LowerBounds.Add(a.GetLowerBound(d));
       }
-      box.Values.ArrayInfoId = mapper.GetArrayInfoId(arrInfo);
+      box.Values.ArrayMetadataId = mapper.GetArrayMetadataId(arrMetadata);
       AddRange(a, box.Values, mapper);
     }
 
     protected override object Extract(Box box, Type type, Mapper mapper) {
-      var arrInfoBox = mapper.GetArrayInfo(box.Values.ArrayInfoId);
-      var lower = arrInfoBox.LowerBounds.ToArray();
-      var lenghts = arrInfoBox.Lengths.ToArray();
+      var arrMetadata = mapper.GetArrayMetadata(box.Values.ArrayMetadataId);
+      var lower = arrMetadata.LowerBounds.ToArray();
+      var lenghts = arrMetadata.Lengths.ToArray();
       return Array.CreateInstance(type.GetElementType(), lenghts, lower);
     }
 

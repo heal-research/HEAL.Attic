@@ -22,57 +22,58 @@ namespace HEAL.Attic {
     static PersistenceMessagesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIosCCgZC",
+            "ChlQZXJzaXN0ZW5jZU1lc3NhZ2VzLnByb3RvEgpIRUFMLkF0dGljIqMCCgZC",
             "dW5kbGUSGQoRdHJhbnNmb3JtZXJfZ3VpZHMYASADKAwSEgoKdHlwZV9ndWlk",
             "cxgCIAMoDBITCgtyb290X2JveF9pZBgDIAEoDRIeCgVib3hlcxgEIAMoCzIP",
-            "LkhFQUwuQXR0aWMuQm94Eg8KB3N0cmluZ3MYBSADKAkSMgoHbGF5b3V0cxgG",
-            "IAMoCzIhLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBlTGF5b3V0Qm94Ei0KDHR5",
-            "cGVNZXNzYWdlcxgIIAMoCzIXLkhFQUwuQXR0aWMuVHlwZU1lc3NhZ2USKQoK",
-            "YXJyYXlJbmZvcxgJIAMoCzIVLkhFQUwuQXR0aWMuQXJyYXlJbmZvIqgBCgNC",
-            "b3gSEwoLdHlwZV9tc2dfaWQYAiABKA0SKQoFdmFsdWUYAyABKAsyGi5IRUFM",
-            "LkF0dGljLlNjYWxhclZhbHVlQm94EiwKBnZhbHVlcxgFIAEoCzIcLkhFQUwu",
-            "QXR0aWMuUmVwZWF0ZWRWYWx1ZUJveBIzCgdtZW1iZXJzGAYgASgLMiIuSEVB",
-            "TC5BdHRpYy5TdG9yYWJsZVR5cGVNZW1iZXJzQm94IlMKC1R5cGVNZXNzYWdl",
-            "Eg8KB3R5cGVfaWQYASABKA0SHAoUZ2VuZXJpY190eXBlX21zZ19pZHMYAiAD",
-            "KA0SFQoNdHJhbnNmb3JtZXJJZBgDIAEoDSJsCg5TY2FsYXJWYWx1ZUJveBIM",
-            "CgRsb25nGAMgASgDEg4KBnVfbG9uZxgFIAEoBBINCgVmbG9hdBgGIAEoAhIO",
-            "CgZkb3VibGUYByABKAESDQoFYnl0ZXMYCCABKAwSDgoGc19sb25nGAogASgS",
-            "IqQEChBSZXBlYXRlZFZhbHVlQm94EioKBWJvb2xzGAEgASgLMhsuSEVBTC5B",
-            "dHRpYy5SZXBlYXRlZEJvb2xCb3gSKAoEaW50cxgCIAEoCzIaLkhFQUwuQXR0",
-            "aWMuUmVwZWF0ZWRJbnRCb3gSKgoFbG9uZ3MYAyABKAsyGy5IRUFMLkF0dGlj",
-            "LlJlcGVhdGVkTG9uZ0JveBIrCgZ1X2ludHMYBCABKAsyGy5IRUFMLkF0dGlj",
-            "LlJlcGVhdGVkVUludEJveBItCgd1X2xvbmdzGAUgASgLMhwuSEVBTC5BdHRp",
-            "Yy5SZXBlYXRlZFVMb25nQm94EiwKBmZsb2F0cxgGIAEoCzIcLkhFQUwuQXR0",
-            "aWMuUmVwZWF0ZWRGbG9hdEJveBIuCgdkb3VibGVzGAcgASgLMh0uSEVBTC5B",
-            "dHRpYy5SZXBlYXRlZERvdWJsZUJveBIrCgZzX2ludHMYCCABKAsyGy5IRUFM",
-            "LkF0dGljLlJlcGVhdGVkU0ludEJveBItCgdzX2xvbmdzGAkgASgLMhwuSEVB",
-            "TC5BdHRpYy5SZXBlYXRlZFNMb25nQm94EjIKBGt2cHMYCiABKAsyJC5IRUFM",
-            "LkF0dGljLlJlcGVhdGVkS2V5VmFsdWVQYWlyc0JveBITCgtjb21wYXJlcl9p",
-            "ZBgLIAEoDRIYChBjb21wYXJlcl90eXBlX2lkGAwgASgNEhUKDWFycmF5X2lu",
-            "Zm9faWQYDSABKA0iPwoJQXJyYXlJbmZvEgwKBHJhbmsYASABKAUSDwoHbGVu",
-            "Z3RocxgCIAMoBRITCgtsb3dlckJvdW5kcxgDIAMoBSJPChZTdG9yYWJsZVR5",
-            "cGVNZW1iZXJzQm94Eh8KF3N0b3JhYmxlX3R5cGVfbGF5b3V0X2lkGAEgASgN",
-            "EhQKDHZhbHVlX2JveF9pZBgCIAMoDSIhCg9SZXBlYXRlZEJvb2xCb3gSDgoG",
-            "dmFsdWVzGAEgAygIIiAKDlJlcGVhdGVkSW50Qm94Eg4KBnZhbHVlcxgBIAMo",
-            "BSIhCg9SZXBlYXRlZExvbmdCb3gSDgoGdmFsdWVzGAEgAygDIiEKD1JlcGVh",
-            "dGVkVUludEJveBIOCgZ2YWx1ZXMYASADKA0iIgoQUmVwZWF0ZWRVTG9uZ0Jv",
-            "eBIOCgZ2YWx1ZXMYASADKAQiIgoQUmVwZWF0ZWRGbG9hdEJveBIOCgZ2YWx1",
-            "ZXMYASADKAIiIwoRUmVwZWF0ZWREb3VibGVCb3gSDgoGdmFsdWVzGAEgAygB",
-            "IiEKD1JlcGVhdGVkU0ludEJveBIOCgZ2YWx1ZXMYASADKBEiIgoQUmVwZWF0",
-            "ZWRTTG9uZ0JveBIOCgZ2YWx1ZXMYASADKBIiOAoYUmVwZWF0ZWRLZXlWYWx1",
-            "ZVBhaXJzQm94EgwKBGtleXMYASADKA0SDgoGdmFsdWVzGAIgAygNIkkKFVN0",
-            "b3JhYmxlVHlwZUxheW91dEJveBIRCgl0eXBlX2d1aWQYASABKA0SDgoGcGFy",
-            "ZW50GAIgASgNEg0KBW5hbWVzGAMgAygNYgZwcm90bzM="));
+            "LkhFQUwuQXR0aWMuQm94Eg8KB3N0cmluZ3MYBSADKAkSQAoWc3RvcmFibGVf",
+            "dHlwZV9tZXRhZGF0YRgGIAMoCzIgLkhFQUwuQXR0aWMuU3RvcmFibGVUeXBl",
+            "TWV0YWRhdGESLwoNdHlwZV9tZXRhZGF0YRgHIAMoCzIYLkhFQUwuQXR0aWMu",
+            "VHlwZU1ldGFkYXRhEjEKDmFycmF5X21ldGFkYXRhGAggAygLMhkuSEVBTC5B",
+            "dHRpYy5BcnJheU1ldGFkYXRhIq0BCgNCb3gSGAoQdHlwZV9tZXRhZGF0YV9p",
+            "ZBgBIAEoDRIpCgV2YWx1ZRgCIAEoCzIaLkhFQUwuQXR0aWMuU2NhbGFyVmFs",
+            "dWVCb3gSLAoGdmFsdWVzGAMgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRlZFZh",
+            "bHVlQm94EjMKB21lbWJlcnMYBCABKAsyIi5IRUFMLkF0dGljLlN0b3JhYmxl",
+            "VHlwZU1lbWJlcnNCb3giWgoMVHlwZU1ldGFkYXRhEg8KB3R5cGVfaWQYASAB",
+            "KA0SIQoZZ2VuZXJpY190eXBlX21ldGFkYXRhX2lkcxgCIAMoDRIWCg50cmFu",
+            "c2Zvcm1lcl9pZBgDIAEoDSJsCg5TY2FsYXJWYWx1ZUJveBIMCgRsb25nGAEg",
+            "ASgDEg4KBnVfbG9uZxgCIAEoBBINCgVmbG9hdBgDIAEoAhIOCgZkb3VibGUY",
+            "BCABKAESDQoFYnl0ZXMYBSABKAwSDgoGc19sb25nGAYgASgSIqgEChBSZXBl",
+            "YXRlZFZhbHVlQm94EioKBWJvb2xzGAEgASgLMhsuSEVBTC5BdHRpYy5SZXBl",
+            "YXRlZEJvb2xCb3gSKAoEaW50cxgCIAEoCzIaLkhFQUwuQXR0aWMuUmVwZWF0",
+            "ZWRJbnRCb3gSKgoFbG9uZ3MYAyABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVk",
+            "TG9uZ0JveBIrCgZ1X2ludHMYBCABKAsyGy5IRUFMLkF0dGljLlJlcGVhdGVk",
+            "VUludEJveBItCgd1X2xvbmdzGAUgASgLMhwuSEVBTC5BdHRpYy5SZXBlYXRl",
+            "ZFVMb25nQm94EiwKBmZsb2F0cxgGIAEoCzIcLkhFQUwuQXR0aWMuUmVwZWF0",
+            "ZWRGbG9hdEJveBIuCgdkb3VibGVzGAcgASgLMh0uSEVBTC5BdHRpYy5SZXBl",
+            "YXRlZERvdWJsZUJveBIrCgZzX2ludHMYCCABKAsyGy5IRUFMLkF0dGljLlJl",
+            "cGVhdGVkU0ludEJveBItCgdzX2xvbmdzGAkgASgLMhwuSEVBTC5BdHRpYy5S",
+            "ZXBlYXRlZFNMb25nQm94EjIKBGt2cHMYCiABKAsyJC5IRUFMLkF0dGljLlJl",
+            "cGVhdGVkS2V5VmFsdWVQYWlyc0JveBITCgtjb21wYXJlcl9pZBgLIAEoDRIY",
+            "ChBjb21wYXJlcl90eXBlX2lkGAwgASgNEhkKEWFycmF5X21ldGFkYXRhX2lk",
+            "GA0gASgNIkQKDUFycmF5TWV0YWRhdGESDAoEcmFuaxgBIAEoBRIPCgdsZW5n",
+            "dGhzGAIgAygFEhQKDGxvd2VyX2JvdW5kcxgDIAMoBSJRChZTdG9yYWJsZVR5",
+            "cGVNZW1iZXJzQm94EiEKGXN0b3JhYmxlX3R5cGVfbWV0YWRhdGFfaWQYASAB",
+            "KA0SFAoMdmFsdWVfYm94X2lkGAIgAygNIiEKD1JlcGVhdGVkQm9vbEJveBIO",
+            "CgZ2YWx1ZXMYASADKAgiIAoOUmVwZWF0ZWRJbnRCb3gSDgoGdmFsdWVzGAEg",
+            "AygFIiEKD1JlcGVhdGVkTG9uZ0JveBIOCgZ2YWx1ZXMYASADKAMiIQoPUmVw",
+            "ZWF0ZWRVSW50Qm94Eg4KBnZhbHVlcxgBIAMoDSIiChBSZXBlYXRlZFVMb25n",
+            "Qm94Eg4KBnZhbHVlcxgBIAMoBCIiChBSZXBlYXRlZEZsb2F0Qm94Eg4KBnZh",
+            "bHVlcxgBIAMoAiIjChFSZXBlYXRlZERvdWJsZUJveBIOCgZ2YWx1ZXMYASAD",
+            "KAEiIQoPUmVwZWF0ZWRTSW50Qm94Eg4KBnZhbHVlcxgBIAMoESIiChBSZXBl",
+            "YXRlZFNMb25nQm94Eg4KBnZhbHVlcxgBIAMoEiI4ChhSZXBlYXRlZEtleVZh",
+            "bHVlUGFpcnNCb3gSDAoEa2V5cxgBIAMoDRIOCgZ2YWx1ZXMYAiADKA0iSAoU",
+            "U3RvcmFibGVUeXBlTWV0YWRhdGESEQoJdHlwZV9ndWlkGAEgASgNEg4KBnBh",
+            "cmVudBgCIAEoDRINCgVuYW1lcxgDIAMoDWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "Layouts", "TypeMessages", "ArrayInfos" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TypeMsgId", "Value", "Values", "Members" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeMessage), global::HEAL.Attic.TypeMessage.Parser, new[]{ "TypeId", "GenericTypeMsgIds", "TransformerId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Bundle), global::HEAL.Attic.Bundle.Parser, new[]{ "TransformerGuids", "TypeGuids", "RootBoxId", "Boxes", "Strings", "StorableTypeMetadata", "TypeMetadata", "ArrayMetadata" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.Box), global::HEAL.Attic.Box.Parser, new[]{ "TypeMetadataId", "Value", "Values", "Members" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.TypeMetadata), global::HEAL.Attic.TypeMetadata.Parser, new[]{ "TypeId", "GenericTypeMetadataIds", "TransformerId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ScalarValueBox), global::HEAL.Attic.ScalarValueBox.Parser, new[]{ "Long", "ULong", "Float", "Double", "Bytes", "SLong" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ComparerId", "ComparerTypeId", "ArrayInfoId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayInfo), global::HEAL.Attic.ArrayInfo.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "StorableTypeLayoutId", "ValueBoxId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedValueBox), global::HEAL.Attic.RepeatedValueBox.Parser, new[]{ "Bools", "Ints", "Longs", "UInts", "ULongs", "Floats", "Doubles", "SInts", "SLongs", "Kvps", "ComparerId", "ComparerTypeId", "ArrayMetadataId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.ArrayMetadata), global::HEAL.Attic.ArrayMetadata.Parser, new[]{ "Rank", "Lengths", "LowerBounds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMembersBox), global::HEAL.Attic.StorableTypeMembersBox.Parser, new[]{ "StorableTypeMetadataId", "ValueBoxId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedBoolBox), global::HEAL.Attic.RepeatedBoolBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedIntBox), global::HEAL.Attic.RepeatedIntBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedLongBox), global::HEAL.Attic.RepeatedLongBox.Parser, new[]{ "Values" }, null, null, null),
@@ -83,7 +84,7 @@ namespace HEAL.Attic {
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSIntBox), global::HEAL.Attic.RepeatedSIntBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedSLongBox), global::HEAL.Attic.RepeatedSLongBox.Parser, new[]{ "Values" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.RepeatedKeyValuePairsBox), global::HEAL.Attic.RepeatedKeyValuePairsBox.Parser, new[]{ "Keys", "Values" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeLayoutBox), global::HEAL.Attic.StorableTypeLayoutBox.Parser, new[]{ "TypeGuid", "Parent", "Names" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::HEAL.Attic.StorableTypeMetadata), global::HEAL.Attic.StorableTypeMetadata.Parser, new[]{ "TypeGuid", "Parent", "Names" }, null, null, null)
           }));
     }
     #endregion
@@ -119,9 +120,9 @@ namespace HEAL.Attic {
       rootBoxId_ = other.rootBoxId_;
       boxes_ = other.boxes_.Clone();
       strings_ = other.strings_.Clone();
-      layouts_ = other.layouts_.Clone();
-      typeMessages_ = other.typeMessages_.Clone();
-      arrayInfos_ = other.arrayInfos_.Clone();
+      storableTypeMetadata_ = other.storableTypeMetadata_.Clone();
+      typeMetadata_ = other.typeMetadata_.Clone();
+      arrayMetadata_ = other.arrayMetadata_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -183,37 +184,34 @@ namespace HEAL.Attic {
       get { return strings_; }
     }
 
-    /// <summary>Field number for the "layouts" field.</summary>
-    public const int LayoutsFieldNumber = 6;
-    private static readonly pb::FieldCodec<global::HEAL.Attic.StorableTypeLayoutBox> _repeated_layouts_codec
-        = pb::FieldCodec.ForMessage(50, global::HEAL.Attic.StorableTypeLayoutBox.Parser);
-    private readonly pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> layouts_ = new pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox>();
+    /// <summary>Field number for the "storable_type_metadata" field.</summary>
+    public const int StorableTypeMetadataFieldNumber = 6;
+    private static readonly pb::FieldCodec<global::HEAL.Attic.StorableTypeMetadata> _repeated_storableTypeMetadata_codec
+        = pb::FieldCodec.ForMessage(50, global::HEAL.Attic.StorableTypeMetadata.Parser);
+    private readonly pbc::RepeatedField<global::HEAL.Attic.StorableTypeMetadata> storableTypeMetadata_ = new pbc::RepeatedField<global::HEAL.Attic.StorableTypeMetadata>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::HEAL.Attic.StorableTypeLayoutBox> Layouts {
-      get { return layouts_; }
+    public pbc::RepeatedField<global::HEAL.Attic.StorableTypeMetadata> StorableTypeMetadata {
+      get { return storableTypeMetadata_; }
     }
 
-    /// <summary>Field number for the "typeMessages" field.</summary>
-    public const int TypeMessagesFieldNumber = 8;
-    private static readonly pb::FieldCodec<global::HEAL.Attic.TypeMessage> _repeated_typeMessages_codec
-        = pb::FieldCodec.ForMessage(66, global::HEAL.Attic.TypeMessage.Parser);
-    private readonly pbc::RepeatedField<global::HEAL.Attic.TypeMessage> typeMessages_ = new pbc::RepeatedField<global::HEAL.Attic.TypeMessage>();
-    /// <summary>
-    ///repeated uint32 transformer_ids = 7;          // transformer_id for each element of type_guids (same order)
-    /// </summary>
+    /// <summary>Field number for the "type_metadata" field.</summary>
+    public const int TypeMetadataFieldNumber = 7;
+    private static readonly pb::FieldCodec<global::HEAL.Attic.TypeMetadata> _repeated_typeMetadata_codec
+        = pb::FieldCodec.ForMessage(58, global::HEAL.Attic.TypeMetadata.Parser);
+    private readonly pbc::RepeatedField<global::HEAL.Attic.TypeMetadata> typeMetadata_ = new pbc::RepeatedField<global::HEAL.Attic.TypeMetadata>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::HEAL.Attic.TypeMessage> TypeMessages {
-      get { return typeMessages_; }
+    public pbc::RepeatedField<global::HEAL.Attic.TypeMetadata> TypeMetadata {
+      get { return typeMetadata_; }
     }
 
-    /// <summary>Field number for the "arrayInfos" field.</summary>
-    public const int ArrayInfosFieldNumber = 9;
-    private static readonly pb::FieldCodec<global::HEAL.Attic.ArrayInfo> _repeated_arrayInfos_codec
-        = pb::FieldCodec.ForMessage(74, global::HEAL.Attic.ArrayInfo.Parser);
-    private readonly pbc::RepeatedField<global::HEAL.Attic.ArrayInfo> arrayInfos_ = new pbc::RepeatedField<global::HEAL.Attic.ArrayInfo>();
+    /// <summary>Field number for the "array_metadata" field.</summary>
+    public const int ArrayMetadataFieldNumber = 8;
+    private static readonly pb::FieldCodec<global::HEAL.Attic.ArrayMetadata> _repeated_arrayMetadata_codec
+        = pb::FieldCodec.ForMessage(66, global::HEAL.Attic.ArrayMetadata.Parser);
+    private readonly pbc::RepeatedField<global::HEAL.Attic.ArrayMetadata> arrayMetadata_ = new pbc::RepeatedField<global::HEAL.Attic.ArrayMetadata>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::HEAL.Attic.ArrayInfo> ArrayInfos {
-      get { return arrayInfos_; }
+    public pbc::RepeatedField<global::HEAL.Attic.ArrayMetadata> ArrayMetadata {
+      get { return arrayMetadata_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -234,9 +232,9 @@ namespace HEAL.Attic {
       if (RootBoxId != other.RootBoxId) return false;
       if(!boxes_.Equals(other.boxes_)) return false;
       if(!strings_.Equals(other.strings_)) return false;
-      if(!layouts_.Equals(other.layouts_)) return false;
-      if(!typeMessages_.Equals(other.typeMessages_)) return false;
-      if(!arrayInfos_.Equals(other.arrayInfos_)) return false;
+      if(!storableTypeMetadata_.Equals(other.storableTypeMetadata_)) return false;
+      if(!typeMetadata_.Equals(other.typeMetadata_)) return false;
+      if(!arrayMetadata_.Equals(other.arrayMetadata_)) return false;
       return true;
     }
 
@@ -248,9 +246,9 @@ namespace HEAL.Attic {
       if (RootBoxId != 0) hash ^= RootBoxId.GetHashCode();
       hash ^= boxes_.GetHashCode();
       hash ^= strings_.GetHashCode();
-      hash ^= layouts_.GetHashCode();
-      hash ^= typeMessages_.GetHashCode();
-      hash ^= arrayInfos_.GetHashCode();
+      hash ^= storableTypeMetadata_.GetHashCode();
+      hash ^= typeMetadata_.GetHashCode();
+      hash ^= arrayMetadata_.GetHashCode();
       return hash;
     }
 
@@ -269,9 +267,9 @@ namespace HEAL.Attic {
       }
       boxes_.WriteTo(output, _repeated_boxes_codec);
       strings_.WriteTo(output, _repeated_strings_codec);
-      layouts_.WriteTo(output, _repeated_layouts_codec);
-      typeMessages_.WriteTo(output, _repeated_typeMessages_codec);
-      arrayInfos_.WriteTo(output, _repeated_arrayInfos_codec);
+      storableTypeMetadata_.WriteTo(output, _repeated_storableTypeMetadata_codec);
+      typeMetadata_.WriteTo(output, _repeated_typeMetadata_codec);
+      arrayMetadata_.WriteTo(output, _repeated_arrayMetadata_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -284,9 +282,9 @@ namespace HEAL.Attic {
       }
       size += boxes_.CalculateSize(_repeated_boxes_codec);
       size += strings_.CalculateSize(_repeated_strings_codec);
-      size += layouts_.CalculateSize(_repeated_layouts_codec);
-      size += typeMessages_.CalculateSize(_repeated_typeMessages_codec);
-      size += arrayInfos_.CalculateSize(_repeated_arrayInfos_codec);
+      size += storableTypeMetadata_.CalculateSize(_repeated_storableTypeMetadata_codec);
+      size += typeMetadata_.CalculateSize(_repeated_typeMetadata_codec);
+      size += arrayMetadata_.CalculateSize(_repeated_arrayMetadata_codec);
       return size;
     }
 
@@ -302,9 +300,9 @@ namespace HEAL.Attic {
       }
       boxes_.Add(other.boxes_);
       strings_.Add(other.strings_);
-      layouts_.Add(other.layouts_);
-      typeMessages_.Add(other.typeMessages_);
-      arrayInfos_.Add(other.arrayInfos_);
+      storableTypeMetadata_.Add(other.storableTypeMetadata_);
+      typeMetadata_.Add(other.typeMetadata_);
+      arrayMetadata_.Add(other.arrayMetadata_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -336,15 +334,15 @@ namespace HEAL.Attic {
             break;
           }
           case 50: {
-            layouts_.AddEntriesFrom(input, _repeated_layouts_codec);
+            storableTypeMetadata_.AddEntriesFrom(input, _repeated_storableTypeMetadata_codec);
+            break;
+          }
+          case 58: {
+            typeMetadata_.AddEntriesFrom(input, _repeated_typeMetadata_codec);
             break;
           }
           case 66: {
-            typeMessages_.AddEntriesFrom(input, _repeated_typeMessages_codec);
-            break;
-          }
-          case 74: {
-            arrayInfos_.AddEntriesFrom(input, _repeated_arrayInfos_codec);
+            arrayMetadata_.AddEntriesFrom(input, _repeated_arrayMetadata_codec);
             break;
           }
         }
@@ -380,7 +378,7 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Box(Box other) : this() {
-      typeMsgId_ = other.typeMsgId_;
+      typeMetadataId_ = other.typeMetadataId_;
       Value = other.value_ != null ? other.Value.Clone() : null;
       Values = other.values_ != null ? other.Values.Clone() : null;
       Members = other.members_ != null ? other.Members.Clone() : null;
@@ -391,22 +389,22 @@ namespace HEAL.Attic {
       return new Box(this);
     }
 
-    /// <summary>Field number for the "type_msg_id" field.</summary>
-    public const int TypeMsgIdFieldNumber = 2;
-    private uint typeMsgId_;
+    /// <summary>Field number for the "type_metadata_id" field.</summary>
+    public const int TypeMetadataIdFieldNumber = 1;
+    private uint typeMetadataId_;
     /// <summary>
-    /// uint32 transformer_id = 1;
+    /// index within Bundle.type_metadata for the type of the object
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TypeMsgId {
-      get { return typeMsgId_; }
+    public uint TypeMetadataId {
+      get { return typeMetadataId_; }
       set {
-        typeMsgId_ = value;
+        typeMetadataId_ = value;
       }
     }
 
     /// <summary>Field number for the "value" field.</summary>
-    public const int ValueFieldNumber = 3;
+    public const int ValueFieldNumber = 2;
     private global::HEAL.Attic.ScalarValueBox value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.ScalarValueBox Value {
@@ -417,11 +415,8 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "values" field.</summary>
-    public const int ValuesFieldNumber = 5;
+    public const int ValuesFieldNumber = 3;
     private global::HEAL.Attic.RepeatedValueBox values_;
-    /// <summary>
-    /// TypeBox type = 4;
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.RepeatedValueBox Values {
       get { return values_; }
@@ -431,7 +426,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "members" field.</summary>
-    public const int MembersFieldNumber = 6;
+    public const int MembersFieldNumber = 4;
     private global::HEAL.Attic.StorableTypeMembersBox members_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::HEAL.Attic.StorableTypeMembersBox Members {
@@ -454,7 +449,7 @@ namespace HEAL.Attic {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (TypeMsgId != other.TypeMsgId) return false;
+      if (TypeMetadataId != other.TypeMetadataId) return false;
       if (!object.Equals(Value, other.Value)) return false;
       if (!object.Equals(Values, other.Values)) return false;
       if (!object.Equals(Members, other.Members)) return false;
@@ -464,7 +459,7 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (TypeMsgId != 0) hash ^= TypeMsgId.GetHashCode();
+      if (TypeMetadataId != 0) hash ^= TypeMetadataId.GetHashCode();
       if (value_ != null) hash ^= Value.GetHashCode();
       if (values_ != null) hash ^= Values.GetHashCode();
       if (members_ != null) hash ^= Members.GetHashCode();
@@ -478,20 +473,20 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (TypeMsgId != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(TypeMsgId);
+      if (TypeMetadataId != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(TypeMetadataId);
       }
       if (value_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteMessage(Value);
       }
       if (values_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(26);
         output.WriteMessage(Values);
       }
       if (members_ != null) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(34);
         output.WriteMessage(Members);
       }
     }
@@ -499,8 +494,8 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (TypeMsgId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeMsgId);
+      if (TypeMetadataId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeMetadataId);
       }
       if (value_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Value);
@@ -519,8 +514,8 @@ namespace HEAL.Attic {
       if (other == null) {
         return;
       }
-      if (other.TypeMsgId != 0) {
-        TypeMsgId = other.TypeMsgId;
+      if (other.TypeMetadataId != 0) {
+        TypeMetadataId = other.TypeMetadataId;
       }
       if (other.value_ != null) {
         if (value_ == null) {
@@ -550,25 +545,25 @@ namespace HEAL.Attic {
           default:
             input.SkipLastField();
             break;
-          case 16: {
-            TypeMsgId = input.ReadUInt32();
+          case 8: {
+            TypeMetadataId = input.ReadUInt32();
             break;
           }
-          case 26: {
+          case 18: {
             if (value_ == null) {
               value_ = new global::HEAL.Attic.ScalarValueBox();
             }
             input.ReadMessage(value_);
             break;
           }
-          case 42: {
+          case 26: {
             if (values_ == null) {
               values_ = new global::HEAL.Attic.RepeatedValueBox();
             }
             input.ReadMessage(values_);
             break;
           }
-          case 50: {
+          case 34: {
             if (members_ == null) {
               members_ = new global::HEAL.Attic.StorableTypeMembersBox();
             }
@@ -581,10 +576,10 @@ namespace HEAL.Attic {
 
   }
 
-  public sealed partial class TypeMessage : pb::IMessage<TypeMessage> {
-    private static readonly pb::MessageParser<TypeMessage> _parser = new pb::MessageParser<TypeMessage>(() => new TypeMessage());
+  public sealed partial class TypeMetadata : pb::IMessage<TypeMetadata> {
+    private static readonly pb::MessageParser<TypeMetadata> _parser = new pb::MessageParser<TypeMetadata>(() => new TypeMetadata());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<TypeMessage> Parser { get { return _parser; } }
+    public static pb::MessageParser<TypeMetadata> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -597,22 +592,22 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TypeMessage() {
+    public TypeMetadata() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TypeMessage(TypeMessage other) : this() {
+    public TypeMetadata(TypeMetadata other) : this() {
       typeId_ = other.typeId_;
-      genericTypeMsgIds_ = other.genericTypeMsgIds_.Clone();
+      genericTypeMetadataIds_ = other.genericTypeMetadataIds_.Clone();
       transformerId_ = other.transformerId_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public TypeMessage Clone() {
-      return new TypeMessage(this);
+    public TypeMetadata Clone() {
+      return new TypeMetadata(this);
     }
 
     /// <summary>Field number for the "type_id" field.</summary>
@@ -629,20 +624,20 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "generic_type_msg_ids" field.</summary>
-    public const int GenericTypeMsgIdsFieldNumber = 2;
-    private static readonly pb::FieldCodec<uint> _repeated_genericTypeMsgIds_codec
+    /// <summary>Field number for the "generic_type_metadata_ids" field.</summary>
+    public const int GenericTypeMetadataIdsFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_genericTypeMetadataIds_codec
         = pb::FieldCodec.ForUInt32(18);
-    private readonly pbc::RepeatedField<uint> genericTypeMsgIds_ = new pbc::RepeatedField<uint>();
+    private readonly pbc::RepeatedField<uint> genericTypeMetadataIds_ = new pbc::RepeatedField<uint>();
     /// <summary>
-    /// index into Bundle.typeMessages (for each generic type argument)
+    /// index into Bundle.type_metadata (for each generic type argument)
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> GenericTypeMsgIds {
-      get { return genericTypeMsgIds_; }
+    public pbc::RepeatedField<uint> GenericTypeMetadataIds {
+      get { return genericTypeMetadataIds_; }
     }
 
-    /// <summary>Field number for the "transformerId" field.</summary>
+    /// <summary>Field number for the "transformer_id" field.</summary>
     public const int TransformerIdFieldNumber = 3;
     private uint transformerId_;
     /// <summary>
@@ -658,11 +653,11 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as TypeMessage);
+      return Equals(other as TypeMetadata);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(TypeMessage other) {
+    public bool Equals(TypeMetadata other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -670,7 +665,7 @@ namespace HEAL.Attic {
         return true;
       }
       if (TypeId != other.TypeId) return false;
-      if(!genericTypeMsgIds_.Equals(other.genericTypeMsgIds_)) return false;
+      if(!genericTypeMetadataIds_.Equals(other.genericTypeMetadataIds_)) return false;
       if (TransformerId != other.TransformerId) return false;
       return true;
     }
@@ -679,7 +674,7 @@ namespace HEAL.Attic {
     public override int GetHashCode() {
       int hash = 1;
       if (TypeId != 0) hash ^= TypeId.GetHashCode();
-      hash ^= genericTypeMsgIds_.GetHashCode();
+      hash ^= genericTypeMetadataIds_.GetHashCode();
       if (TransformerId != 0) hash ^= TransformerId.GetHashCode();
       return hash;
     }
@@ -695,7 +690,7 @@ namespace HEAL.Attic {
         output.WriteRawTag(8);
         output.WriteUInt32(TypeId);
       }
-      genericTypeMsgIds_.WriteTo(output, _repeated_genericTypeMsgIds_codec);
+      genericTypeMetadataIds_.WriteTo(output, _repeated_genericTypeMetadataIds_codec);
       if (TransformerId != 0) {
         output.WriteRawTag(24);
         output.WriteUInt32(TransformerId);
@@ -708,7 +703,7 @@ namespace HEAL.Attic {
       if (TypeId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TypeId);
       }
-      size += genericTypeMsgIds_.CalculateSize(_repeated_genericTypeMsgIds_codec);
+      size += genericTypeMetadataIds_.CalculateSize(_repeated_genericTypeMetadataIds_codec);
       if (TransformerId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TransformerId);
       }
@@ -716,14 +711,14 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(TypeMessage other) {
+    public void MergeFrom(TypeMetadata other) {
       if (other == null) {
         return;
       }
       if (other.TypeId != 0) {
         TypeId = other.TypeId;
       }
-      genericTypeMsgIds_.Add(other.genericTypeMsgIds_);
+      genericTypeMetadataIds_.Add(other.genericTypeMetadataIds_);
       if (other.TransformerId != 0) {
         TransformerId = other.TransformerId;
       }
@@ -743,7 +738,7 @@ namespace HEAL.Attic {
           }
           case 18:
           case 16: {
-            genericTypeMsgIds_.AddEntriesFrom(input, _repeated_genericTypeMsgIds_codec);
+            genericTypeMetadataIds_.AddEntriesFrom(input, _repeated_genericTypeMetadataIds_codec);
             break;
           }
           case 24: {
@@ -794,11 +789,10 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "long" field.</summary>
-    public const int LongFieldNumber = 3;
+    public const int LongFieldNumber = 1;
     private long long_;
     /// <summary>
-    ///bool bool = 1;
-    ///int32 int = 2;
+    /// on the wire there is no difference between int64, int32 and bool. The encoding uses only as much space as necessary
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long Long {
@@ -809,10 +803,10 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "u_long" field.</summary>
-    public const int ULongFieldNumber = 5;
+    public const int ULongFieldNumber = 2;
     private ulong uLong_;
     /// <summary>
-    ///uint32 u_int = 4;
+    /// on the wire there is no difference between uint64 and uint32
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong ULong {
@@ -823,7 +817,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "float" field.</summary>
-    public const int FloatFieldNumber = 6;
+    public const int FloatFieldNumber = 3;
     private float float_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public float Float {
@@ -834,7 +828,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "double" field.</summary>
-    public const int DoubleFieldNumber = 7;
+    public const int DoubleFieldNumber = 4;
     private double double_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public double Double {
@@ -845,7 +839,7 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "bytes" field.</summary>
-    public const int BytesFieldNumber = 8;
+    public const int BytesFieldNumber = 5;
     private pb::ByteString bytes_ = pb::ByteString.Empty;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pb::ByteString Bytes {
@@ -856,10 +850,10 @@ namespace HEAL.Attic {
     }
 
     /// <summary>Field number for the "s_long" field.</summary>
-    public const int SLongFieldNumber = 10;
+    public const int SLongFieldNumber = 6;
     private long sLong_;
     /// <summary>
-    ///sint32 s_int = 9;
+    /// on the wire there is no different between sint32 and sint64
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public long SLong {
@@ -911,27 +905,27 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
       if (Long != 0L) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(8);
         output.WriteInt64(Long);
       }
       if (ULong != 0UL) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(16);
         output.WriteUInt64(ULong);
       }
       if (Float != 0F) {
-        output.WriteRawTag(53);
+        output.WriteRawTag(29);
         output.WriteFloat(Float);
       }
       if (Double != 0D) {
-        output.WriteRawTag(57);
+        output.WriteRawTag(33);
         output.WriteDouble(Double);
       }
       if (Bytes.Length != 0) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(42);
         output.WriteBytes(Bytes);
       }
       if (SLong != 0L) {
-        output.WriteRawTag(80);
+        output.WriteRawTag(48);
         output.WriteSInt64(SLong);
       }
     }
@@ -993,27 +987,27 @@ namespace HEAL.Attic {
           default:
             input.SkipLastField();
             break;
-          case 24: {
+          case 8: {
             Long = input.ReadInt64();
             break;
           }
-          case 40: {
+          case 16: {
             ULong = input.ReadUInt64();
             break;
           }
-          case 53: {
+          case 29: {
             Float = input.ReadFloat();
             break;
           }
-          case 57: {
+          case 33: {
             Double = input.ReadDouble();
             break;
           }
-          case 66: {
+          case 42: {
             Bytes = input.ReadBytes();
             break;
           }
-          case 80: {
+          case 48: {
             SLong = input.ReadSInt64();
             break;
           }
@@ -1062,7 +1056,7 @@ namespace HEAL.Attic {
       Kvps = other.kvps_ != null ? other.Kvps.Clone() : null;
       comparerId_ = other.comparerId_;
       comparerTypeId_ = other.comparerTypeId_;
-      arrayInfoId_ = other.arrayInfoId_;
+      arrayMetadataId_ = other.arrayMetadataId_;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1198,7 +1192,7 @@ namespace HEAL.Attic {
     public const int ComparerTypeIdFieldNumber = 12;
     private uint comparerTypeId_;
     /// <summary>
-    /// other collection only have a comparer type (index into Bundle.typeMessages)
+    /// other collection only have a comparer type (index into Bundle.type_metadata)
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint ComparerTypeId {
@@ -1208,17 +1202,17 @@ namespace HEAL.Attic {
       }
     }
 
-    /// <summary>Field number for the "array_info_id" field.</summary>
-    public const int ArrayInfoIdFieldNumber = 13;
-    private uint arrayInfoId_;
+    /// <summary>Field number for the "array_metadata_id" field.</summary>
+    public const int ArrayMetadataIdFieldNumber = 13;
+    private uint arrayMetadataId_;
     /// <summary>
-    /// index into Boxes.arrayInfos
+    /// index into Boxes.array_metadata
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ArrayInfoId {
-      get { return arrayInfoId_; }
+    public uint ArrayMetadataId {
+      get { return arrayMetadataId_; }
       set {
-        arrayInfoId_ = value;
+        arrayMetadataId_ = value;
       }
     }
 
@@ -1247,7 +1241,7 @@ namespace HEAL.Attic {
       if (!object.Equals(Kvps, other.Kvps)) return false;
       if (ComparerId != other.ComparerId) return false;
       if (ComparerTypeId != other.ComparerTypeId) return false;
-      if (ArrayInfoId != other.ArrayInfoId) return false;
+      if (ArrayMetadataId != other.ArrayMetadataId) return false;
       return true;
     }
 
@@ -1266,7 +1260,7 @@ namespace HEAL.Attic {
       if (kvps_ != null) hash ^= Kvps.GetHashCode();
       if (ComparerId != 0) hash ^= ComparerId.GetHashCode();
       if (ComparerTypeId != 0) hash ^= ComparerTypeId.GetHashCode();
-      if (ArrayInfoId != 0) hash ^= ArrayInfoId.GetHashCode();
+      if (ArrayMetadataId != 0) hash ^= ArrayMetadataId.GetHashCode();
       return hash;
     }
 
@@ -1325,9 +1319,9 @@ namespace HEAL.Attic {
         output.WriteRawTag(96);
         output.WriteUInt32(ComparerTypeId);
       }
-      if (ArrayInfoId != 0) {
+      if (ArrayMetadataId != 0) {
         output.WriteRawTag(104);
-        output.WriteUInt32(ArrayInfoId);
+        output.WriteUInt32(ArrayMetadataId);
       }
     }
 
@@ -1370,8 +1364,8 @@ namespace HEAL.Attic {
       if (ComparerTypeId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ComparerTypeId);
       }
-      if (ArrayInfoId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ArrayInfoId);
+      if (ArrayMetadataId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ArrayMetadataId);
       }
       return size;
     }
@@ -1447,8 +1441,8 @@ namespace HEAL.Attic {
       if (other.ComparerTypeId != 0) {
         ComparerTypeId = other.ComparerTypeId;
       }
-      if (other.ArrayInfoId != 0) {
-        ArrayInfoId = other.ArrayInfoId;
+      if (other.ArrayMetadataId != 0) {
+        ArrayMetadataId = other.ArrayMetadataId;
       }
     }
 
@@ -1539,7 +1533,7 @@ namespace HEAL.Attic {
             break;
           }
           case 104: {
-            ArrayInfoId = input.ReadUInt32();
+            ArrayMetadataId = input.ReadUInt32();
             break;
           }
         }
@@ -1548,10 +1542,10 @@ namespace HEAL.Attic {
 
   }
 
-  public sealed partial class ArrayInfo : pb::IMessage<ArrayInfo> {
-    private static readonly pb::MessageParser<ArrayInfo> _parser = new pb::MessageParser<ArrayInfo>(() => new ArrayInfo());
+  public sealed partial class ArrayMetadata : pb::IMessage<ArrayMetadata> {
+    private static readonly pb::MessageParser<ArrayMetadata> _parser = new pb::MessageParser<ArrayMetadata>(() => new ArrayMetadata());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ArrayInfo> Parser { get { return _parser; } }
+    public static pb::MessageParser<ArrayMetadata> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1564,22 +1558,22 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayInfo() {
+    public ArrayMetadata() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayInfo(ArrayInfo other) : this() {
+    public ArrayMetadata(ArrayMetadata other) : this() {
       rank_ = other.rank_;
       lengths_ = other.lengths_.Clone();
       lowerBounds_ = other.lowerBounds_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ArrayInfo Clone() {
-      return new ArrayInfo(this);
+    public ArrayMetadata Clone() {
+      return new ArrayMetadata(this);
     }
 
     /// <summary>Field number for the "rank" field.</summary>
@@ -1603,7 +1597,7 @@ namespace HEAL.Attic {
       get { return lengths_; }
     }
 
-    /// <summary>Field number for the "lowerBounds" field.</summary>
+    /// <summary>Field number for the "lower_bounds" field.</summary>
     public const int LowerBoundsFieldNumber = 3;
     private static readonly pb::FieldCodec<int> _repeated_lowerBounds_codec
         = pb::FieldCodec.ForInt32(26);
@@ -1615,11 +1609,11 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ArrayInfo);
+      return Equals(other as ArrayMetadata);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ArrayInfo other) {
+    public bool Equals(ArrayMetadata other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -1668,7 +1662,7 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ArrayInfo other) {
+    public void MergeFrom(ArrayMetadata other) {
       if (other == null) {
         return;
       }
@@ -1731,7 +1725,7 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public StorableTypeMembersBox(StorableTypeMembersBox other) : this() {
-      storableTypeLayoutId_ = other.storableTypeLayoutId_;
+      storableTypeMetadataId_ = other.storableTypeMetadataId_;
       valueBoxId_ = other.valueBoxId_.Clone();
     }
 
@@ -1740,17 +1734,17 @@ namespace HEAL.Attic {
       return new StorableTypeMembersBox(this);
     }
 
-    /// <summary>Field number for the "storable_type_layout_id" field.</summary>
-    public const int StorableTypeLayoutIdFieldNumber = 1;
-    private uint storableTypeLayoutId_;
+    /// <summary>Field number for the "storable_type_metadata_id" field.</summary>
+    public const int StorableTypeMetadataIdFieldNumber = 1;
+    private uint storableTypeMetadataId_;
     /// <summary>
-    /// index into Bundle.layouts
+    /// index into Bundle.storable_type_metadata
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint StorableTypeLayoutId {
-      get { return storableTypeLayoutId_; }
+    public uint StorableTypeMetadataId {
+      get { return storableTypeMetadataId_; }
       set {
-        storableTypeLayoutId_ = value;
+        storableTypeMetadataId_ = value;
       }
     }
 
@@ -1759,11 +1753,6 @@ namespace HEAL.Attic {
     private static readonly pb::FieldCodec<uint> _repeated_valueBoxId_codec
         = pb::FieldCodec.ForUInt32(18);
     private readonly pbc::RepeatedField<uint> valueBoxId_ = new pbc::RepeatedField<uint>();
-    /// <summary>
-    /// 3
-    /// 4;
-    /// StorableTypeMembersBox parent = 5;       // box with members of the base class
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<uint> ValueBoxId {
       get { return valueBoxId_; }
@@ -1782,7 +1771,7 @@ namespace HEAL.Attic {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (StorableTypeLayoutId != other.StorableTypeLayoutId) return false;
+      if (StorableTypeMetadataId != other.StorableTypeMetadataId) return false;
       if(!valueBoxId_.Equals(other.valueBoxId_)) return false;
       return true;
     }
@@ -1790,7 +1779,7 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (StorableTypeLayoutId != 0) hash ^= StorableTypeLayoutId.GetHashCode();
+      if (StorableTypeMetadataId != 0) hash ^= StorableTypeMetadataId.GetHashCode();
       hash ^= valueBoxId_.GetHashCode();
       return hash;
     }
@@ -1802,9 +1791,9 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (StorableTypeLayoutId != 0) {
+      if (StorableTypeMetadataId != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(StorableTypeLayoutId);
+        output.WriteUInt32(StorableTypeMetadataId);
       }
       valueBoxId_.WriteTo(output, _repeated_valueBoxId_codec);
     }
@@ -1812,8 +1801,8 @@ namespace HEAL.Attic {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (StorableTypeLayoutId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(StorableTypeLayoutId);
+      if (StorableTypeMetadataId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(StorableTypeMetadataId);
       }
       size += valueBoxId_.CalculateSize(_repeated_valueBoxId_codec);
       return size;
@@ -1824,8 +1813,8 @@ namespace HEAL.Attic {
       if (other == null) {
         return;
       }
-      if (other.StorableTypeLayoutId != 0) {
-        StorableTypeLayoutId = other.StorableTypeLayoutId;
+      if (other.StorableTypeMetadataId != 0) {
+        StorableTypeMetadataId = other.StorableTypeMetadataId;
       }
       valueBoxId_.Add(other.valueBoxId_);
     }
@@ -1839,7 +1828,7 @@ namespace HEAL.Attic {
             input.SkipLastField();
             break;
           case 8: {
-            StorableTypeLayoutId = input.ReadUInt32();
+            StorableTypeMetadataId = input.ReadUInt32();
             break;
           }
           case 18:
@@ -2891,9 +2880,6 @@ namespace HEAL.Attic {
     private static readonly pb::FieldCodec<uint> _repeated_values_codec
         = pb::FieldCodec.ForUInt32(18);
     private readonly pbc::RepeatedField<uint> values_ = new pbc::RepeatedField<uint>();
-    /// <summary>
-    /// map&lt;uint32, uint32> key_value_pairs = 10;   // separate repeated keys and values is more lightweight
-    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<uint> Values {
       get { return values_; }
@@ -2977,10 +2963,10 @@ namespace HEAL.Attic {
 
   }
 
-  public sealed partial class StorableTypeLayoutBox : pb::IMessage<StorableTypeLayoutBox> {
-    private static readonly pb::MessageParser<StorableTypeLayoutBox> _parser = new pb::MessageParser<StorableTypeLayoutBox>(() => new StorableTypeLayoutBox());
+  public sealed partial class StorableTypeMetadata : pb::IMessage<StorableTypeMetadata> {
+    private static readonly pb::MessageParser<StorableTypeMetadata> _parser = new pb::MessageParser<StorableTypeMetadata>(() => new StorableTypeMetadata());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<StorableTypeLayoutBox> Parser { get { return _parser; } }
+    public static pb::MessageParser<StorableTypeMetadata> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -2993,22 +2979,22 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StorableTypeLayoutBox() {
+    public StorableTypeMetadata() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StorableTypeLayoutBox(StorableTypeLayoutBox other) : this() {
+    public StorableTypeMetadata(StorableTypeMetadata other) : this() {
       typeGuid_ = other.typeGuid_;
       parent_ = other.parent_;
       names_ = other.names_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public StorableTypeLayoutBox Clone() {
-      return new StorableTypeLayoutBox(this);
+    public StorableTypeMetadata Clone() {
+      return new StorableTypeMetadata(this);
     }
 
     /// <summary>Field number for the "type_guid" field.</summary>
@@ -3051,11 +3037,11 @@ namespace HEAL.Attic {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as StorableTypeLayoutBox);
+      return Equals(other as StorableTypeMetadata);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(StorableTypeLayoutBox other) {
+    public bool Equals(StorableTypeMetadata other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -3109,7 +3095,7 @@ namespace HEAL.Attic {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(StorableTypeLayoutBox other) {
+    public void MergeFrom(StorableTypeMetadata other) {
       if (other == null) {
         return;
       }

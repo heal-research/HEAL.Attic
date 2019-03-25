@@ -9,40 +9,33 @@ message Bundle {
   uint32 root_box_id = 3; // index into boxes
   repeated Box boxes = 4;
   repeated string strings = 5;
-  repeated StorableTypeLayoutBox layouts = 6;
-  //repeated uint32 transformer_ids = 7;          // transformer_id for each element of type_guids (same order)
-  repeated TypeMessage typeMessages = 8;
-  repeated ArrayInfo arrayInfos = 9;
+  repeated StorableTypeMetadata storable_type_metadata = 6;
+  repeated TypeMetadata type_metadata = 7;
+  repeated ArrayMetadata array_metadata = 8;
 }
 
 // each box represents and object in an object graph
 message Box {
-  // uint32 transformer_id = 1;
-  uint32 type_msg_id = 2; // index within Bundle.typeMessages for the type of the object
+  uint32 type_metadata_id = 1; // index within Bundle.type_metadata for the type of the object
 
-  ScalarValueBox value = 3;
-  // TypeBox type = 4;
-  RepeatedValueBox values = 5;
-  StorableTypeMembersBox members = 6;
+  ScalarValueBox value = 2;
+  RepeatedValueBox values = 3;
+  StorableTypeMembersBox members = 4;
 }
 
-message TypeMessage {
-  uint32 type_id = 1;                           // index into Bundle.type_guids
-  repeated uint32 generic_type_msg_ids = 2;     // index into Bundle.typeMessages (for each generic type argument)
-  uint32 transformerId = 3;                     // index into Bundle.transformer_guids
+message TypeMetadata {
+  uint32 type_id = 1;                             // index into Bundle.type_guids
+  repeated uint32 generic_type_metadata_ids = 2;  // index into Bundle.type_metadata (for each generic type argument)
+  uint32 transformer_id = 3;                      // index into Bundle.transformer_guids
 }
 
 message ScalarValueBox {
-  //bool bool = 1;
-  //int32 int = 2;
-  int64 long = 3; // on the wire there is no difference between int64, int32 and bool. The encoding uses only as much space as necessary
-  //uint32 u_int = 4;
-  uint64 u_long = 5; // on the wire there is no difference between uint64 and uint32
-  float float = 6;
-  double double = 7;
-  bytes bytes = 8;
-  //sint32 s_int = 9;
-  sint64 s_long = 10; // on the wire there is no different between sint32 and sint64
+  int64 long = 1;    // on the wire there is no difference between int64, int32 and bool. The encoding uses only as much space as necessary
+  uint64 u_long = 2; // on the wire there is no difference between uint64 and uint32
+  float float = 3;
+  double double = 4;
+  bytes bytes = 5;
+  sint64 s_long = 6; // on the wire there is no different between sint32 and sint64
 }
 
 // for collection types and arrays
@@ -59,23 +52,20 @@ message RepeatedValueBox {
   RepeatedKeyValuePairsBox kvps = 10;
 
   uint32 comparer_id = 11;                 // some collections have a StorableType comparer (index into Bundle.boxes)
-  uint32 comparer_type_id = 12;            // other collection only have a comparer type (index into Bundle.typeMessages)
+  uint32 comparer_type_id = 12;            // other collection only have a comparer type (index into Bundle.type_metadata)
 
-  uint32 array_info_id = 13;               // index into Boxes.arrayInfos
+  uint32 array_metadata_id = 13;           // index into Boxes.array_metadata
 }
 
-message ArrayInfo {                 
+message ArrayMetadata {                 
   int32 rank = 1;
   repeated int32 lengths = 2;
-  repeated int32 lowerBounds = 3;
+  repeated int32 lower_bounds = 3;
 }
 
 message StorableTypeMembersBox {
-  uint32 storable_type_layout_id = 1;         // index into Bundle.layouts
+  uint32 storable_type_metadata_id = 1;         // index into Bundle.storable_type_metadata
   repeated uint32 value_box_id = 2;
-  // 3
-  // 4;
-  // StorableTypeMembersBox parent = 5;       // box with members of the base class
 }
 
 message RepeatedBoolBox {
@@ -117,10 +107,9 @@ message RepeatedSLongBox {
 message RepeatedKeyValuePairsBox {
   repeated uint32 keys = 1;
   repeated uint32 values = 2;
-  // map<uint32, uint32> key_value_pairs = 10;   // separate repeated keys and values is more lightweight
 }
 
-message StorableTypeLayoutBox {
+message StorableTypeMetadata {
   uint32 type_guid = 1;      // index into Bundle.type_guids
   uint32 parent = 2; 
   repeated uint32 names = 3; // index into Bundle.strings

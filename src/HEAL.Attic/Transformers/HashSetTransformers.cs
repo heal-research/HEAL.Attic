@@ -34,7 +34,7 @@ namespace HEAL.Attic {
       else if (comparerType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).Any())
         throw new NotSupportedException("Cannot serialize non-storable equality comparers with fields");
       else
-        box.Values.ComparerTypeId = mapper.GetTypeMessageId(comparerType, transformer: null); // there is no transformer for the comparer type
+        box.Values.ComparerTypeId = mapper.GetTypeMetadataId(comparerType, transformer: null); // there is no transformer for the comparer type
       AddRange((IEnumerable)value, box.Values, mapper);
     }
 
@@ -43,7 +43,7 @@ namespace HEAL.Attic {
       if (box.Values.ComparerId != 0) {
         comparer = mapper.GetObject(box.Values.ComparerId);
       } else {
-        comparer = Activator.CreateInstance(mapper.TypeMessageToType(mapper.GetTypeMessage(box.Values.ComparerTypeId)));
+        comparer = Activator.CreateInstance(mapper.StorableTypeMetadataToType(mapper.GetTypeMetadata(box.Values.ComparerTypeId)));
       }
       if (type.GetGenericArguments()[0].IsPrimitive) {
         return Activator.CreateInstance(type, new object[] {

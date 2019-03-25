@@ -6,7 +6,6 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -48,8 +47,8 @@ namespace HEAL.Attic {
     private Index<string> strings;
     private Dictionary<uint, Box> boxId2Box;
     private Index<StorableTypeLayout> storableTypeLayouts;
-    private Index<TypeMessage> typeMessages;
-    private Index<ArrayInfo> arrayInfos;
+    private Index<TypeMetadata> typeMetadata;
+    private Index<ArrayMetadata> arrayMetadata;
 
     private readonly Queue<Tuple<object, Box>> objectsToProcess = new Queue<Tuple<object, Box>>();
 
@@ -57,7 +56,7 @@ namespace HEAL.Attic {
     private readonly Dictionary<uint, object> boxId2Object;
     private readonly Dictionary<string, Dictionary<string, string>> componentInfoKeys; // cache for strings <TypeGUID>.<MemberName> for accessing fields and properties of StorableTypes
     private readonly Dictionary<string, StorableTypeLayout> type2layout; // GUID -> Layout
-    private readonly Dictionary<Type, uint> type2TypeMessageId;
+    private readonly Dictionary<Type, uint> type2TypeMetadataId;
 
     public CancellationToken CancellationToken { get; private set; }
 
@@ -74,10 +73,10 @@ namespace HEAL.Attic {
       componentInfoKeys = new Dictionary<string, Dictionary<string, string>>();
       type2layout = new Dictionary<string, StorableTypeLayout>();
 
-      typeMessages = new Index<TypeMessage>();
-      type2TypeMessageId = new Dictionary<Type, uint>();
+      typeMetadata = new Index<TypeMetadata>();
+      type2TypeMetadataId = new Dictionary<Type, uint>();
 
-      arrayInfos = new Index<ArrayInfo>();
+      arrayMetadata = new Index<ArrayMetadata>();
 
       GetTypeId(typeof(Type).GetType());
 
@@ -111,7 +110,7 @@ namespace HEAL.Attic {
     #endregion
 
     #region StorableType layouts
-    internal uint GetStorableTypeLayoutIds(string typeGuid) {
+    internal uint GetStorableTypeMetadata(string typeGuid) {
       if (!type2layout.TryGetValue(typeGuid, out StorableTypeLayout layout)) {
         layout = new StorableTypeLayout();
         layout.TypeGuid = typeGuid.ToString().ToUpperInvariant();
@@ -129,7 +128,7 @@ namespace HEAL.Attic {
       return storableTypeLayouts.GetValue(layoutId);
     }
 
-    private static StorableTypeLayout LayoutBoxToLayout(StorableTypeLayoutBox box, Mapper mapper) {
+    private static StorableTypeLayout StorableTypeMetadataToLayout(StorableTypeMetadata box, Mapper mapper) {
       var layout = new StorableTypeLayout();
       layout.TypeGuid = mapper.GetString(box.TypeGuid);
       layout.MemberNames = box.Names.Select(sId => mapper.GetString(sId)).ToList();
@@ -138,56 +137,56 @@ namespace HEAL.Attic {
       return layout;
     }
 
-    private static StorableTypeLayoutBox LayoutToLayoutBox(StorableTypeLayout layout, Mapper mapper) {
-      var layoutBox = new StorableTypeLayoutBox();
-      layoutBox.Names.AddRange(layout.MemberNames.Select(name => mapper.GetStringId(name)));
-      layoutBox.TypeGuid = mapper.GetStringId(layout.TypeGuid);
-      layoutBox.Parent = layout.ParentLayoutId;
-      return layoutBox;
+    private static StorableTypeMetadata StorableTypeLayoutToMetadata(StorableTypeLayout layout, Mapper mapper) {
+      var metadata = new StorableTypeMetadata();
+      metadata.Names.AddRange(layout.MemberNames.Select(name => mapper.GetStringId(name)));
+      metadata.TypeGuid = mapper.GetStringId(layout.TypeGuid);
+      metadata.Parent = layout.ParentLayoutId;
+      return metadata;
     }
     #endregion
 
-    #region TypeMessages
-    internal uint GetTypeMessageId(Type type, ITransformer transformer) {
-      if (type2TypeMessageId.TryGetValue(type, out uint id)) {
-        var typeMsg = typeMessages.GetValue(id);
+    #region TypeMetadata
+    internal uint GetTypeMetadataId(Type type, ITransformer transformer) {
+      if (type2TypeMetadataId.TryGetValue(type, out uint id)) {
+        var typeMsg = typeMetadata.GetValue(id);
         if (typeMsg.TransformerId == 0) typeMsg.TransformerId = GetTransformerId(transformer); // GetTransformerId returns 0 when transformer is null
         return id;
       } else {
-        var typeMessage = new TypeMessage();
+        var typeMessage = new TypeMetadata();
         typeMessage.TransformerId = GetTransformerId(transformer);
         if (type.IsGenericType) {
           typeMessage.TypeId = GetTypeId(type.GetGenericTypeDefinition());
-          typeMessage.GenericTypeMsgIds.AddRange(type.GetGenericArguments().Select(t => GetTypeMessageId(t, null)));
+          typeMessage.GenericTypeMetadataIds.AddRange(type.GetGenericArguments().Select(t => GetTypeMetadataId(t, null)));
         } else if (type.IsArray) {
           typeMessage.TypeId = GetTypeId(typeof(Array));
-          typeMessage.GenericTypeMsgIds.Add(GetTypeMessageId(type.GetElementType(), null));
+          typeMessage.GenericTypeMetadataIds.Add(GetTypeMetadataId(type.GetElementType(), null));
         } else {
           typeMessage.TypeId = GetTypeId(type);
         }
-        id = typeMessages.GetIndex(typeMessage);
-        type2TypeMessageId.Add(type, id);
+        id = typeMetadata.GetIndex(typeMessage);
+        type2TypeMetadataId.Add(type, id);
         return id;
       }
     }
 
-    internal Type TypeMessageToType(TypeMessage typeMsg) {
-      TryGetType(typeMsg.TypeId, out Type type);
+    internal Type StorableTypeMetadataToType(TypeMetadata typeMetadata) {
+      TryGetType(typeMetadata.TypeId, out Type type);
       if (type == null) return null;
       else {
         if (type.IsGenericType) {
-          var genericArgumentTypes = typeMsg.GenericTypeMsgIds.Select(x => TypeMessageToType(GetTypeMessage(x))).ToArray();
+          var genericArgumentTypes = typeMetadata.GenericTypeMetadataIds.Select(x => StorableTypeMetadataToType(GetTypeMetadata(x))).ToArray();
           return genericArgumentTypes.Any(x => x == null) ? null : type.MakeGenericType(genericArgumentTypes);
         } else if (type == typeof(Array)) {
-          var arrayType = (Type)TypeMessageToType(GetTypeMessage(typeMsg.GenericTypeMsgIds[0]));
+          var arrayType = (Type)StorableTypeMetadataToType(GetTypeMetadata(typeMetadata.GenericTypeMetadataIds[0]));
           return arrayType?.MakeArrayType();
         } else {
           return type;
         }
       }
     }
-    internal TypeMessage GetTypeMessage(uint typeMessageId) {
-      return typeMessages.GetValue(typeMessageId);
+    internal TypeMetadata GetTypeMetadata(uint typeMetadataId) {
+      return typeMetadata.GetValue(typeMetadataId);
     }
     #endregion
 
@@ -226,8 +225,8 @@ namespace HEAL.Attic {
         o = null;
       else {
         // to find the transformer we first need to find the type and then we get the corresponding transformer
-        var typeMessage = GetTypeMessage(box.TypeMsgId);
-        var transformer = GetTransformer(typeMessage.TransformerId);
+        var typeMetadata = GetTypeMetadata(box.TypeMetadataId);
+        var transformer = GetTransformer(typeMetadata.TransformerId);
 
         o = transformer.ToObject(box, this);
         boxId2Object.Add(boxId, o);
@@ -235,7 +234,6 @@ namespace HEAL.Attic {
 
       return o;
     }
-
     #endregion
 
     #region Strings
@@ -258,17 +256,14 @@ namespace HEAL.Attic {
     }
     #endregion
 
-    #region ArrayInfos
-    internal uint GetArrayInfoId(ArrayInfo arrayInfo) {
-      return arrayInfos.GetIndex(arrayInfo);
+    #region ArrayMetadata
+    internal uint GetArrayMetadataId(ArrayMetadata arrayInfo) {
+      return arrayMetadata.GetIndex(arrayInfo);
     }
-    internal ArrayInfo GetArrayInfo(uint id) {
-      return arrayInfos.GetValue(id);
+    internal ArrayMetadata GetArrayMetadata(uint id) {
+      return arrayMetadata.GetValue(id);
     }
     #endregion
-
-
-
 
     public object CreateInstance(Type type) {
       try {
@@ -294,18 +289,17 @@ namespace HEAL.Attic {
         var tuple = mapper.objectsToProcess.Dequeue();
         var o = tuple.Item1;
         var box = tuple.Item2;
-        var transformer = mapper.GetTransformer(mapper.GetTypeMessage(box.TypeMsgId).TransformerId);
+        var transformer = mapper.GetTransformer(mapper.GetTypeMetadata(box.TypeMetadataId).TransformerId);
         transformer.FillBox(box, o, mapper);
       }
 
       bundle.TransformerGuids.AddRange(mapper.transformers.GetValues().Select(x => x.Guid).Select(x => ByteString.CopyFrom(x.ToByteArray())));
       bundle.TypeGuids.AddRange(mapper.types.GetValues().Select(x => ByteString.CopyFrom(StaticCache.GetGuid(x).ToByteArray())));
-      bundle.Layouts.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => LayoutToLayoutBox(l, mapper)));
-      bundle.ArrayInfos.AddRange(mapper.arrayInfos.GetValues());
+      bundle.StorableTypeMetadata.AddRange(mapper.storableTypeLayouts.GetValues().Select(l => StorableTypeLayoutToMetadata(l, mapper)));
+      bundle.ArrayMetadata.AddRange(mapper.arrayMetadata.GetValues());
+      bundle.TypeMetadata.AddRange(mapper.typeMetadata.GetValues());
       bundle.Boxes.AddRange(mapper.boxId2Box.OrderBy(x => x.Key).Select(x => x.Value));
       bundle.Strings.AddRange(mapper.strings.GetValues());
-      bundle.TypeMessages.AddRange(mapper.typeMessages.GetValues());
-
 
       sw.Stop();
 
@@ -325,7 +319,6 @@ namespace HEAL.Attic {
 
       mapper.transformers = new Index<ITransformer>(bundle.TransformerGuids.Select(x => new Guid(x.ToByteArray())).Select(StaticCache.GetTransformer));
 
-
       var types = new List<Type>();
       var unknownTypeGuids = new List<Guid>();
       for (int i = 0; i < bundle.TypeGuids.Count; i++) {
@@ -340,11 +333,11 @@ namespace HEAL.Attic {
       }
 
       mapper.types = new Index<Type>(types);
-      mapper.typeMessages = new Index<TypeMessage>(bundle.TypeMessages);
+      mapper.typeMetadata = new Index<TypeMetadata>(bundle.TypeMetadata);
       mapper.boxId2Box = bundle.Boxes.Select((b, i) => new { Box = b, Index = i }).ToDictionary(k => (uint)k.Index + 1, v => v.Box);
       mapper.strings = new Index<string>(bundle.Strings);
-      mapper.storableTypeLayouts = new Index<StorableTypeLayout>(bundle.Layouts.Select(l => LayoutBoxToLayout(l, mapper)));
-      mapper.arrayInfos = new Index<ArrayInfo>(bundle.ArrayInfos);
+      mapper.storableTypeLayouts = new Index<StorableTypeLayout>(bundle.StorableTypeMetadata.Select(l => StorableTypeMetadataToLayout(l, mapper)));
+      mapper.arrayMetadata = new Index<ArrayMetadata>(bundle.ArrayMetadata);
 
       var boxes = bundle.Boxes;
 
@@ -356,7 +349,7 @@ namespace HEAL.Attic {
         var box = mapper.boxId2Box[(uint)i];
         var o = mapper.boxId2Object[(uint)i];
         if (o == null) continue;
-        var transformer = mapper.GetTransformer(mapper.GetTypeMessage(box.TypeMsgId).TransformerId);
+        var transformer = mapper.GetTransformer(mapper.GetTypeMetadata(box.TypeMetadataId).TransformerId);
         transformer.FillFromBox(o, box, mapper);
       }
 

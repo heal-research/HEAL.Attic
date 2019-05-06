@@ -274,6 +274,8 @@ namespace HEAL.Attic {
     }
 
     public static Bundle ToBundle(object root, out SerializationInfo info, CancellationToken cancellationToken = default(CancellationToken)) {
+      StaticCache.UpdateRegisteredTypes();
+
       var mapper = new Mapper();
       var bundle = new Bundle();
       mapper.CancellationToken = cancellationToken;

@@ -15,6 +15,7 @@ namespace HEAL.Attic {
   public sealed class StaticCache {
     private static readonly object locker = new object();
 
+    private readonly HashSet<string> cachedAssemblies;
     private readonly Dictionary<Guid, ITransformer> guid2Transformer;
     private readonly Dictionary<ITransformer, Guid> transformer2Guid;
     private readonly Dictionary<Guid, Type> guid2Type;
@@ -22,20 +23,12 @@ namespace HEAL.Attic {
     private readonly Dictionary<Type, TypeInfo> typeInfos;
 
     internal StaticCache() {
+      cachedAssemblies = new HashSet<string>();
       guid2Transformer = new Dictionary<Guid, ITransformer>();
       transformer2Guid = new Dictionary<ITransformer, Guid>();
       guid2Type = new Dictionary<Guid, Type>();
       type2Guid = new Dictionary<Type, Guid>();
       typeInfos = new Dictionary<Type, TypeInfo>();
-
-      foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
-        foreach (var t in asm.GetTypes()) {
-          if (typeof(ITransformer).IsAssignableFrom(t) && !t.IsAbstract) {
-            var transformer = (ITransformer)Activator.CreateInstance(t);
-            RegisterTransformer(transformer);
-          }
-        }
-      }
 
       RegisterType(new Guid("ECAEA154-6BFF-419F-8BE6-2565E9314825"), typeof(object));
       RegisterType(new Guid("94AD8522-3F55-4580-A6F8-2D2AAEDD4B8C"), typeof(bool));
@@ -133,7 +126,21 @@ namespace HEAL.Attic {
       RegisterType(new Guid("56B8ECAE-E1F5-4A3D-8FC3-FAE9A0EB3806"), typeof(System.Drawing.FontStyle));
       RegisterType(new Guid("464FB443-A034-4328-8D2D-94B3D33DED71"), typeof(System.Drawing.GraphicsUnit));
 
+      UpdateRegisteredTypes();
+    }
+
+    public void UpdateRegisteredTypes() {
       foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+        if (cachedAssemblies.Contains(asm.FullName)) continue;
+        cachedAssemblies.Add(asm.FullName);
+
+        foreach (var t in asm.GetTypes()) {
+          if (typeof(ITransformer).IsAssignableFrom(t) && !t.IsAbstract) {
+            var transformer = (ITransformer)Activator.CreateInstance(t);
+            RegisterTransformer(transformer);
+          }
+        }
+
         foreach (var t in asm.GetTypes()) {
           if (StorableTypeAttribute.IsStorableType(t)) {
             type2Guid.Add(t, StorableTypeAttribute.GetStorableTypeAttribute(t).Guid);

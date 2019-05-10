@@ -58,6 +58,7 @@ namespace HEAL.Attic {
       RegisterType(new Guid("14138614-45DB-4A0D-9E59-AE9373241D6B"), typeof(Tuple<,,,,,,,>));
       RegisterType(new Guid("4DB2ED2B-D9F2-4695-B555-A2CF42740740"), typeof(Color));
       RegisterType(new Guid("9BC74087-D5C0-4C39-99B4-D7465F478492"), typeof(Point));
+      RegisterType(new Guid("B3D0E812-9F5A-45F9-8291-0D23B360ABCF"), typeof(Guid));
       RegisterType(new Guid("E84C326A-7E14-4F28-AEFF-BC16CC671655"), typeof(KeyValuePair<,>));
       RegisterType(new Guid("F0280B55-25E8-4981-B309-D675D081402A"), typeof(string));
 

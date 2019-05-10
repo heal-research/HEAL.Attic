@@ -273,6 +273,7 @@ The following types are supported by HEAL.Attic:
 - System.Tuple<,,,,,,,>
 - System.Drawing.Color
 - System.Drawing.Point
+- System.Guid
 - System.Collections.Generic.KeyValuePair<,>
 - System.Collections.IEnumerable
 - System.Collections.Generic.IEnumerable<>

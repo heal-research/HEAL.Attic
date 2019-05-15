@@ -1411,6 +1411,35 @@ namespace HEAL.Attic.Tests {
       Assert.AreEqual(newHashSets[1].Comparer.GetType(), typeof(IdentityComparer<int>));
     }
 
+    [StorableType("7B0E3E6C-8B33-4D6E-A769-15F603FC009A")]
+    private class ReverseComparer<T> : IComparer<T> where T : IComparable {
+      public int Compare(T x, T y) { return -x.CompareTo(y); }
+
+      [StorableConstructor]
+      protected ReverseComparer(StorableConstructorFlag _) {
+      }
+      public ReverseComparer() {
+      }
+    }
+
+    [TestMethod]
+    public void TestSortedSetSerializer() {
+      var sortedSets = new List<SortedSet<int>>() {
+        new SortedSet<int>(new[] { 1, 2, 3 }),
+        new SortedSet<int>(new[] { 4, 5, 6 }, new ReverseComparer<int>()),
+      };
+      new ProtoBufSerializer().Serialize(sortedSets, tempFile);
+      var newHashSets = (List<SortedSet<int>>)new ProtoBufSerializer().Deserialize(tempFile);
+      Assert.IsTrue(newHashSets[0].Contains(1));
+      Assert.IsTrue(newHashSets[0].Contains(2));
+      Assert.IsTrue(newHashSets[0].Contains(3));
+      Assert.IsTrue(newHashSets[1].Contains(6));
+      Assert.IsTrue(newHashSets[1].Contains(5));
+      Assert.IsTrue(newHashSets[1].Contains(4));
+      Assert.AreEqual(newHashSets[0].Comparer.GetType(), new SortedSet<int>().Comparer.GetType());
+      Assert.AreEqual(newHashSets[1].Comparer.GetType(), typeof(ReverseComparer<int>));
+    }
+
     [TestMethod]
     public void TestConcreteDictionarySerializer() {
       var dictionaries = new List<Dictionary<int, int>>() {

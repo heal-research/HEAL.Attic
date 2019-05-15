@@ -106,6 +106,10 @@ namespace HEAL.Attic {
       RegisterType(new Guid("744d8349-f2c8-45cf-81cd-6ec5fac9ba55"), typeof(SortedList<,>));
       RegisterType(new Guid("f09956c0-17b4-47f4-8d9c-071cac9622e8"), typeof(SortedSet<>));
       RegisterType(new Guid("EB98A564-BEDC-458A-9E9B-4BF3CDAFB9BE"), typeof(Stack<>));
+      RegisterType(new Guid("8ED528D6-EE65-42DB-AD5D-A1B9471DC3CC"), Type.GetType("System.Collections.Generic.GenericComparer`1"));
+      RegisterType(new Guid("456A063D-65DC-4617-9CA8-1BE301297B83"), Type.GetType("System.Collections.Generic.NullableComparer`1"));
+      RegisterType(new Guid("2BC5D54C-8FC4-4DE6-9CB8-ACC5C2D3528A"), Type.GetType("System.Collections.Generic.ObjectComparer`1"));
+      RegisterType(new Guid("EA1581F1-FB1B-44D4-9E7B-6BD943E717A4"), Type.GetType("System.Collections.Generic.ComparisonComparer`1"));
       RegisterType(new Guid("FB247FE0-9203-4196-B4D3-71AB18CD12C5"), Type.GetType("System.Collections.Generic.GenericEqualityComparer`1"));
       RegisterType(new Guid("06443E04-FB1D-41E1-BAE2-1AB3728BDCC9"), Type.GetType("System.Collections.Generic.NullableEqualityComparer`1"));
       RegisterType(new Guid("D9029E74-C511-4D28-B8C5-D0E299EC45A5"), Type.GetType("System.Collections.Generic.ObjectEqualityComparer`1"));

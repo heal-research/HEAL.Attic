@@ -10,13 +10,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HEAL.Attic;
 
 namespace HEAL.Attic {
-  internal abstract class HashSetTransformer<T> : BoxTransformer<object> {
+  internal abstract class SetTransformer<T> : BoxTransformer<object> {
     public override bool CanTransformType(Type type) {
-      return
-        type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>) && typeof(T).IsAssignableFrom(type.GetGenericArguments()[0]);
+      return type.IsGenericType
+        && (type.GetGenericTypeDefinition() == typeof(HashSet<>) || type.GetGenericTypeDefinition() == typeof(SortedSet<>))
+        && typeof(T).IsAssignableFrom(type.GetGenericArguments()[0]);
     }
 
     protected abstract void AddRange(IEnumerable values, RepeatedValueBox repValueBox, Mapper mapper);
@@ -50,7 +50,12 @@ namespace HEAL.Attic {
           ExtractValues(box.Values, mapper), comparer
         });
       } else {
-        return Activator.CreateInstance(type, new object[] { box.Values.UInts.Values.Count, comparer });  // init with correct capacity
+        var genericTypeDef = type.GetGenericTypeDefinition();
+        if (genericTypeDef == typeof(HashSet<>)) {
+          return Activator.CreateInstance(type, new object[] { box.Values.UInts.Values.Count, comparer });  // init with correct capacity and comparer
+        } else {
+          return Activator.CreateInstance(type, new object[] { comparer });  // init with correct comparer only
+        }
       }
     }
 
@@ -67,7 +72,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("81E4E0D1-3EF2-4D38-A6AE-CC2F89EDCDB0", 200)]
-  internal sealed class StringHashSetTransformer : HashSetTransformer<string> {
+  internal sealed class StringSetTransformer : SetTransformer<string> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.UInts = new RepeatedUIntBox();
       foreach (string val in values) box.UInts.Values.Add(mapper.GetStringId(val));
@@ -78,7 +83,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("3E5AFA38-4B76-4E37-A8BE-7A83C073F3AA", 200)]
-  internal sealed class BoolHashSetTransformer : HashSetTransformer<bool> {
+  internal sealed class BoolSetTransformer : SetTransformer<bool> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Bools = new RepeatedBoolBox();
       box.Bools.Values.AddRange((IEnumerable<bool>)values);
@@ -89,7 +94,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("D12D09F0-2E9F-402E-BC97-BA858AB1F8FA", 200)]
-  internal sealed class IntHashSetTransformer : HashSetTransformer<int> {
+  internal sealed class IntSetTransformer : SetTransformer<int> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Ints = new RepeatedIntBox();
       box.Ints.Values.AddRange((IEnumerable<int>)values);
@@ -100,7 +105,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("86F16004-D591-40A5-9B57-683A2B2D31D4", 200)]
-  internal sealed class UnsignedIntHashSetTransformer : HashSetTransformer<uint> {
+  internal sealed class UnsignedIntSetTransformer : SetTransformer<uint> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.UInts = new RepeatedUIntBox();
       box.UInts.Values.AddRange((IEnumerable<uint>)values);
@@ -111,7 +116,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("CBC3CF4B-EE9E-4D41-88F1-53B0D5701EA5", 200)]
-  internal sealed class LongHashSetTransformer : HashSetTransformer<long> {
+  internal sealed class LongSetTransformer : SetTransformer<long> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Longs = new RepeatedLongBox();
       box.Longs.Values.AddRange((IEnumerable<long>)values);
@@ -122,7 +127,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("30F54768-B1FE-4B84-BB4A-66FD07897B61", 200)]
-  internal sealed class UnsignedLongHashSetTransformer : HashSetTransformer<ulong> {
+  internal sealed class UnsignedLongSetTransformer : SetTransformer<ulong> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.ULongs = new RepeatedULongBox();
       box.ULongs.Values.AddRange((IEnumerable<ulong>)values);
@@ -133,7 +138,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("9FC14EFC-D74C-49AF-B2B1-0905C57C2D0A", 200)]
-  internal sealed class FloatHashSetTransformer : HashSetTransformer<float> {
+  internal sealed class FloatSetTransformer : SetTransformer<float> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Floats = new RepeatedFloatBox();
       box.Floats.Values.AddRange((IEnumerable<float>)values);
@@ -144,7 +149,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("03EDA1D8-4BB9-48D0-8915-DC0CAAEC07B8", 200)]
-  internal sealed class DoubleHashSetTransformer : HashSetTransformer<double> {
+  internal sealed class DoubleSetTransformer : SetTransformer<double> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Doubles = new RepeatedDoubleBox();
       box.Doubles.Values.AddRange((IEnumerable<double>)values);
@@ -155,7 +160,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("A463637A-CFBB-49C7-9F54-79FFB0C69013", 200)]
-  internal sealed class ByteHashSetTransformer : HashSetTransformer<byte> {
+  internal sealed class ByteSetTransformer : SetTransformer<byte> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.UInts = new RepeatedUIntBox();
       box.UInts.Values.AddRange(((IEnumerable<byte>)values).Select(v => (uint)v));
@@ -166,7 +171,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("E1562FBE-EF22-4BEB-B4A7-B7BAE98C00E0", 200)]
-  internal sealed class SByteHashSetTransformer : HashSetTransformer<sbyte> {
+  internal sealed class SByteSetTransformer : SetTransformer<sbyte> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.SInts = new RepeatedSIntBox();
       box.SInts.Values.AddRange(((IEnumerable<int>)values).Select(v => (int)v));
@@ -177,7 +182,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("2D657E39-7E97-4AAE-B25B-632AAC26C2AC", 200)]
-  internal sealed class ShortHashSetTransformer : HashSetTransformer<short> {
+  internal sealed class ShortSetTransformer : SetTransformer<short> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Ints = new RepeatedIntBox();
       box.Ints.Values.AddRange(((IEnumerable<short>)values).Select(v => (int)v));
@@ -188,7 +193,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("62B6A3A7-C31E-4C78-B6BF-BFA477D8C299", 200)]
-  internal sealed class UShortHashSetTransformer : HashSetTransformer<ushort> {
+  internal sealed class UShortSetTransformer : SetTransformer<ushort> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.UInts = new RepeatedUIntBox();
       box.UInts.Values.AddRange(((IEnumerable<ushort>)values).Select(v => (uint)v));
@@ -199,7 +204,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("8886CAB5-AC7F-40C4-A939-84DCA580FB96", 200)]
-  internal sealed class CharHashSetTransformer : HashSetTransformer<char> {
+  internal sealed class CharSetTransformer : SetTransformer<char> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.UInts = new RepeatedUIntBox();
       box.UInts.Values.AddRange(((IEnumerable<char>)values).Select(v => (uint)v));
@@ -210,7 +215,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("343CFC09-8BE6-4219-890C-0D42AE6C5B68", 200)]
-  internal sealed class DecimalHashSetTransformer : HashSetTransformer<decimal> {
+  internal sealed class DecimalSetTransformer : SetTransformer<decimal> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox box, Mapper mapper) {
       box.Ints = new RepeatedIntBox();
       box.Ints.Values.AddRange(((IEnumerable<decimal>)values).SelectMany(decimal.GetBits));
@@ -228,7 +233,7 @@ namespace HEAL.Attic {
   }
 
   [Transformer("A8799BD8-43E5-484F-BCA0-C89A3BC1A89A", 200)]
-  internal sealed class ObjectHashSetTransformer : HashSetTransformer<object> {
+  internal sealed class ObjectSetTransformer : SetTransformer<object> {
     protected override void AddRange(IEnumerable values, RepeatedValueBox repValueBox, Mapper mapper) {
       repValueBox.UInts = new RepeatedUIntBox();
       foreach (var v in values) {

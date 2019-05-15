@@ -285,6 +285,7 @@ The following types are supported by HEAL.Attic:
 - System.Collections.Queue
 - System.Collections.Generic.Queue<>
 - System.Collections.Generic.HashSet<>
+- System.Collections.Generic.SortedSet<>
 - System.Collections.Generic.Dictionary<,>
 - System.Type
 - System.StringComparer

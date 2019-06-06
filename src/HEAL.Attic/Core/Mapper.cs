@@ -313,6 +313,8 @@ namespace HEAL.Attic {
     }
 
     public static object ToObject(Bundle bundle, out SerializationInfo info) {
+      StaticCache.UpdateRegisteredTypes();
+
       var mapper = new Mapper();
       info = new SerializationInfo();
 

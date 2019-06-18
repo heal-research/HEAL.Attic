@@ -45,5 +45,8 @@ namespace HEAL.Attic {
     object Deserialize(byte[] data,
                        out SerializationInfo info,
                        CancellationToken cancellationToken = default(CancellationToken));
+    bool CanDeserialize(Stream stream);
+    bool CanDeserialize(string path);
+    bool CanDeserialize(byte[] data);
   }
 }

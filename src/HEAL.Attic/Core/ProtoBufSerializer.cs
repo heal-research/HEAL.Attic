@@ -30,5 +30,15 @@ namespace HEAL.Attic {
           inputStream.Dispose();
       }
     }
+
+    public override bool CanDeserialize(Stream stream) {
+      using (var inputStream = new CodedInputStream(stream)) {
+        try {
+          return !inputStream.IsAtEnd;
+        } catch (InvalidDataException) {
+          return false;
+        }
+      }
+    }
   }
 }

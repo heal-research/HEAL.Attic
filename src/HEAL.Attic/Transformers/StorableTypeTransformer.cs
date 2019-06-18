@@ -86,12 +86,14 @@ namespace HEAL.Attic {
     }
 
     public override void FillFromBox(object obj, Box box, Mapper mapper) {
+      if (mapper.CancellationToken.IsCancellationRequested) return;
+
       var dict = new Dictionary<string, object>();
       var members = box.Members;
       var layout = mapper.GetStorableTypeLayout(members.StorableTypeMetadataId);
 
       var valueIdx = 0;
-      while (layout != null) {
+      while (layout != null && !mapper.CancellationToken.IsCancellationRequested) {
         for (int j = 0; j < layout.MemberNames.Count; j++) {
           string key = mapper.GetComponentInfoKey(layout.TypeGuid, layout.MemberNames[j]);
           object value = mapper.GetObject(members.ValueBoxId[valueIdx++]);
@@ -108,7 +110,7 @@ namespace HEAL.Attic {
         typeInfo = Mapper.StaticCache.GetTypeInfo(type);
         typeStack.Push(Tuple.Create(type, typeInfo));
         type = type.BaseType;
-      } while (StorableTypeAttribute.IsStorableType(type));
+      } while (StorableTypeAttribute.IsStorableType(type) && !mapper.CancellationToken.IsCancellationRequested);
 
       foreach (var frame in typeStack) {
         type = frame.Item1;

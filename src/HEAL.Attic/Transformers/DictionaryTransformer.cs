@@ -63,6 +63,7 @@ namespace HEAL.Attic {
       var keys = kvpBox.Kvps.Keys;
       var values = kvpBox.Kvps.Values;
       for (int i = 0; i < kvpBox.Kvps.Keys.Count; i++) {
+        if (mapper.CancellationToken.IsCancellationRequested) return;
         var key = mapper.GetObject(keys[i]);
         var value = mapper.GetObject(values[i]);
         dict.Add(key, value);

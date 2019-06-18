@@ -41,8 +41,9 @@ namespace HEAL.Attic {
       }
       File.Delete(tempfile);
     }
-    public virtual byte[] Serialize(object o, CancellationToken cancellationToken = default(CancellationToken)) {
-      return Serialize(o, out SerializationInfo _);
+    public virtual byte[] Serialize(object o,
+                                    CancellationToken cancellationToken = default(CancellationToken)) {
+      return Serialize(o, out SerializationInfo _, cancellationToken);
     }
     public virtual byte[] Serialize(object o,
                                     out SerializationInfo info,
@@ -54,32 +55,42 @@ namespace HEAL.Attic {
         return memoryStream.ToArray();
       }
     }
-    protected abstract void SerializeBundle(Bundle bundle, Stream stream,
-                                            bool disposeStream = true);
+    protected abstract void SerializeBundle(Bundle bundle, Stream stream, bool disposeStream = true);
 
-    public virtual object Deserialize(Stream stream, bool disposeStream = true) {
-      return Deserialize(stream, out SerializationInfo _, disposeStream);
+    public virtual object Deserialize(Stream stream,
+                                      bool disposeStream = true,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
+      return Deserialize(stream, out SerializationInfo _, disposeStream, cancellationToken);
     }
-    public virtual object Deserialize(Stream stream, out SerializationInfo info, bool disposeStream = true) {
-      return Mapper.ToObject(DeserializeBundle(stream, disposeStream), out info);
+    public virtual object Deserialize(Stream stream,
+                                      out SerializationInfo info,
+                                      bool disposeStream = true,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
+      return Mapper.ToObject(DeserializeBundle(stream, disposeStream), out info, cancellationToken);
     }
-    public virtual object Deserialize(string path) {
-      return Deserialize(path, out SerializationInfo _);
+    public virtual object Deserialize(string path,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
+      return Deserialize(path, out SerializationInfo _, cancellationToken);
     }
-    public virtual object Deserialize(string path, out SerializationInfo info) {
+    public virtual object Deserialize(string path,
+                                      out SerializationInfo info,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
       using (var fileStream = new FileStream(path, FileMode.Open)) {
         using (var zipStream = new DeflateStream(fileStream, CompressionMode.Decompress)) {
-          return Deserialize(zipStream, out info);
+          return Deserialize(zipStream, out info, false, cancellationToken);
         }
       }
     }
-    public virtual object Deserialize(byte[] data) {
-      return Deserialize(data, out SerializationInfo _);
+    public virtual object Deserialize(byte[] data,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
+      return Deserialize(data, out SerializationInfo _, cancellationToken);
     }
-    public virtual object Deserialize(byte[] data, out SerializationInfo info) {
+    public virtual object Deserialize(byte[] data,
+                                      out SerializationInfo info,
+                                      CancellationToken cancellationToken = default(CancellationToken)) {
       using (var memoryStream = new MemoryStream(data)) {
         using (var zipStream = new DeflateStream(memoryStream, CompressionMode.Decompress)) {
-          return Deserialize(zipStream, out info);
+          return Deserialize(zipStream, out info, false, cancellationToken);
         }
       }
     }

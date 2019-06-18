@@ -14,23 +14,36 @@ namespace HEAL.Attic {
     void Serialize(object o, Stream stream,
                    bool disposeStream = true,
                    CancellationToken cancellationToken = default(CancellationToken));
-    void Serialize(object o, string path, CancellationToken cancellationToken = default(CancellationToken));
-    byte[] Serialize(object o, CancellationToken cancellationToken = default(CancellationToken));
     void Serialize(object o, Stream stream,
                    out SerializationInfo info,
-                  bool disposeStream = true,
-                  CancellationToken cancellationToken = default(CancellationToken));
+                   bool disposeStream = true,
+                   CancellationToken cancellationToken = default(CancellationToken));
+    void Serialize(object o, string path,
+                   CancellationToken cancellationToken = default(CancellationToken));
     void Serialize(object o, string path,
                    out SerializationInfo info,
                    CancellationToken cancellationToken = default(CancellationToken));
     byte[] Serialize(object o,
+                     CancellationToken cancellationToken = default(CancellationToken));
+    byte[] Serialize(object o,
                      out SerializationInfo info,
                      CancellationToken cancellationToken = default(CancellationToken));
-    object Deserialize(Stream stream, bool disposeStream = true);
-    object Deserialize(Stream stream, out SerializationInfo info, bool disposeStream = true);
-    object Deserialize(string path);
-    object Deserialize(string path, out SerializationInfo info);
-    object Deserialize(byte[] data);
-    object Deserialize(byte[] data, out SerializationInfo info);
+    object Deserialize(Stream stream,
+                       bool disposeStream = true,
+                       CancellationToken cancellationToken = default(CancellationToken));
+    object Deserialize(Stream stream,
+                       out SerializationInfo info,
+                       bool disposeStream = true,
+                       CancellationToken cancellationToken = default(CancellationToken));
+    object Deserialize(string path,
+                       CancellationToken cancellationToken = default(CancellationToken));
+    object Deserialize(string path,
+                       out SerializationInfo info,
+                       CancellationToken cancellationToken = default(CancellationToken));
+    object Deserialize(byte[] data,
+                       CancellationToken cancellationToken = default(CancellationToken));
+    object Deserialize(byte[] data,
+                       out SerializationInfo info,
+                       CancellationToken cancellationToken = default(CancellationToken));
   }
 }

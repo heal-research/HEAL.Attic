@@ -276,9 +276,8 @@ namespace HEAL.Attic {
     public static Bundle ToBundle(object root, out SerializationInfo info, CancellationToken cancellationToken = default(CancellationToken)) {
       StaticCache.UpdateRegisteredTypes();
 
-      var mapper = new Mapper();
+      var mapper = new Mapper { CancellationToken = cancellationToken };
       var bundle = new Bundle();
-      mapper.CancellationToken = cancellationToken;
 
       info = new SerializationInfo();
 
@@ -288,6 +287,7 @@ namespace HEAL.Attic {
       bundle.RootBoxId = mapper.GetBoxId(root);
 
       while (mapper.objectsToProcess.Any()) {
+        if (cancellationToken.IsCancellationRequested) return bundle;
         var tuple = mapper.objectsToProcess.Dequeue();
         var o = tuple.Item1;
         var box = tuple.Item2;
@@ -312,10 +312,10 @@ namespace HEAL.Attic {
       return bundle;
     }
 
-    public static object ToObject(Bundle bundle, out SerializationInfo info) {
+    public static object ToObject(Bundle bundle, out SerializationInfo info, CancellationToken cancellationToken = default(CancellationToken)) {
       StaticCache.UpdateRegisteredTypes();
 
-      var mapper = new Mapper();
+      var mapper = new Mapper { CancellationToken = cancellationToken };
       info = new SerializationInfo();
 
       var sw = new Stopwatch();
@@ -346,10 +346,12 @@ namespace HEAL.Attic {
       var boxes = bundle.Boxes;
 
       for (int i = boxes.Count - 1; i >= 0; i--) {
+        if (cancellationToken.IsCancellationRequested) return null;
         mapper.GetObject((uint)i + 1);
       }
 
       for (int i = boxes.Count; i > 0; i--) {
+        if (cancellationToken.IsCancellationRequested) return null;
         var box = mapper.boxId2Box[(uint)i];
         var o = mapper.boxId2Object[(uint)i];
         if (o == null) continue;

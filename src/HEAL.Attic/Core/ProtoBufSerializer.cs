@@ -11,32 +11,18 @@ using Google.Protobuf;
 namespace HEAL.Attic {
   public sealed class ProtoBufSerializer : Serializer {
     protected override void SerializeBundle(Bundle bundle, Stream stream, bool disposeStream = true) {
-      var outputStream = new CodedOutputStream(stream);
-      try {
+      using (var outputStream = new CodedOutputStream(stream, leaveOpen: !disposeStream)) {
         bundle.WriteTo(outputStream);
-      } finally {
         outputStream.Flush();
-        if (disposeStream)
-          outputStream.Dispose();
       }
     }
 
     protected override Bundle DeserializeBundle(Stream stream, bool disposeStream = true) {
-      var inputStream = new CodedInputStream(stream);
-      try {
-        return Bundle.Parser.ParseFrom(inputStream);
-      } finally {
-        if (disposeStream)
-          inputStream.Dispose();
-      }
-    }
-
-    public override bool CanDeserialize(Stream stream) {
-      using (var inputStream = new CodedInputStream(stream)) {
+      using (var inputStream = new CodedInputStream(stream, leaveOpen: !disposeStream)) {
         try {
-          return !inputStream.IsAtEnd;
-        } catch (InvalidDataException) {
-          return false;
+          return Bundle.Parser.ParseFrom(inputStream);
+        } catch (InvalidProtocolBufferException e) {
+          throw new PersistenceException("Invalid format.", e);
         }
       }
     }

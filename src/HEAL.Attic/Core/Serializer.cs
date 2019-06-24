@@ -95,22 +95,5 @@ namespace HEAL.Attic {
       }
     }
     protected abstract Bundle DeserializeBundle(Stream stream, bool disposeStream = true);
-
-    public virtual bool CanDeserialize(string path) {
-      using (var fileStream = new FileStream(path, FileMode.Open)) {
-        using (var zipStream = new DeflateStream(fileStream, CompressionMode.Decompress)) {
-          return CanDeserialize(zipStream);
-        }
-      }
-    }
-    public virtual bool CanDeserialize(byte[] data) {
-      using (var memoryStream = new MemoryStream(data)) {
-        using (var zipStream = new DeflateStream(memoryStream, CompressionMode.Decompress)) {
-          return CanDeserialize(zipStream);
-        }
-      }
-    }
-
-    public abstract bool CanDeserialize(Stream stream);
   }
 }

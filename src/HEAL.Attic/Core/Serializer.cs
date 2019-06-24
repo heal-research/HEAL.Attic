@@ -66,7 +66,11 @@ namespace HEAL.Attic {
                                       out SerializationInfo info,
                                       bool disposeStream = true,
                                       CancellationToken cancellationToken = default(CancellationToken)) {
-      return Mapper.ToObject(DeserializeBundle(stream, disposeStream), out info, cancellationToken);
+      try {
+        return Mapper.ToObject(DeserializeBundle(stream, disposeStream), out info, cancellationToken);
+      } catch (InvalidDataException ide) {
+        throw new PersistenceException("Invalid data in stream. Maybe the data was serialized with or without using a DeflateStream.", ide);
+      }
     }
     public virtual object Deserialize(string path,
                                       CancellationToken cancellationToken = default(CancellationToken)) {

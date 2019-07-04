@@ -20,7 +20,9 @@ namespace HEAL.Attic {
                                   out SerializationInfo info,
                                   bool disposeStream = true,
                                   CancellationToken cancellationToken = default(CancellationToken)) {
-      SerializeBundle(Mapper.ToBundle(o, out info, cancellationToken), stream, disposeStream);
+      using (var deflateStream = new DeflateStream(stream, CompressionMode.Compress)) {
+        SerializeBundle(Mapper.ToBundle(o, out info, cancellationToken), deflateStream, disposeStream);
+      }
     }
     public virtual void Serialize(object o, string path,
                                   CancellationToken cancellationToken = default(CancellationToken)) {
@@ -31,10 +33,8 @@ namespace HEAL.Attic {
                                   CancellationToken cancellationToken = default(CancellationToken)) {
       string tempfile = Path.GetTempFileName();
 
-      using (FileStream stream = File.Create(tempfile)) {
-        using (var zipStream = new DeflateStream(stream, CompressionMode.Compress)) {
-          Serialize(o, zipStream, out info, false, cancellationToken);
-        }
+      using (FileStream fileStream = File.Create(tempfile)) {
+        Serialize(o, fileStream, out info, false, cancellationToken);
       }
       if (!cancellationToken.IsCancellationRequested) {
         File.Copy(tempfile, path, true);
@@ -49,9 +49,7 @@ namespace HEAL.Attic {
                                     out SerializationInfo info,
                                     CancellationToken cancellationToken = default(CancellationToken)) {
       using (var memoryStream = new MemoryStream()) {
-        using (var zipStream = new DeflateStream(memoryStream, CompressionMode.Compress)) {
-          Serialize(o, zipStream, out info, false, cancellationToken);
-        }
+        Serialize(o, memoryStream, out info, false, cancellationToken);
         return memoryStream.ToArray();
       }
     }
@@ -67,9 +65,11 @@ namespace HEAL.Attic {
                                       bool disposeStream = true,
                                       CancellationToken cancellationToken = default(CancellationToken)) {
       try {
-        return Mapper.ToObject(DeserializeBundle(stream, disposeStream), out info, cancellationToken);
+        using (var deflateStream = new DeflateStream(stream, CompressionMode.Decompress)) {
+          return Mapper.ToObject(DeserializeBundle(deflateStream, disposeStream), out info, cancellationToken);
+        }
       } catch (InvalidDataException ide) {
-        throw new PersistenceException("Invalid data in stream. Maybe the data was serialized with or without using a DeflateStream.", ide);
+        throw new PersistenceException("Invalid data in stream. Maybe the data was serialized without using a DeflateStream.", ide);
       }
     }
     public virtual object Deserialize(string path,
@@ -79,10 +79,8 @@ namespace HEAL.Attic {
     public virtual object Deserialize(string path,
                                       out SerializationInfo info,
                                       CancellationToken cancellationToken = default(CancellationToken)) {
-      using (var fileStream = new FileStream(path, FileMode.Open)) {
-        using (var zipStream = new DeflateStream(fileStream, CompressionMode.Decompress)) {
-          return Deserialize(zipStream, out info, false, cancellationToken);
-        }
+      using (var fileStream = File.Open(path, FileMode.Open)) {
+        return Deserialize(fileStream, out info, false, cancellationToken);
       }
     }
     public virtual object Deserialize(byte[] data,
@@ -93,9 +91,7 @@ namespace HEAL.Attic {
                                       out SerializationInfo info,
                                       CancellationToken cancellationToken = default(CancellationToken)) {
       using (var memoryStream = new MemoryStream(data)) {
-        using (var zipStream = new DeflateStream(memoryStream, CompressionMode.Decompress)) {
-          return Deserialize(zipStream, out info, false, cancellationToken);
-        }
+        return Deserialize(memoryStream, out info, false, cancellationToken);
       }
     }
     protected abstract Bundle DeserializeBundle(Stream stream, bool disposeStream = true);

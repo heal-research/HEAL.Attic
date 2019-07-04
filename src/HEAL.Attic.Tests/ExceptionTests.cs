@@ -6,6 +6,7 @@
 #endregion
 
 using System.IO;
+using System.IO.Compression;
 using System.Text;
 using Google.Protobuf;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,17 +17,21 @@ namespace HEAL.Attic.Tests {
   public class ExceptionTests {
     [TestMethod]
     public void TestMissingDeflateStreamException() {
+      var bytes = new ProtoBufSerializer().Serialize(new TestStorable());
       var tmpFile = Path.GetTempFileName();
       using (var outStream = File.OpenWrite(tmpFile)) {
-        new ProtoBufSerializer().Serialize(new TestStorable(), outStream);
+        using (var deflateStream = new DeflateStream(outStream, CompressionMode.Decompress)) {
+          deflateStream.Write(bytes, 0, bytes.Length);
+        }
       }
-      // This must fail, because Serialize did not use a DeflateStream
+
+      // This must fail, because the file contents have not been serialized with a DeflateStream
       // However, Deserialize(string path) uses a DeflateStream
       try {
         var instance = (TestStorable)new ProtoBufSerializer().Deserialize(tmpFile);
         Assert.Fail("This method should not succeed.");
       } catch (PersistenceException e) {
-        Assert.AreEqual("Invalid data in stream. Maybe the data was serialized with or without using a DeflateStream.", e.Message);
+        Assert.AreEqual("Invalid data in stream. Maybe the data was serialized without using a DeflateStream.", e.Message);
         Assert.IsInstanceOfType(e.InnerException, typeof(InvalidDataException));
       }
       File.Delete(tmpFile);
@@ -35,7 +40,11 @@ namespace HEAL.Attic.Tests {
     [TestMethod]
     public void TestInvalidFormatException() {
       var tmpFile = Path.GetTempFileName();
-      File.WriteAllBytes(tmpFile, Encoding.UTF8.GetBytes("Hello Attic"));
+      using (var deflateStream = new DeflateStream(File.OpenWrite(tmpFile), CompressionMode.Compress)) {
+        var bytes = Encoding.UTF8.GetBytes("Hello Attic");
+        deflateStream.Write(bytes, 0, bytes.Length);
+      }
+
       // This must fail, because this file is not a valid format of Attic
       using (var stream = File.OpenRead(tmpFile)) {
         try {

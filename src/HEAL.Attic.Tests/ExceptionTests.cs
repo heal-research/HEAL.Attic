@@ -17,12 +17,13 @@ namespace HEAL.Attic.Tests {
   public class ExceptionTests {
     [TestMethod]
     public void TestMissingDeflateStreamException() {
-      var bytes = new ProtoBufSerializer().Serialize(new TestStorable());
+      var bytes = new ProtoBufSerializer().Serialize(new TestStorable()); // compresses bytes using DeflateStream
       var tmpFile = Path.GetTempFileName();
-      using (var outStream = File.OpenWrite(tmpFile)) {
-        using (var deflateStream = new DeflateStream(outStream, CompressionMode.Decompress)) {
-          deflateStream.Write(bytes, 0, bytes.Length);
-        }
+
+      using (var memoryStream = new MemoryStream(bytes))
+      using (var deflateStream = new DeflateStream(memoryStream, CompressionMode.Decompress)) // decompress bytes
+      using (var fileStream = File.OpenWrite(tmpFile)) {
+        deflateStream.CopyTo(fileStream); // save decompressed bytes to file
       }
 
       // This must fail, because the file contents have not been serialized with a DeflateStream
@@ -39,10 +40,12 @@ namespace HEAL.Attic.Tests {
 
     [TestMethod]
     public void TestInvalidFormatException() {
+      var bytes = Encoding.UTF8.GetBytes("Hello Attic");
       var tmpFile = Path.GetTempFileName();
-      using (var deflateStream = new DeflateStream(File.OpenWrite(tmpFile), CompressionMode.Compress)) {
-        var bytes = Encoding.UTF8.GetBytes("Hello Attic");
-        deflateStream.Write(bytes, 0, bytes.Length);
+
+      using (var fileStream = File.OpenWrite(tmpFile))
+      using (var deflateStream = new DeflateStream(fileStream, CompressionMode.Compress)) { // compress bytes
+        deflateStream.Write(bytes, 0, bytes.Length); // save compressed bytes to file
       }
 
       // This must fail, because this file is not a valid format of Attic

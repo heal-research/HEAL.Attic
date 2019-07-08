@@ -46,7 +46,7 @@ namespace HEAL.Attic {
       var _headFieldInfo = t.GetField("_head", BindingFlags.NonPublic | BindingFlags.Instance);
       _headFieldInfo.SetValue(obj, 0);
       var _tailFieldInfo = t.GetField("_tail", BindingFlags.NonPublic | BindingFlags.Instance);
-      _tailFieldInfo.SetValue(obj, _array.Length);
+      _tailFieldInfo.SetValue(obj, _array.Length - 1);
       var _sizeFieldInfo = t.GetField("_size", BindingFlags.NonPublic | BindingFlags.Instance);
       _sizeFieldInfo.SetValue(obj, _array.Length);
       int i = 0;

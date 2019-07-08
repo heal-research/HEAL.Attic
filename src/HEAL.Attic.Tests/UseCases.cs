@@ -1638,6 +1638,20 @@ namespace HEAL.Attic.Tests {
       new ProtoBufSerializer().Serialize(q, tempFile);
       var newQ = (Queue<int>)new ProtoBufSerializer().Deserialize(tempFile);
       CollectionAssert.AreEqual(q, newQ);
+      Assert.AreEqual(1, newQ.Dequeue());
+      newQ.Enqueue(5); // test adding an object
+      Assert.AreEqual(2, newQ.Dequeue());
+    }
+
+    [TestMethod]
+    public void TestGenericQueueOfObject() {
+      var q = new Queue<object>(new object[] { 1, 2, 3, 4, 0 });
+      new ProtoBufSerializer().Serialize(q, tempFile);
+      var newQ = (Queue<object>)new ProtoBufSerializer().Deserialize(tempFile);
+      CollectionAssert.AreEqual(q, newQ);
+      Assert.AreEqual(1, newQ.Dequeue());
+      newQ.Enqueue(5); // test adding an object
+      Assert.AreEqual(2, newQ.Dequeue());
     }
 
     [TestMethod]
@@ -1646,6 +1660,9 @@ namespace HEAL.Attic.Tests {
       new ProtoBufSerializer().Serialize(q, tempFile);
       var newQ = (Queue)new ProtoBufSerializer().Deserialize(tempFile);
       CollectionAssert.AreEqual(q, newQ);
+      Assert.AreEqual(1, newQ.Dequeue());
+      newQ.Enqueue(new object()); // test adding an object
+      Assert.AreEqual(2, newQ.Dequeue());
     }
 
     [TestMethod]

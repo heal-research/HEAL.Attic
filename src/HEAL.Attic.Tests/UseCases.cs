@@ -1644,14 +1644,30 @@ namespace HEAL.Attic.Tests {
     }
 
     [TestMethod]
-    public void TestGenericQueueOfObject() {
-      var q = new Queue<object>(new object[] { 1, 2, 3, 4, 0 });
+    public void TestGenericQueueOfIntValue() {
+      var q = new Queue<IntValue>(new IntValue[] { new IntValue(1), new IntValue(2), new IntValue(3), new IntValue(4) });
+      q.Dequeue();                 // --> 2 3 4
+      q.Enqueue(new IntValue(2));  // --> 2 3 4 2
       new ProtoBufSerializer().Serialize(q, tempFile);
-      var newQ = (Queue<object>)new ProtoBufSerializer().Deserialize(tempFile);
-      CollectionAssert.AreEqual(q, newQ);
-      Assert.AreEqual(1, newQ.Dequeue());
-      newQ.Enqueue(5); // test adding an object
-      Assert.AreEqual(2, newQ.Dequeue());
+      var newQ = (Queue<IntValue>)new ProtoBufSerializer().Deserialize(tempFile);
+      // here the queue is still correct
+      var arr = newQ.ToArray();
+      Assert.AreEqual(2, arr[0].Value);
+      Assert.AreEqual(3, arr[1].Value);
+      Assert.AreEqual(4, arr[2].Value);
+      Assert.AreEqual(2, arr[3].Value);
+
+      Assert.AreEqual(2, newQ.Dequeue().Value);  // --> 3 4 2
+      arr = newQ.ToArray();
+      Assert.AreEqual(3, arr[0].Value);
+      Assert.AreEqual(4, arr[1].Value);
+      Assert.AreEqual(2, arr[2].Value);
+
+      newQ.Enqueue(new IntValue(5)); // --> 3 4 2 5
+      Assert.AreEqual(3, newQ.Dequeue().Value);
+      Assert.AreEqual(4, newQ.Dequeue().Value);
+      Assert.AreEqual(2, newQ.Dequeue().Value); // BROKEN!
+      Assert.AreEqual(5, newQ.Dequeue().Value);
     }
 
     [TestMethod]

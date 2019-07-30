@@ -10,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HEAL.Attic;
 
 namespace HEAL.Attic {
   [Transformer("F8A2F91F-3FCE-4514-A9E6-3B376BD3F379", 200)]
@@ -43,10 +42,6 @@ namespace HEAL.Attic {
       if (t.GetGenericArguments()[0].IsPrimitive) return;
       var _arrayFieldInfo = t.GetField("_array", BindingFlags.NonPublic | BindingFlags.Instance);
       var _array = (Array)_arrayFieldInfo.GetValue(obj);
-      var _headFieldInfo = t.GetField("_head", BindingFlags.NonPublic | BindingFlags.Instance);
-      _headFieldInfo.SetValue(obj, 0);
-      var _tailFieldInfo = t.GetField("_tail", BindingFlags.NonPublic | BindingFlags.Instance);
-      _tailFieldInfo.SetValue(obj, _array.Length - 1);
       var _sizeFieldInfo = t.GetField("_size", BindingFlags.NonPublic | BindingFlags.Instance);
       _sizeFieldInfo.SetValue(obj, _array.Length);
       int i = 0;

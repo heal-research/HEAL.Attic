@@ -18,8 +18,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace HEAL.Attic.Tests
-{
+namespace HEAL.Attic.Tests {
 
   class Util {
     public static bool AreElementsEqual<T>(T[,] a, T[,] b) {
@@ -2569,8 +2568,7 @@ namespace HEAL.Attic.Tests
 
     #region Introduce or change the inheritance hierarchy
     [TestMethod]
-    public void NewHierarchyTest()
-    {
+    public void NewHierarchyTest() {
       DeregisterType(StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassAfter)).Guid);
 
       var oldType = new NewHierarchyTestClassBefore() { x = 5 };
@@ -2598,9 +2596,7 @@ namespace HEAL.Attic.Tests
     }
 
     [StorableType("818ace97-f667-44ae-b911-71216956fb6f")] // will be manually registered as 39a3bb49-74e2-4955-9365-543b956f706d
-    class NewHierarchyTestClassAfter : NewHierarchyTestBaseClassAfter<double>
-    {
-    }
+    class NewHierarchyTestClassAfter : NewHierarchyTestBaseClassAfter<double> { }
     #endregion
   }
 }

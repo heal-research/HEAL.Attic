@@ -2599,5 +2599,37 @@ namespace HEAL.Attic.Tests {
     }
     #endregion
 
+    #region Introduce or change the inheritance hierarchy
+    [TestMethod]
+    public void NewHierarchyTest() {
+      DeregisterType(StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassAfter)).Guid);
+
+      var oldType = new NewHierarchyTestClassBefore() { x = 5 };
+      var oldTypeBinary = new ProtoBufSerializer().Serialize(oldType);
+
+      var oldTypeGuid = StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassBefore)).Guid;
+      DeregisterType(oldTypeGuid);
+
+      Mapper.StaticCache.RegisterType(oldTypeGuid, typeof(NewHierarchyTestClassAfter));
+
+      var item = (NewHierarchyTestClassAfter)new ProtoBufSerializer().Deserialize(oldTypeBinary);
+      Assert.AreEqual(5, item.x);
+    }
+
+    [StorableType("39a3bb49-74e2-4955-9365-543b956f706d")]
+    class NewHierarchyTestClassBefore {
+      [Storable]
+      public double x;
+    }
+
+    [StorableType("d2f9180a-06a3-4ad8-82cc-e6ff6788a44d")]
+    class NewHierarchyTestBaseClassAfter<T> {
+      [Storable(OldName = "39a3bb49-74e2-4955-9365-543b956f706d.x")]
+      public T x;
+    }
+
+    [StorableType("818ace97-f667-44ae-b911-71216956fb6f")] // will be manually registered as 39a3bb49-74e2-4955-9365-543b956f706d
+    class NewHierarchyTestClassAfter : NewHierarchyTestBaseClassAfter<double> { }
+    #endregion
   }
 }

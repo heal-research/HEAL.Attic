@@ -70,7 +70,7 @@ Similarly, we can restore the person object using the  `Deserialize` method.
           seriaizer.Serialize(family, "family.bin");
       }
   }
-``` 
+```
 
 ### Principles
 HEAL.Attic transforms object graphs to a serialized format called `Bundle`. The `Bundle` is a ProtoBuf message type and basically holds an array of `Boxes`. `Box` is another ProtoBuf message type which represents each object from the serialized object graph. The `Box` contains the information to restore the object. For a scalar types (int, long, double, ...), the box contains only the value. 
@@ -108,7 +108,7 @@ HEAL.Attic provides the type `StorableConstructorFlag` which must be used as for
           // initialize object ...
       }
   }
-```     
+```
 
 ### BeforeSerialization and AfterDeserialization Hooks
 Sometimes it is necessary to run code after deserialization has restored all objects. For instance to register event handlers after deserialization. We can accomplish this using an `AfterDeserialization` hook. In each storable type a single method can be marked as an `AfterDeserialization` hook. The method must return void and must not have parameters. We recommend to set the visibility of the method to `private`. HEAL.Attic calls the hook using reflection. 
@@ -179,8 +179,8 @@ As a consequence, every type must be marked with the `StorableType` attribute wi
   public class TypeAggregator {
     ...
   }
-``` 
-   
+```
+
 
 
 #### Why is it necessary to mark interfaces and enums with the StorableType attribute?
@@ -601,8 +601,60 @@ class NewType : AB {
 }
 ```
 
+#### Splitting a class into base and derived
+
+HEAL.Attic also supports splitting a class into a base and derived class. The example below demonstrates how a generic base class is introduced of which the former class now derives. 
+
+Old code: 
+
+```csharp
+[StorableType("39a3bb49-74e2-4955-9365-543b956f706d")]
+class MyClass {
+  [Storable]
+  public double x;
+  [Storable]
+  public double y;
+}
+```
+
+New code (MyClass is split into MyBase and MyDerived):
+
+```csharp
+[StorableType("d2f9180a-06a3-4ad8-82cc-e6ff6788a44d")]
+class MyNewGenericBase<T> {
+  [Storable(OldName = "39a3bb49-74e2-4955-9365-543b956f706d.x")]
+  public T x;
+}
+
+[StorableType("39a3bb49-74e2-4955-9365-543b956f706d")] 
+class MyClass : MyNewGenericBase<double> {
+  [Storable]
+  public double y;
+}
+```
+
+The new generic class needs to obtain a new GUID and references the properties that were moved from the old type.
+
+An ***alternate solution*** to maintaining backwards compatibility of such a change would be to introduce a "forwarding" method in the derived class. This can be desirable if you want the base class to be free of backwards compatible code.
+
+```csharp
+[StorableType("d2f9180a-06a3-4ad8-82cc-e6ff6788a44d")]
+class MyNewGenericBase<T> {
+  [Storable]
+  public T x;
+}
+
+[StorableType("39a3bb49-74e2-4955-9365-543b956f706d")] 
+class MyClass : MyNewGenericBase<double> {
+  [Storable(OldName = "39a3bb49-74e2-4955-9365-543b956f706d.x")]
+  private double x_setter_persistence { set { base.x = value; } }
+  [Storable]
+  public double y;
+}
+```
 
 ### Deleting a type
+
 When you want to remove a type which has been marked as a `StorableType` then you have several options to make sure that old files can still be opened with the new version of your code.
 1. Keep the (empty) class definition including the attached `StorableType` attribute. HEAL.Attic will create an object of the class on deserialization.
 1. Delete the type but use a different (compatible) type as a replacement. Add the GUID from the deleted class to the list of GUIDs in the `StorableType` attribute of replacement type
@@ -632,7 +684,7 @@ HEAL.Attic automatically discovers all loaded types marked with the `StorableTyp
   Mapper.StaticCache.RegisterType(
     new Guid("9CF55419-439B-4A90-B2ED-8C7F7768EB61"), 
     Type.GetType("MyDynamicType"));
-``` 
+```
 
 This method of registering types can be used for any type including types marked with the `StorableType` attribute. Therefore, you can also use it instead of the `IStorableTypeMap` interface as explained above. However, be aware that on the first call of `Mapper.StaticCache.RegisterType` you will trigger the initialization of HEAL.Attic, whereby it discovers all currently loaded `StorableType`s. 
 

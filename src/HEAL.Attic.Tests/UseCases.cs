@@ -13,7 +13,6 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -358,24 +357,6 @@ namespace HEAL.Attic.Tests {
 
     #region Helpers
     private string tempFile;
-
-    // the following are necessary to test backwards compatibility test cases
-    private static Dictionary<Guid, Type> guid2Type;
-    private static Dictionary<Type, Guid> type2Guid;
-    private static Dictionary<Type, TypeInfo> typeInfos;
-    private static PropertyInfo guidPropertyInfo = typeof(StorableTypeAttribute).GetProperty("Guid");
-
-
-    [ClassInitialize]
-    public static void Initialize(TestContext testContext) {
-      var guid2TypeFieldInfo = typeof(StaticCache).GetField("guid2Type", BindingFlags.NonPublic | BindingFlags.Instance);
-      var type2GuidFieldInfo = typeof(StaticCache).GetField("type2Guid", BindingFlags.NonPublic | BindingFlags.Instance);
-      var typeInfosFieldInfo = typeof(StaticCache).GetField("typeInfos", BindingFlags.NonPublic | BindingFlags.Instance);
-
-      guid2Type = (Dictionary<Guid, Type>)guid2TypeFieldInfo.GetValue(Mapper.StaticCache);
-      type2Guid = (Dictionary<Type, Guid>)type2GuidFieldInfo.GetValue(Mapper.StaticCache);
-      typeInfos = (Dictionary<Type, TypeInfo>)typeInfosFieldInfo.GetValue(Mapper.StaticCache);
-    }
 
     [TestInitialize()]
     public void CreateTempFile() {
@@ -2170,38 +2151,6 @@ namespace HEAL.Attic.Tests {
 
     }
     #region backwards compatibility tests
-    #region helpers
-
-    public static void RegisterType(Guid guid, Type type) {
-      Mapper.StaticCache.RegisterType(guid, type);
-    }
-
-    public static void DeregisterType(Guid guid) {
-      if (!guid2Type.ContainsKey(guid)) return;
-      type2Guid.Remove(guid2Type[guid]);
-      guid2Type.Remove(guid);
-    }
-
-    public static TypeInfo GetTypeInfo(Type type) {
-      return Mapper.StaticCache.GetTypeInfo(type);
-    }
-
-    private static void ReplaceTypeImplementation(Type old, Guid oldGuid, Type @new) {
-      DeregisterType(oldGuid);
-      DeregisterType(StorableTypeAttribute.GetStorableTypeAttribute(@new).Guid);
-
-      RegisterType(oldGuid, @new);
-      SetTypeGuid(@new, oldGuid);
-      typeInfos.Remove(old);
-    }
-
-    public static void SetTypeGuid(Type type, Guid guid) {
-      var typeInfo = GetTypeInfo(type);
-      guidPropertyInfo.SetValue(typeInfo.StorableTypeAttribute, guid);
-      var reflectMethod = typeInfo.GetType().GetMethod("Reflect", BindingFlags.NonPublic | BindingFlags.Instance);
-      reflectMethod.Invoke(typeInfo, new object[0]);
-    }
-    #endregion
 
     [StorableType("28A5F6B8-49AF-4C6A-AF0E-F92EB4511722")]
     private class PersistenceTestA0 {
@@ -2249,12 +2198,12 @@ namespace HEAL.Attic.Tests {
       var v0 = test();
       serializer.Serialize(v0, tempFile);
 
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestA1));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestA1));
 
       var v1 = (PersistenceTestA1)serializer.Deserialize(tempFile);
       Assert.AreEqual(v0.v.Value, v1.v);
 
-      ReplaceTypeImplementation(typeof(PersistenceTestA1), v0Guid, typeof(PersistenceTestA2));
+      TypeManipulation.ReplaceTypeImplementation(typeof(PersistenceTestA1), v0Guid, typeof(PersistenceTestA2));
 
       var v2 = (PersistenceTestA2)serializer.Deserialize(tempFile);
       Assert.AreEqual(v2.v, v1.v);
@@ -2320,26 +2269,26 @@ namespace HEAL.Attic.Tests {
       Assert.AreEqual(v0.p.Y, newV0.p.Y);
 
       // serialize B0, deserialize B1
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB1));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB1));
       var v1 = (PersistenceTestB1)serializer.Deserialize(tempFile);
       Assert.AreEqual(v0.p.X, v1.x);
       Assert.AreEqual(v0.p.Y, v1.y);
 
       // serialize B0, deserialize B2
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB2));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB2));
       var v2 = (PersistenceTestB2)serializer.Deserialize(tempFile);
       Assert.AreEqual(v0.p.X, v2.p.X);
       Assert.AreEqual(v0.p.Y, v2.p.Y);
 
       // serialize B1, deserialize B1
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB1));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB1));
       serializer.Serialize(v1, tempFile);
       var newV1 = (PersistenceTestB1)serializer.Deserialize(tempFile);
       Assert.AreEqual(v1.x, newV1.x);
       Assert.AreEqual(v1.y, newV1.y);
 
       // serialize B1, deserialize B2
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB2));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestB2));
       v2 = (PersistenceTestB2)serializer.Deserialize(tempFile);
       Assert.AreEqual(v1.x, v2.p.X);
       Assert.AreEqual(v1.y, v2.p.Y);
@@ -2408,7 +2357,7 @@ namespace HEAL.Attic.Tests {
       Assert.ReferenceEquals(newV0.neighbor, newV0);
 
       // serialize C0, deserialize C1
-      ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestC1));
+      TypeManipulation.ReplaceTypeImplementation(v0Type, v0Guid, typeof(PersistenceTestC1));
       var v1 = (PersistenceTestC1)serializer.Deserialize(tempFile);
       Assert.AreEqual(v0.value, v1.value);
       Assert.AreEqual(v1.neighborValue, v0.neighbor.value);
@@ -2510,8 +2459,8 @@ namespace HEAL.Attic.Tests {
 
 
       // serialize C0, deserialize C1
-      ReplaceTypeImplementation(c0Type, c0Guid, typeof(PersistenceTestSample4C1));
-      ReplaceTypeImplementation(a0Type, a0Guid, typeof(PersistenceTestSample4A1));
+      TypeManipulation.ReplaceTypeImplementation(c0Type, c0Guid, typeof(PersistenceTestSample4C1));
+      TypeManipulation.ReplaceTypeImplementation(a0Type, a0Guid, typeof(PersistenceTestSample4A1));
       serializer = new ProtoBufSerializer();
       var c1 = (PersistenceTestSample4C1)serializer.Deserialize(tempFile);
       Assert.AreEqual(c0.Name, c1.Name);
@@ -2527,7 +2476,7 @@ namespace HEAL.Attic.Tests {
 
       // serialize C1, deserialize C2
       serializer.Serialize(c1, tempFile);
-      ReplaceTypeImplementation(c0Type, c0Guid, typeof(PersistenceTestSample4C2));
+      TypeManipulation.ReplaceTypeImplementation(c0Type, c0Guid, typeof(PersistenceTestSample4C2));
       var c2 = (PersistenceTestSample4C2)serializer.Deserialize(tempFile);
       Assert.AreEqual(c1.Name, c2.Name);
       Assert.AreEqual(c1.Description, c2.Description);
@@ -2543,7 +2492,7 @@ namespace HEAL.Attic.Tests {
       };
 
       serializer.Serialize(newType0, tempFile);
-      ReplaceTypeImplementation(newType0Type, newType0Guid, typeof(PersistenceTestSample4NewType1));
+      TypeManipulation.ReplaceTypeImplementation(newType0Type, newType0Guid, typeof(PersistenceTestSample4NewType1));
       var newType1 = (PersistenceTestSample4NewType1)serializer.Deserialize(tempFile);
       Assert.AreEqual(newType0.Name, newType1.Name);
       Assert.AreEqual(newType0.Description.Value, newType1.Description);
@@ -2583,8 +2532,8 @@ namespace HEAL.Attic.Tests {
       var deletedTypeSurrogate = typeof(DeletedTypeSurrogate);
       var deletedTypeSurrogateGuid = StorableTypeAttribute.GetStorableTypeAttribute(deletedTypeSurrogate).Guid;
 
-      DeregisterType(deletedTypeGuid);
-      DeregisterType(deletedTypeSurrogateGuid);
+      TypeManipulation.DeregisterType(deletedTypeGuid);
+      TypeManipulation.DeregisterType(deletedTypeSurrogateGuid);
 
       var l2 = (IList<IItem>)ser.Deserialize(tempFile);
       Assert.IsNull(l2[0]);
@@ -2602,13 +2551,13 @@ namespace HEAL.Attic.Tests {
     #region Introduce or change the inheritance hierarchy
     [TestMethod]
     public void NewHierarchyTest() {
-      DeregisterType(StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassAfter)).Guid);
+      TypeManipulation.DeregisterType(StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassAfter)).Guid);
 
       var oldType = new NewHierarchyTestClassBefore() { x = 5 };
       var oldTypeBinary = new ProtoBufSerializer().Serialize(oldType);
 
       var oldTypeGuid = StorableTypeAttribute.GetStorableTypeAttribute(typeof(NewHierarchyTestClassBefore)).Guid;
-      DeregisterType(oldTypeGuid);
+      TypeManipulation.DeregisterType(oldTypeGuid);
 
       Mapper.StaticCache.RegisterType(oldTypeGuid, typeof(NewHierarchyTestClassAfter));
 

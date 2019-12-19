@@ -150,6 +150,7 @@ namespace HEAL.Attic {
           if (StorableTypeAttribute.IsStorableType(t)) {
             type2Guid.Add(t, StorableTypeAttribute.GetStorableTypeAttribute(t).Guid);
             foreach (var guid in StorableTypeAttribute.GetStorableTypeAttribute(t).Guids) {
+              if (guid2Type.ContainsKey(guid)) throw new PersistenceException($"The GUID {guid} is already used by type {guid2Type[guid]}.", t);
               guid2Type.Add(guid, t);
             }
           } else if (typeof(IStorableTypeMap).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract) {
@@ -177,6 +178,7 @@ namespace HEAL.Attic {
       if (type == null) throw new ArgumentNullException(nameof(type));
       lock (locker) {
         foreach (var guid in guids) {
+          if (guid2Type.ContainsKey(guid)) throw new PersistenceException($"The GUID {guid} is already used by type {guid2Type[guid]}.", type);
           guid2Type.Add(guid, type);
         }
         type2Guid.Add(type, guids[0]);

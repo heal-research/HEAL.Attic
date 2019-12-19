@@ -51,6 +51,8 @@ namespace HEAL.Attic {
       }
     }
 
+    public PersistenceException(string message, Type type) : this($"{nameof(PersistenceException)} in type {type.FullName}: {message}") { }
+
     protected PersistenceException(System.Runtime.Serialization.SerializationInfo info, StreamingContext context) : base(info, context) { }
 
     /// <summary>

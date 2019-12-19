@@ -52,7 +52,7 @@ namespace HEAL.Attic {
         // check constructors
         if (!type.IsValueType && !type.IsEnum && !type.IsInterface &&
           GetStorableConstructor() == null && GetDefaultConstructor() == null)
-          throw new PersistenceException("No storable constructor or parameterless constructor found.");
+          throw new PersistenceException("No storable constructor or parameterless constructor found.", type);
 
         var fields = new List<ComponentInfo<FieldInfo>>();
         var properties = new List<ComponentInfo<PropertyInfo>>();
@@ -73,7 +73,7 @@ namespace HEAL.Attic {
 
             if (attrib != null) {
               if (!string.IsNullOrEmpty(attrib.Name) && !string.IsNullOrEmpty(attrib.OldName))
-                throw new PersistenceException("Cannot use Name and OldName at the same time.");
+                throw new PersistenceException($"Field {field.Name} cannot use Name and OldName at the same time.", type);
 
               if (!string.IsNullOrEmpty(attrib.Name)) name = attrib.Name;
               else if (!string.IsNullOrEmpty(attrib.OldName)) name = attrib.OldName;
@@ -87,11 +87,11 @@ namespace HEAL.Attic {
               var part = nameParts[i];
               if (part == "base") sourceType = sourceType.BaseType;
               else if (Guid.TryParse(part, out tmpGuid)) {
-                if (i != 0 || nameParts.Length != 2) throw new PersistenceException("Invalid field path specified.");
+                if (i != 0 || nameParts.Length != 2) throw new PersistenceException($"Field {field.Name} has an invalid path.", type);
                 guidPrefix = tmpGuid.ToString().ToUpper();
                 break;
               } else if (i != nameParts.Length - 1)
-                throw new PersistenceException("Invalid field path specified.");
+                throw new PersistenceException($"Field {field.Name} has an invalid path.", type);
               else break;
             }
 
@@ -120,17 +120,17 @@ namespace HEAL.Attic {
 
             if (attrib != null) {
               if (!string.IsNullOrEmpty(attrib.Name) && !string.IsNullOrEmpty(attrib.OldName))
-                throw new PersistenceException("Cannot use Name and OldName at the same time.");
+                throw new PersistenceException($"Property {property.Name} cannot use Name and OldName at the same time.", type);
 
               if (attrib.AllowOneWay && !string.IsNullOrEmpty(attrib.OldName))
-                throw new PersistenceException("Cannot use AllowOneWay and OldName at the same time.");
+                throw new PersistenceException($"Property {property.Name} cannot use AllowOneWay and OldName at the same time.", type);
 
               if (!string.IsNullOrEmpty(attrib.Name)) name = attrib.Name;
               else if (!string.IsNullOrEmpty(attrib.OldName)) name = attrib.OldName;
             }
 
             if ((!property.CanRead || !property.CanWrite) && (attrib == null || !attrib.AllowOneWay && string.IsNullOrEmpty(attrib.OldName)))
-              throw new PersistenceException("Properties must be readable and writable or have one way serialization explicitly enabled or use OldName.");
+              throw new PersistenceException($"Property {property.Name} must be readable and writable or have one way serialization explicitly enabled or use OldName.", type);
 
             var nameParts = name.Split('.').ToArray();
             var sourceType = type;
@@ -140,11 +140,11 @@ namespace HEAL.Attic {
               var part = nameParts[i];
               if (part == "base") sourceType = sourceType.BaseType;
               else if (Guid.TryParse(part, out tmpGuid)) {
-                if (i != 0 || nameParts.Length != 2) throw new PersistenceException("Invalid field path specified.");
+                if (i != 0 || nameParts.Length != 2) throw new PersistenceException($"Property {property.Name} has an invalid path.", type);
                 guidPrefix = tmpGuid.ToString().ToUpper();
                 break;
               } else if (i != nameParts.Length - 1)
-                throw new PersistenceException("Invalid field path specified.");
+                throw new PersistenceException($"Property {property.Name} has an invalid path.", type);
               else break;
             }
 
@@ -193,7 +193,7 @@ namespace HEAL.Attic {
         storableConstructor = ctor;
         return () => storableConstructor.Invoke(defaultConstructorParams);
       }
-        
+
       // get default constructor
       ctor = GetDefaultConstructor();
       if (ctor != null) {
@@ -201,7 +201,7 @@ namespace HEAL.Attic {
         return () => defaultConstructor.Invoke(emptyConstructorParams);
       }
 
-      throw new PersistenceException("No storable constructor or parameterless constructor found.");
+      throw new PersistenceException("No storable constructor or parameterless constructor found.", Type);
     }
 
     private ConstructorInfo GetStorableConstructor() {
@@ -217,15 +217,15 @@ namespace HEAL.Attic {
       return Type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
     }
 
-    private static Type GetPropertyDeclaringBaseType(MemberInfo mi) {
+    private Type GetPropertyDeclaringBaseType(MemberInfo mi) {
       PropertyInfo pi = mi as PropertyInfo;
       if (pi == null)
-        throw new PersistenceException("fields don't have a declaring base type, directly use FullyQualifiedMemberName instead");
+        throw new PersistenceException($"Field {mi.Name} does not have a declaring base type, directly use FullyQualifiedMemberName instead.", Type);
       if (pi.CanRead)
         return pi.GetGetMethod(true).GetBaseDefinition().DeclaringType;
       if (pi.CanWrite)
         return pi.GetSetMethod(true).GetBaseDefinition().DeclaringType;
-      throw new InvalidOperationException("property has neigher a getter nor a setter.");
+      throw new PersistenceException($"Property {pi.Name} has neither a getter nor a setter.", Type);
     }
   }
 }

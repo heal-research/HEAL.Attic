@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace HEAL.Attic {
-  internal abstract class BoxTransformer<T> : Transformer {
+  public abstract class BoxTransformer<T> : Transformer {
     public override bool CanTransformType(Type type) {
       return type == typeof(T);
     }

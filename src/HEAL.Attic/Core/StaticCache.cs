@@ -136,6 +136,7 @@ namespace HEAL.Attic {
 
     public void UpdateRegisteredTypes() {
       foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+        if (asm.IsDynamic) continue;
         if (cachedAssemblies.Contains(asm.FullName)) continue;
         cachedAssemblies.Add(asm.FullName);
 

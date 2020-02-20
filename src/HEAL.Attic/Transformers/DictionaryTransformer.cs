@@ -66,7 +66,7 @@ namespace HEAL.Attic {
         if (mapper.CancellationToken.IsCancellationRequested) return;
         var key = mapper.GetObject(keys[i]);
         var value = mapper.GetObject(values[i]);
-        dict.Add(key, value);
+        if (key != null) dict.Add(key, value);
       }
     }
   }

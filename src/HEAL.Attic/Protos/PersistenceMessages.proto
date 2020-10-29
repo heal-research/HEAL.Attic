@@ -14,7 +14,7 @@ message Bundle {
   repeated ArrayMetadata array_metadata = 8;
 }
 
-// each box represents and object in an object graph
+// each box represents an object in the object graph
 message Box {
   uint32 type_metadata_id = 1; // index within Bundle.type_metadata for the type of the object
 

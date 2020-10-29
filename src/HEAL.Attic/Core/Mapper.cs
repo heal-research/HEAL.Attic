@@ -147,7 +147,7 @@ namespace HEAL.Attic {
     #endregion
 
     #region TypeMetadata
-    internal uint GetTypeMetadataId(Type type, ITransformer transformer) {
+    public uint GetTypeMetadataId(Type type, ITransformer transformer) {
       if (type2TypeMetadataId.TryGetValue(type, out uint id)) {
         var typeMsg = typeMetadata.GetValue(id);
         if (typeMsg.TransformerId == 0) typeMsg.TransformerId = GetTransformerId(transformer); // GetTransformerId returns 0 when transformer is null
@@ -170,7 +170,7 @@ namespace HEAL.Attic {
       }
     }
 
-    internal Type StorableTypeMetadataToType(TypeMetadata typeMetadata) {
+    public Type StorableTypeMetadataToType(TypeMetadata typeMetadata) {
       TryGetType(typeMetadata.TypeId, out Type type);
       if (type == null) return null;
       else {
@@ -185,7 +185,7 @@ namespace HEAL.Attic {
         }
       }
     }
-    internal TypeMetadata GetTypeMetadata(uint typeMetadataId) {
+    public TypeMetadata GetTypeMetadata(uint typeMetadataId) {
       return typeMetadata.GetValue(typeMetadataId);
     }
     #endregion

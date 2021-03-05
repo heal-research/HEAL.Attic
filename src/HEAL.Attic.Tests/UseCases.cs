@@ -2125,31 +2125,32 @@ namespace HEAL.Attic.Tests {
               Assert.AreEqual("abc", arr2[i - 1, j + 0, k + 1, l + 2]);
     }
 
-    [StorableType("23899B17-955C-4154-8782-36095598F22E")]
-    internal class GenericCollectionClass {
-      [Storable] internal IReadOnlyList<int> a;
-      [Storable] internal IReadOnlyCollection<int> b;
-      [Storable] internal IReadOnlyDictionary<int, int> c;
-      [Storable] internal SortedDictionary<int, int> d;
-      [Storable] internal SortedList e;
-      [Storable] internal SortedSet<int> f;
-    }
+    //[StorableType("23899B17-955C-4154-8782-36095598F22E")]
+    //internal class GenericCollectionClass {
+    //  [Storable] internal IReadOnlyList<int> a;
+    //  [Storable] internal IReadOnlyCollection<int> b;
+    //  [Storable] internal IReadOnlyDictionary<int, int> c;
+    //  [Storable] internal SortedDictionary<int, int> d;
+    //  [Storable] internal SortedList e;
+    //  [Storable] internal SortedSet<int> f;
+    //}
 
-    [TestMethod]
-    public void TestGenericCollections() {
-      var o = new GenericCollectionClass();
-      o.a = new List<int>().AsReadOnly();
-      o.b = new List<int>().AsReadOnly();
-      o.c = new Dictionary<int, int>();
-      o.d = new SortedDictionary<int, int>();
-      o.e = new SortedList();
-      o.f = new SortedSet<int>();
+    //[TestMethod]
+    //public void TestGenericCollections() {
+    //  var o = new GenericCollectionClass();
+    //  o.a = new List<int>().AsReadOnly();
+    //  o.b = new List<int>().AsReadOnly();
+    //  o.c = new Dictionary<int, int>();
+    //  o.d = new SortedDictionary<int, int>();
+    //  o.e = new SortedList();
+    //  o.f = new SortedSet<int>();
 
-      var ser = new ProtoBufSerializer();
-      ser.Serialize(o, tempFile);
-      var o2 = (GenericCollectionClass)ser.Deserialize(tempFile);
+    //  var ser = new ProtoBufSerializer();
+    //  ser.Serialize(o, tempFile);
+    //  var o2 = (GenericCollectionClass)ser.Deserialize(tempFile);
 
-    }
+    //}
+
     #region backwards compatibility tests
 
     [StorableType("28A5F6B8-49AF-4C6A-AF0E-F92EB4511722")]

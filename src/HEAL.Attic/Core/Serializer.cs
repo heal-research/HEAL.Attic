@@ -20,7 +20,7 @@ namespace HEAL.Attic {
                                   out SerializationInfo info,
                                   bool disposeStream = true,
                                   CancellationToken cancellationToken = default(CancellationToken)) {
-      using (var deflateStream = new DeflateStream(stream, CompressionMode.Compress)) {
+      using (var deflateStream = new DeflateStream(stream, CompressionMode.Compress, leaveOpen: !disposeStream)) {
         SerializeBundle(Mapper.ToBundle(o, out info, cancellationToken), deflateStream, disposeStream);
       }
     }
@@ -65,7 +65,7 @@ namespace HEAL.Attic {
                                       bool disposeStream = true,
                                       CancellationToken cancellationToken = default(CancellationToken)) {
       try {
-        using (var deflateStream = new DeflateStream(stream, CompressionMode.Decompress)) {
+        using (var deflateStream = new DeflateStream(stream, CompressionMode.Decompress, leaveOpen: !disposeStream)) {
           return Mapper.ToObject(DeserializeBundle(deflateStream, disposeStream), out info, cancellationToken);
         }
       } catch (InvalidDataException ide) {

@@ -1,0 +1,25 @@
+name: Windows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore dependencies
+        run: dotnet restore src/HEAL.Attic.sln
+
+      - name: Build
+        run: dotnet build --no-restore src/HEAL.Attic.sln
+
+      - name: Test
+        run: dotnet test --no-build src/HEAL.Attic.sln

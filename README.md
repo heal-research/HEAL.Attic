@@ -1,3 +1,5 @@
+[![Linux](https://github.com/heal-research/HEAL.Attic/actions/workflows/linux.yml/badge.svg)](https://github.com/heal-research/HEAL.Attic/actions/workflows/linux.yml) [![Windows](https://github.com/heal-research/HEAL.Attic/actions/workflows/windows.yml/badge.svg)](https://github.com/heal-research/HEAL.Attic/actions/workflows/windows.yml)
+
 # Introduction
 
 HEAL.Attic is a serialization and persistence framework for .NET. It allows you to save objects to a file and later restore these objects. HEAL.Attic serializes and deserializes complete object graphs. It uses Google Protocol Buffers for compact storage.

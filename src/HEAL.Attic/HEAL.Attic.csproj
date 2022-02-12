@@ -7,7 +7,7 @@
     <Copyright>(c) Heuristic and Evolutionary Algorithms Laboratory (HEAL)</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>HeuristicLab.snk</AssemblyOriginatorKeyFile>
-    <Version>1.6.0</Version>
+    <Version>1.7.0</Version>
     <Description>HEAL.Attic is a serialization and persistence framework for .NET. It serializes and deserializes complete object graphs and uses Google Protocol Buffers for compact storage.</Description>
     <PackageProjectUrl>https://github.com/HeuristicLab/HEAL.Attic</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HeuristicLab/HEAL.Attic.git</RepositoryUrl>

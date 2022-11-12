@@ -7,7 +7,7 @@ HEAL.Attic is a serialization and persistence framework for .NET. It allows you 
 # Examples
 HEAL.Attic provides .NET attributes to mark classes, properties and fields for persistence. For example, if we have a class for a person then we simply mark the class as a `StorableType` and mark the properties `Name` and `Address` as `Storable`     
 ```csharp
-  [StorableType(Guid = "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
+  [StorableType(guid: "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
   public class Person {
       [Storable]
       public string Name { get; set; }
@@ -42,7 +42,7 @@ Similarly, we can restore the person object using the  `Deserialize` method.
 
 .NET collection types and references within object graphs are handled automatically as shown in the following example.
 ```csharp
-  [StorableType(Guid = "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
+  [StorableType(guid: "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
   public class Person {
       [Storable]
       public string Name { get; set; }

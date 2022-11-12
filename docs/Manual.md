@@ -6,7 +6,7 @@ HEAL.Attic is implemented for the .NET Standard 2.0 interface and can be used fr
 ## Basic Usage
 HEAL.Attic provides .NET attributes to mark classes, properties and fields for persistence. For example, if we have a class for a person then we simply mark the class as a `StorableType` and mark the properties `Name` and `Address` as `Storable`     
 ```csharp
-  [StorableType(Guid = "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
+  [StorableType(guid: "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
   public class Person {
       [Storable]
       public string Name { get; set; }
@@ -41,7 +41,7 @@ Similarly, we can restore the person object using the  `Deserialize` method.
 
 .NET collection types and references within object graphs are handled automatically as shown in the following example.
 ```csharp
-  [StorableType(Guid = "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
+  [StorableType(guid: "38C30283-9FF1-4EDC-A842-5DE60E1BBD73")]
   public class Person {
       [Storable]
       public string Name { get; set; }
@@ -92,7 +92,7 @@ Each storable class should have an empty constructor marked with the `StorableCo
 
 HEAL.Attic provides the type `StorableConstructorFlag` which must be used as formal parameter for the storable constructor to prevent collisions with existing constructors. The storable constructor should be protected (or private in sealed classes). Don't forget to call the `StorableConstructor` of the base class if there is one.
 ```csharp
-  [StorableType(Guid = "...")]
+  [StorableType(guid: "...")]
   public class A : AnotherStorableType {
       // ...
 
@@ -191,13 +191,13 @@ In the following example we serialize a `Course` object with a generic `List<IPe
 Even though the list of attendees only contains `Person` objects, HEAL.Attic must generate a `List<IPerson>` on deserialization which holds the persons objects. Therefore, we need also need to generate a GUID for the interface `IPerson`. The framework type `List` is already defined as a known type with an associated GUID within HEAL.Attic.   
 Note that the property `Name` of `IPerson` must not be marked as storable.
 ```csharp
-  [StorableType(Guid = "424AB5BD-DC4E-472E-AF53-4A46D581C89A")]
+  [StorableType(guid: "424AB5BD-DC4E-472E-AF53-4A46D581C89A")]
   public interface IPerson {
       string Name { get; }
       // ...  
   }
   
-  [StorableType(Guid = "17D8FBBD-E982-4490-9BC0-2ADE7B4358CD")]
+  [StorableType(guid: "17D8FBBD-E982-4490-9BC0-2ADE7B4358CD")]
   public class Person : IPerson {
       [Storable]
       string Name { get; private set; }
@@ -207,7 +207,7 @@ Note that the property `Name` of `IPerson` must not be marked as storable.
       }
   }
 
-  [StorableType(Guid = "A99D46DA-5A68-483C-A69F-2FB309A77AA0")]
+  [StorableType(guid: "A99D46DA-5A68-483C-A69F-2FB309A77AA0")]
   public class Course {
       [Storable]
       public string Name { get; private set; }
@@ -492,7 +492,7 @@ In the following example we assume that a new class is introduced whereby storab
 
 Old code:
 ```csharp
-[StorableType(Guid = "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
+[StorableType(guid: "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
 class A {
   [Storable]
   string Name;
@@ -501,7 +501,7 @@ class A {
   string Description;
 }
 
-[StorableType(Guid = "B95F7976-9313-4473-B238-3EE44F1576A7")]
+[StorableType(guid: "B95F7976-9313-4473-B238-3EE44F1576A7")]
 class C : A {
   [Storable]
   int p;
@@ -510,19 +510,19 @@ class C : A {
 
 New code (`Description` is moved from existing class`A` to new class `B`):
 ```csharp
-[StorableType(Guid = "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
+[StorableType(guid: "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
 class A {
   [Storable]
   string Name;
 }
 
-[StorableType(Guid = "3DCA742D-C294-45A9-8E72-D21A9382DAE4")]
+[StorableType(guid: "3DCA742D-C294-45A9-8E72-D21A9382DAE4")]
 class B : A {
   [Storable(OldName = "base.Description")] // we can access storable members of the parent class with base. 
   string Description;
 }
 
-[StorableType(Guid = "B95F7976-9313-4473-B238-3EE44F1576A7")]
+[StorableType(guid: "B95F7976-9313-4473-B238-3EE44F1576A7")]
 class C : B {
   [Storable]
   int p;
@@ -538,19 +538,19 @@ HEAL.Attic also supports removal of a base class in a hierarchy whereby two sepa
 
 Old code: 
 ```csharp
-[StorableType(Guid = "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
+[StorableType(guid: "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB")]
 class A {
   [Storable]
   string Name;
 }
 
-[StorableType(Guid = "3DCA742D-C294-45A9-8E72-D21A9382DAE4")]
+[StorableType(guid: "3DCA742D-C294-45A9-8E72-D21A9382DAE4")]
 class B : A {
   [Storable]
   string Description;
 }
 
-[StorableType(Guid = "B95F7976-9313-4473-B238-3EE44F1576A7")]
+[StorableType(guid: "B95F7976-9313-4473-B238-3EE44F1576A7")]
 class C : B {
   [Storable]
   int p;
@@ -559,7 +559,7 @@ class C : B {
 
 New code (class `AB` takes over the role of `A` and `B`, and `B.Description` is moved to `AB.Description`):
 ```csharp
-[StorableType(Guid = "0F15C129-12D8-4319-8FF4-8F8FECB30A16")] // new GUID different from A and B
+[StorableType(guid: "0F15C129-12D8-4319-8FF4-8F8FECB30A16")] // new GUID different from A and B
 class AB {
   [Storable(OldName = "7D5EF5BE-71ED-4DE7-BB5E-0AD4E94844DB.Name", DefaultValue = "No name")] // retrieve value using the old GUID of A
   string Name;
@@ -568,7 +568,7 @@ class AB {
   string Description; // retrieve value using the old GUID of B
 }
 
-[StorableType(Guid = "B95F7976-9313-4473-B238-3EE44F1576A7")]
+[StorableType(guid: "B95F7976-9313-4473-B238-3EE44F1576A7")]
 class C : AB {
   [Storable]
   int p;
@@ -581,7 +581,7 @@ If HEAL.Attic does not find the specified values in the serialized format the fi
 However, we need to be careful to handle the case correctly when a class X directly inherits from A instead of B.
 Assume we have class `NewType` inheriting directly from `A` which also has a `Description` field. 
 ```csharp
-[StorableType(Guid = "67C909B1-68C0-40A8-8B6F-771940267E17")]
+[StorableType(guid: "67C909B1-68C0-40A8-8B6F-771940267E17")]
 class NewType : A {
   [Storable]
   string Description;
@@ -590,7 +590,7 @@ class NewType : A {
 Here we assume that we now want to use `AB` and `AB.Description` instead of `NewType.Description`. Therefore, we need to set `AB.Description` when deserializing `NewType` in the old format. We accomplish this again with a persistence property.
 
 ```csharp
-[StorableType(Guid = "67C909B1-68C0-40A8-8B6F-771940267E17")]
+[StorableType(guid: "67C909B1-68C0-40A8-8B6F-771940267E17")]
 class NewType : AB {
   [Storable(OldName = "Description")]
   string Description_Persistence_Setter {

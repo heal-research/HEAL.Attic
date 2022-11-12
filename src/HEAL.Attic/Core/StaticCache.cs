@@ -115,7 +115,9 @@ namespace HEAL.Attic {
       RegisterType(new Guid("D9029E74-C511-4D28-B8C5-D0E299EC45A5"), Type.GetType("System.Collections.Generic.ObjectEqualityComparer`1"));
       RegisterType(new Guid("C6D867E2-3CD2-4C59-8BA6-F18F00DDB997"), Type.GetType("System.Collections.Generic.ByteEqualityComparer"));
       RegisterType(new Guid("02F8D180-BABE-4073-82E0-7FE77814F53D"), Type.GetType("System.Collections.Generic.EnumEqualityComparer`1"));
-      RegisterType(new Guid("D3D279FE-169E-46B6-93AE-589BB4F24A4D"), Type.GetType("System.Collections.Generic.LongEnumEqualityComparer`1"));
+      if (Type.GetType("System.Collections.Generic.LongEnumEqualityComparer`1") != null) {  // required for backwards compatibility, LongEnumEqualityComparer is not supported in .NET 6 anymore
+        RegisterType(new Guid("D3D279FE-169E-46B6-93AE-589BB4F24A4D"), Type.GetType("System.Collections.Generic.LongEnumEqualityComparer`1"));
+      }
 
       RegisterType(new Guid("18504ADF-2332-4497-8CA0-B2F00CA2EBA2"), typeof(Type));
 

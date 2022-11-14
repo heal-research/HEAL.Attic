@@ -1,13 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HEAL.Attic", "HEAL.Attic\HEAL.Attic.csproj", "{99516DDD-9EF5-4AAB-A8C7-02A2DDF5C789}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HEAL.Attic.Benchmarks", "HEAL.Attic.Benchmarks\HEAL.Attic.Benchmarks.csproj", "{449CF178-A76C-46D4-B76F-7CB554930CB9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HEAL.Attic.Tests", "HEAL.Attic.Tests\HEAL.Attic.Tests.csproj", "{2435061F-01D9-4042-8359-EE8C9A324607}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1BEA20C-7F41-4FDB-AC63-AD3A0E24AB19}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+		..\LICENSE.txt = ..\LICENSE.txt
+		..\.github\workflows\linux.yml = ..\.github\workflows\linux.yml
+		..\README.md = ..\README.md
+		..\.github\workflows\windows.yml = ..\.github\workflows\windows.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

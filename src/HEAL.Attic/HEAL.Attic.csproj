@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.15.0" />
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.2" />
     <None Include="../../LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 

@@ -5,6 +5,7 @@
  */
 #endregion
 
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
@@ -31,10 +32,19 @@ namespace HEAL.Attic {
     public virtual void Serialize(object o, string path,
                                   out SerializationInfo info,
                                   CancellationToken cancellationToken = default(CancellationToken)) {
-      string tempfile = Path.GetTempFileName();
 
-      using (FileStream fileStream = File.Create(tempfile)) {
-        Serialize(o, fileStream, out info, false, cancellationToken);
+      string tempfile = Path.GetTempFileName();
+      try {
+        using (FileStream fileStream = File.Create(tempfile)) {
+          Serialize(o, fileStream, out info, false, cancellationToken);
+        }
+      } catch (Exception ex ) when (ex is UnauthorizedAccessException ||  ex is IOException)
+      {
+        // when we cannot create the temporary file in the temp folder, retry to create it in the target folder
+        tempfile = Path.Combine(Path.GetDirectoryName(path), Path.GetRandomFileName());
+        using (FileStream fileStream = File.Create(tempfile)) {
+          Serialize(o, fileStream, out info, false, cancellationToken);
+        }
       }
       if (!cancellationToken.IsCancellationRequested) {
         File.Copy(tempfile, path, true);

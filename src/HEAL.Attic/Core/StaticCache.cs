@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Loader;
 
 namespace HEAL.Attic {
   public sealed class StaticCache {
@@ -137,7 +138,7 @@ namespace HEAL.Attic {
     }
 
     public void UpdateRegisteredTypes() {
-      foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+      foreach (var asm in AssemblyLoadContext.Default.Assemblies) {
         if (asm.IsDynamic) continue;
         if (cachedAssemblies.Contains(asm.FullName)) continue;
         cachedAssemblies.Add(asm.FullName);
